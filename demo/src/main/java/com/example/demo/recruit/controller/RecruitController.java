@@ -18,7 +18,7 @@ import com.example.demo.recruit.repository.RecruitRepository;
 @RequestMapping("/recruit")
 @Controller
 public class RecruitController {
-	private RecruitRepository recruitRepository;
+	public RecruitRepository recruitRepository;
 	
         
 	@GetMapping("/recruit/list")
@@ -37,10 +37,20 @@ public class RecruitController {
 	@PostMapping("/recruit/add")
 	public ResponseEntity<RecruitEntity> addRecruit(@RequestBody RecruitEntity recruit){
 	    try {
-	        RecruitEntity newRecruit = recruitRepository.save(
-	                    recruit.getRtitle(), recruit.getWriter(), recruit.getRegisterDate(), recruit.getModifyDate(), recruit.getCareer(), recruit.getSalary(), recruit.getWorkingDays(), recruit.getDetail(), recruit.getMessenger(), recruit.getHomePage(), recruit.getPhoneNumber());
-	                
-	        return new ResponseEntity<>(newRecruit, HttpStatus.OK);
+	        RecruitEntity newRecruit = new RecruitEntity(
+	                recruit.getRtitle(), 
+	                recruit.getWriter(), 
+	                recruit.getRegisterDate(), 
+	                recruit.getModifyDate(), 
+	                recruit.getCareer(), 
+	                recruit.getSalary(), 
+	                recruit.getWorkingDays(), 
+	                recruit.getDetail(), 
+	                recruit.getMessenger(), 
+	                recruit.getHomePage(), 
+	                recruit.getPhoneNumber());
+	        
+	        return new ResponseEntity<>(recruitRepository.save(newRecruit), HttpStatus.OK);
 	    } catch (Exception e) {
 	        return new ResponseEntity<>(null);
 	    }
