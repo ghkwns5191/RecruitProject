@@ -50,4 +50,26 @@ public class Member {
     @Column(name = "member_registerdate")
     public LocalDate member_registerdate; // 회원 가입일
     
+    public Member() {
+        
+    }
+
+    public Member(String member_sort, String member_username, String member_password, String member_name,
+            String member_phone, String member_email, LocalDate member_birthday, String member_address,
+            String member_role, LocalDate member_registerdate) {
+       
+        this.member_sort = member_sort;
+        this.member_username = member_username;
+        this.member_password = member_password;
+        this.member_name = member_name;
+        this.member_phone = member_phone;
+        this.member_email = member_email;
+        this.member_birthday = member_birthday;
+        this.member_address = member_address;
+        this.member_role = member_role;
+        this.member_registerdate = member_registerdate;
+    }
+    
+    
+    
 }

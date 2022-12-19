@@ -53,4 +53,26 @@ public class Academic {
     @Column(length = 1000, name = "academic_detail")
     public String academic_detail;// 경력여부
     
+    
+    public Academic() {
+        // TODO Auto-generated constructor stub
+    }
+
+
+    public Academic(Long id_resume, LocalDate academic_start, LocalDate academic_end, String academic_studying,
+            String academic_type, String academic_name, String academic_major, String academic_grade,
+            String academic_gradefull, String academic_detail) {
+        this.id_resume = id_resume;
+        this.academic_start = academic_start;
+        this.academic_end = academic_end;
+        this.academic_studying = academic_studying;
+        this.academic_type = academic_type;
+        this.academic_name = academic_name;
+        this.academic_major = academic_major;
+        this.academic_grade = academic_grade;
+        this.academic_gradefull = academic_gradefull;
+        this.academic_detail = academic_detail;
+    }
+    
+    
 }

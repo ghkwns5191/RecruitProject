@@ -55,8 +55,28 @@ public class Recruit {
     @Column(length = 100, name = "recruit_attn")
     public String recruit_attn; // 채용공고 담당자
 	
-	// 
-	
+    public Recruit() {
+        
+    }
+
+    public Recruit(Long id_member, String recruit_title, String recruit_writer, LocalDate recruit_registerdate,
+            LocalDate recruit_modifydate, String recruit_career, String recruit_salary, String recruit_workingdays,
+            String recruit_detail, String recruit_phonenumber, String recruit_attn) {
+       
+        this.id_member = id_member;
+        this.recruit_title = recruit_title;
+        this.recruit_writer = recruit_writer;
+        this.recruit_registerdate = recruit_registerdate;
+        this.recruit_modifydate = recruit_modifydate;
+        this.recruit_career = recruit_career;
+        this.recruit_salary = recruit_salary;
+        this.recruit_workingdays = recruit_workingdays;
+        this.recruit_detail = recruit_detail;
+        this.recruit_phonenumber = recruit_phonenumber;
+        this.recruit_attn = recruit_attn;
+    }
+    
+    
 
 	
 	

@@ -45,4 +45,24 @@ public class Company {
     
     @Column(name = "company_modifydate")
     public LocalDate company_modifydate; // 기업 정보 업데이트일
+    
+    public Company() {
+        
+    }
+
+    public Company(Long id_member, String company_name, String company_type, String company_address,
+            String company_phone, String company_pp20number, String company_numberofstaff,
+            LocalDate company_modifydate) {
+        super();
+        this.id_member = id_member;
+        this.company_name = company_name;
+        this.company_type = company_type;
+        this.company_address = company_address;
+        this.company_phone = company_phone;
+        this.company_pp20number = company_pp20number;
+        this.company_numberofstaff = company_numberofstaff;
+        this.company_modifydate = company_modifydate;
+    }
+    
+    
 }

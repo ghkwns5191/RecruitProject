@@ -23,9 +23,26 @@ public class Resume {
     @JoinColumn(name = "id_member")
     public Long id_member; // 회원 고유값(Foreign key)
     
-    @Column(length = 2000, name = "resume_photo")
+    @Column(length = 3000, name = "resume_photo")
     public String resume_photo;// 이력서 사진
     
     @Column(length = 4000, name = "resume_cv")
     public String resume_cv;// 이력서 자기소개서
+    
+    @Column(length = 4000, name = "resume_openforheadhunter")
+    public String resume_openforheadhunter;// 이력서 공개여부
+    
+    public Resume() {
+        
+    }
+
+    public Resume(Long id_member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
+        
+        this.id_member = id_member;
+        this.resume_photo = resume_photo;
+        this.resume_cv = resume_cv;
+        this.resume_openforheadhunter = resume_openforheadhunter;
+    }
+    
+    
 }
