@@ -7,29 +7,37 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Table(name = "member")
 @Entity
 public class Member {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_member")
     public Long id_member; // 회원 고유값(Primary key)
     
     @Column(length = 100, name = "member_sort")
+    @NotNull
     public String member_sort; // 회원 종류 (개인 or 기업)
     
     @Column(length = 100, name = "member_username")
+    @NotNull
     public String member_username; // 회원 사용자명 (회원 기준 ID)
     
     @Column(length = 100, name = "member_password")
+    @NotNull
     public String member_password; // 회원 비밀번호
     
     @Column(length = 100, name = "member_name")
+    @NotNull
     public String member_name; // 회원 성명
     
     @Column(length = 100, name = "member_phone")
@@ -45,6 +53,7 @@ public class Member {
     public String member_address; // 회원 주소
     
     @Column(length = 500, name = "member_role")
+    @NotNull
     public String member_role; // 회원 자격(사용자 or 관리자)
     
     @Column(name = "member_registerdate")

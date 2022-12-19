@@ -8,12 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Table(name = "notice")
 @Entity
 public class Notice {
 
@@ -22,26 +26,31 @@ public class Notice {
     @Column(name = "id_notice")
     public Long id_notice; // 공지사항 고유값
     
+    @ManyToOne
     @JoinColumn(name = "id_member")
-    public Long id_member; // 회원 고유값(Foreign key)
+    @NotNull
+    public Member id_member; // 회원 고유값(Foreign key)
     
     @Column(length = 200, name = "notice_title")
-    public String notice_title; // 수료 교육명
+    @NotNull
+    public String notice_title; // 공지사항 제목
     
     @Column(length = 5000, name = "notice_detail")
-    public String notice_detail; // 상세 교육내용
+    @NotNull
+    public String notice_detail; // 공지사항 상세내용
     
     @Column(name = "notice_registerdate")
-    public LocalDate notice_registerdate; // 교육 시작일
+    @NotNull
+    public LocalDate notice_registerdate; // 공지사항 작성일
     
     @Column(name = "notice_modifydate")
-    public LocalDate notice_modifydate; // 교육 종료일
+    public LocalDate notice_modifydate; // 공지사항 수정일
     
     public Notice() {
         
     }
 
-    public Notice(Long id_member, String notice_title, String notice_detail, LocalDate notice_registerdate,
+    public Notice(Member id_member, String notice_title, String notice_detail, LocalDate notice_registerdate,
             LocalDate notice_modifydate) {
         
         this.id_member = id_member;
@@ -50,6 +59,8 @@ public class Notice {
         this.notice_registerdate = notice_registerdate;
         this.notice_modifydate = notice_modifydate;
     }
+
+    
     
     
 }

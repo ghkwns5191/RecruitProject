@@ -8,12 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Table(name = "career")
 @Entity
 public class Career {
 
@@ -22,28 +26,37 @@ public class Career {
     @Column(name = "id_career")
     public Long id_career; // 경력사항 고유값
     
+    @ManyToOne
     @JoinColumn(name = "id_resume")
-    public Long id_resume; // 이력서 고유값(Foreign key)
+    @NotNull
+    public Resume id_resume; // 이력서 고유값(Foreign key)
     
     @Column(name = "career_start")
+    @NotNull
     public LocalDate career_start;// 경력 시작일
     
     @Column(name = "career_end")
+    @NotNull
     public LocalDate career_end;// 경력 종료일
     
     @Column(length = 100, name = "career_working")
+    @NotNull
     public String career_working;// 재직중 여부 (재직중 or 퇴사)
     
     @Column(length = 100, name = "career_companyname")
+    @NotNull
     public String career_companyname;// 회사 이름
     
     @Column(length = 100, name = "career_rank")
+    @NotNull
     public String career_rank;// 근무 직급
     
     @Column(length = 100, name = "career_salary")
+    @NotNull
     public String career_salary;// 연봉/월급정보
     
     @Column(length = 100, name = "career_jobduty")
+    @NotNull
     public String career_jobduty;// 직무부서
     
     @Column(length = 2000, name = "career_detail")
@@ -53,10 +66,10 @@ public class Career {
         
     }
 
-    public Career(Long id_resume, LocalDate career_start, LocalDate career_end, String career_working,
+    public Career(Resume id_resume, LocalDate career_start, LocalDate career_end, String career_working,
             String career_companyname, String career_rank, String career_salary, String career_jobduty,
             String career_detail) {
-        
+       
         this.id_resume = id_resume;
         this.career_start = career_start;
         this.career_end = career_end;
@@ -67,6 +80,8 @@ public class Career {
         this.career_jobduty = career_jobduty;
         this.career_detail = career_detail;
     }
+
+    
     
     
     

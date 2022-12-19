@@ -8,12 +8,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Table(name = "languages")
 @Entity
 public class Languages {
     
@@ -22,13 +26,17 @@ public class Languages {
     @Column(name = "id_languages")
     public Long id_languages; // 어학 고유값
     
+    @ManyToOne
     @JoinColumn(name = "id_resume")
-    public Long id_resume; // 이력서 고유값(Foreign key)
+    @NotNull
+    public Resume id_resume; // 이력서 고유값(Foreign key)
     
     @Column(length = 100, name = "languages_leveltalking")
+    @NotNull
     public String languages_leveltalking; // 어학 회화능력
     
     @Column(length = 100, name = "languages_levelwriting")
+    @NotNull
     public String languages_levelwriting; // 어학 작문독해능력
     
     @Column(length = 100, name = "languages_test")
@@ -47,10 +55,10 @@ public class Languages {
         
     }
 
-    public Languages(Long id_resume, String languages_leveltalking, String languages_levelwriting,
+    public Languages(Resume id_resume, String languages_leveltalking, String languages_levelwriting,
             String languages_test, String languages_score, LocalDate languages_achievedate,
             String languages_certificatenumber) {
-        
+       
         this.id_resume = id_resume;
         this.languages_leveltalking = languages_leveltalking;
         this.languages_levelwriting = languages_levelwriting;
@@ -59,6 +67,8 @@ public class Languages {
         this.languages_achievedate = languages_achievedate;
         this.languages_certificatenumber = languages_certificatenumber;
     }
+
+    
     
     
 }
