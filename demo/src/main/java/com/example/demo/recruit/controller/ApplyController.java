@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.recruit.dto.ApplyDto;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
@@ -48,6 +51,16 @@ public class ApplyController {
         try {
             Apply apply = new Apply();
             apply = applyService.getapply(id_apply);
+            return new ResponseEntity<>(apply, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Apply> inputData(@RequestBody ApplyDto applyDto) {
+        try {
+            Apply apply = applyService.inputData(applyDto);
             return new ResponseEntity<>(apply, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

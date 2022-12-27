@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.recruit.dto.AcademicDto;
 import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.AcademicService;
@@ -37,6 +40,16 @@ public class AcademicController {
         try {
             Academic academic = new Academic();
             academic = academicService.getacademic(id_academic);
+            return new ResponseEntity<>(academic, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Academic> inputData(@RequestBody AcademicDto academicDto) {
+        try {
+            Academic academic = academicService.inputData(academicDto);
             return new ResponseEntity<>(academic, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

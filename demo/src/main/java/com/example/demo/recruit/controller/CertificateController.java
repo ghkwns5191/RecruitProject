@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.recruit.dto.CertificateDto;
 import com.example.demo.recruit.entity.Certificate;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.CertificateService;
@@ -32,12 +35,22 @@ public class CertificateController {
         }
 
     }
-    
+
     @GetMapping
     public ResponseEntity<Certificate> getCertificate(@RequestParam(required = false) Long id_certificate) {
         try {
             Certificate certificate = new Certificate();
             certificate = certificateService.getcertificate(id_certificate);
+            return new ResponseEntity<>(certificate, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Certificate> inputData(@RequestBody CertificateDto certificateDto) {
+        try {
+            Certificate certificate = certificateService.inputData(certificateDto);
             return new ResponseEntity<>(certificate, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

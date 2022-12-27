@@ -60,6 +60,21 @@ public class Company {
         
     }
 
+    public Company(Member id_member, @NotNull String company_name, @NotNull String company_type,
+            @NotNull String company_address, @NotNull String company_phone, @NotNull String company_pp20number,
+            String company_numberofstaff, LocalDate company_modifydate) {
+        
+        this.id_member = id_member;
+        this.company_name = company_name;
+        this.company_type = company_type;
+        this.company_address = company_address;
+        this.company_phone = company_phone;
+        this.company_pp20number = company_pp20number;
+        this.company_numberofstaff = company_numberofstaff;
+        this.company_modifydate = company_modifydate;
+    }
+
+    
     
     
     
