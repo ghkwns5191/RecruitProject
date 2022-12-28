@@ -23,6 +23,7 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
+    // 이력서 조회 시 자격증 정보를 함께 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<List<Certificate>> getList(@RequestParam(required = false) Resume id_resume) {
 
@@ -36,6 +37,7 @@ public class CertificateController {
 
     }
 
+    // 해당 자격증 정보만 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<Certificate> getCertificate(@RequestParam(required = false) Long id_certificate) {
         try {
@@ -47,6 +49,7 @@ public class CertificateController {
         }
     }
 
+    // 이력서상 자격증 내역을 입력받아 저정하기 위해 사용
     @PostMapping
     public ResponseEntity<Certificate> inputData(@RequestBody CertificateDto certificateDto) {
         try {

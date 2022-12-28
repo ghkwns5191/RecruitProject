@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.recruit.dto.EducationDto;
 import com.example.demo.recruit.entity.Education;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.EducationService;
@@ -20,6 +23,7 @@ public class EducationController {
     @Autowired
     private EducationService educationService;
 
+    // 이력서 조회 시 교육내용을 함께 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<List<Education>> getList(@RequestParam(required = false) Resume id_resume) {
 
@@ -32,11 +36,23 @@ public class EducationController {
         }
     }
     
+    // 해당 교육내용만 확인하기 위해 사용
     @GetMapping
     public ResponseEntity<Education> getEducaction(@RequestParam(required = false) Long id_education) {
         try {
             Education education = new Education();
             education = educationService.geteducation(id_education);
+            return new ResponseEntity<>(education, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 이력서상 교육정보를 입력받아 DB 에 저장하기 위해 사용
+    @PostMapping
+    public ResponseEntity<Education> inputData(@RequestBody EducationDto educationDto) {
+        try {
+            Education education = educationService.inputData(educationDto);
             return new ResponseEntity<>(education, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

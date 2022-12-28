@@ -23,6 +23,7 @@ public class CareerController {
     @Autowired
     private CareerService careerService;
 
+    // 이력서 조회 시 경력사항을 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<List<Career>> careerList(@RequestParam(required = false) Resume id_resume) {
         try {
@@ -35,6 +36,7 @@ public class CareerController {
 
     }
 
+    // 해당 경력사항만 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<Career> getCareer(@RequestParam(required = false) Long id_career) {
         try {
@@ -46,6 +48,7 @@ public class CareerController {
         }
     }
 
+    // 이력서상 경력사항을 입력받아 DB 에 저장하기 위해 사용
     @PostMapping
     public ResponseEntity<Career> inputData(@RequestBody CareerDto careerDto) {
         try {

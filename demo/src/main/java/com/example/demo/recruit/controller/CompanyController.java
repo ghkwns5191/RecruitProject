@@ -22,6 +22,7 @@ public class CompanyController {
     @Autowired
     private CompanyService companyService;
 
+    // 모든 기업 리스트를 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<List<Company>> getList() {
 
@@ -35,6 +36,7 @@ public class CompanyController {
 
     }
 
+    // 해당 기업의 정보를 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<Company> getCompany(@RequestParam(required = false) Long id_company) {
         try {
@@ -46,6 +48,7 @@ public class CompanyController {
         }
     }
 
+    // 기업정보를 입력받아 DB 에 저장하기 위해 사용
     @PostMapping
     public ResponseEntity<Company> inputData(@RequestBody CompanyDto companyDto) {
         try {

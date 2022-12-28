@@ -23,6 +23,7 @@ public class AcademicController {
     @Autowired
     public AcademicService academicService;
 
+    //이력서 조회 시 학력정보를 함께 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<List<Academic>> academicList(@RequestParam(required = false) Resume id_resume) {
         try {
@@ -35,6 +36,7 @@ public class AcademicController {
 
     }
 
+    // 학력정보만 별도로 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<Academic> getacademic(@RequestParam(required = false) Long id_academic) {
         try {
@@ -46,6 +48,7 @@ public class AcademicController {
         }
     }
 
+    // 이력서상 학력정보를 입력받아 저장하기 위해 사용
     @PostMapping
     public ResponseEntity<Academic> inputData(@RequestBody AcademicDto academicDto) {
         try {

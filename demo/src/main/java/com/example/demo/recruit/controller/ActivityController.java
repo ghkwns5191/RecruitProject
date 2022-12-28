@@ -23,6 +23,7 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+    // 이력서 조회 시 활동내용을 함께 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<List<Activity>> getActivity(@RequestParam(required = false) Resume id_resume) {
 
@@ -36,6 +37,7 @@ public class ActivityController {
 
     }
 
+    // 활동내용만 별도로 조회하기 위해 사용
     @GetMapping
     public ResponseEntity<Activity> getActivity(@RequestParam(required = false) Long id_activity) {
         try {
@@ -47,6 +49,7 @@ public class ActivityController {
         }
     }
 
+    // 이력서상 활동내용을 입력받아 DB 에 저장하기 위해 사용
     @PostMapping
     public ResponseEntity<Activity> inputData(@RequestBody ActivityDto activityDto) {
         try {

@@ -17,7 +17,8 @@ public class ActivityService {
 
     @Autowired
     private ActivityRepository activityRepository;
-
+    
+    //이력서에 해당하는 활동내용 불러내는 코드
     public List<Activity> getactivity(Resume id_resume) {
         List<Activity> activitylist = new ArrayList<Activity>();
         this.activityRepository.findById_Resume(id_resume).forEach(activitylist::add);
@@ -25,14 +26,22 @@ public class ActivityService {
 
     }
     
+    //해당 화동내용만 불러내는 코드
     public Activity getactivity(Long id_activity) {
         Optional<Activity> activityData = this.activityRepository.findById(id_activity);
         Activity activity = activityData.get();
         return activity;
     }
-    
+
+    //활동내용을 입력받아 DB에 저장하는 코드
     public Activity inputData(ActivityDto activityDto) {
-        Activity activity = this.activityRepository.save(new Activity(activityDto.getId_resume(), activityDto.getActivity_start(), activityDto.getActivity_end(), activityDto.getActivity_title(), activityDto.getActivity_holdby(), activityDto.getActivity_detail()));
+        Activity activity = this.activityRepository.save(new Activity(
+                activityDto.getId_resume(),
+                activityDto.getActivity_start(),
+                activityDto.getActivity_end(),
+                activityDto.getActivity_title(),
+                activityDto.getActivity_holdby(),
+                activityDto.getActivity_detail()));
         return activity;
     }
 }
