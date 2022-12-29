@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -56,6 +59,28 @@ public class EducationController {
             return new ResponseEntity<>(education, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    //이력서상 교육정보를 수정하기 위해 사용
+    @PutMapping
+    public ResponseEntity<Education> reviseData(@PathVariable("id_education") Long id_education, EducationDto educationDto) {
+        try {
+            Education education = educationService.inputData(id_education, educationDto);
+            return new ResponseEntity<>(education, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 이력서상 교육정보를 삭제하기 위해 사용
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_education") Long id_education) {
+        try {
+            educationService.deleteData(id_education);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

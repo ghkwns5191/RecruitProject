@@ -48,4 +48,9 @@ public class ApplyService {
                 applyDto.getApply_applydate()));
         return apply;
     }
+    
+    // 지원 정보를 삭제하는 코드
+    public void deleteData(Long id_apply) {
+        this.applyRepository.deleteById(id_apply);
+    }
 }

@@ -43,4 +43,22 @@ public class EducationService {
                 educationDto.getEducation_detail()));
         return education;
     }
+    
+    // DB 에 저장된 교육내용을 수정하는 코드
+    public Education inputData(Long id_education, EducationDto educationDto) {
+        Optional<Education> educationData = this.educationRepository.findById(id_education);
+        Education education = educationData.get();
+        education.setEducation_start(educationDto.getEducation_start());
+        education.setEducation_end(educationDto.getEducation_end());
+        education.setEducation_title(educationDto.getEducation_title());
+        education.setEducation_holdby(educationDto.getEducation_holdby());
+        education.setEducation_detail(educationDto.getEducation_detail());
+        this.educationRepository.save(education);
+        return education;
+    }
+    
+    // DB 에 저장된 교육내용을 삭제하는 코드
+    public void deleteData(Long id_education) {
+        this.educationRepository.deleteById(id_education);
+    }
 }

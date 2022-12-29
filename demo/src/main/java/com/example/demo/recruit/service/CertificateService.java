@@ -43,4 +43,22 @@ public class CertificateService {
                 certificateDto.getCertificate_certificatenumber()));
         return certificate;
     }
+    
+    // 자격증 내역을 수정하는 코드
+    public Certificate inputData(Long id_certificate, CertificateDto certificateDto) {
+        Optional<Certificate> certificateData = this.certificateRepository.findById(id_certificate);
+        Certificate certificate = certificateData.get();
+        certificate.setCertificate_achievedate(certificateDto.getCertificate_achievedate());
+        certificate.setCertificate_name(certificateDto.getCertificate_name());
+        certificate.setCertificate_grade(certificateDto.getCertificate_grade());
+        certificate.setCertificate_achievefrom(certificateDto.getCertificate_achievefrom());
+        certificate.setCertificate_certificatenumber(certificateDto.getCertificate_certificatenumber());
+        this.certificateRepository.save(certificate);
+        return certificate;
+    }
+    
+    // 자격증 내역을 삭제하는 코드
+    public void deleteData(Long id_certificate) {
+        this.certificateRepository.deleteById(id_certificate);
+    }
 }

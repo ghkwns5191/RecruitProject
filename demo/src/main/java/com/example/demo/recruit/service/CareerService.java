@@ -46,4 +46,25 @@ public class CareerService {
                 careerDto.getCareer_detail()));
         return career;
     }
+    
+    // 경력사항을 수정하여 DB 에 저장하는 코드
+    public Career inputData(Long id_career, CareerDto careerDto) {
+        Optional<Career> careerData = this.careerRepository.findById(id_career);
+        Career career = careerData.get();
+        career.setCareer_start(careerDto.getCareer_start());
+        career.setCareer_end(careerDto.getCareer_end());
+        career.setCareer_working(careerDto.getCareer_working());
+        career.setCareer_companyname(careerDto.getCareer_companyname());
+        career.setCareer_rank(careerDto.getCareer_rank());
+        career.setCareer_salary(careerDto.getCareer_salary());
+        career.setCareer_jobduty(careerDto.getCareer_jobduty());
+        career.setCareer_detail(careerDto.getCareer_detail());
+        this.careerRepository.save(career);
+        return career;
+    }
+    
+    // 경력사항 삭제하는 코드
+    public void deleteData(Long id_career) {
+        this.careerRepository.deleteById(id_career);
+    }
 }

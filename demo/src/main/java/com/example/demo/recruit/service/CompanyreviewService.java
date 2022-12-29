@@ -43,4 +43,21 @@ public class CompanyreviewService {
                 companyreviewDto.getCompanyreview_score()));
         return companyreview;
     }
+    
+    // DB 에 저장된 기업리뷰를 불러내어 수정하는 코드
+    public Companyreview inputData(Long id_companyreview, CompanyreviewDto companyreviewDto) {
+        Optional<Companyreview> companyreviewData = this.companyreviewRepository.findById(id_companyreview);
+        Companyreview companyreview = companyreviewData.get();
+        companyreview.setCompanyreview_strength(companyreviewDto.getCompanyreview_strength());
+        companyreview.setCompanyreview_weakness(companyreviewDto.getCompanyreview_weakness());
+        companyreview.setCompanyreview_reviewdetail(companyreviewDto.getCompanyreview_reviewdetail());
+        companyreview.setCompanyreview_score(companyreviewDto.getCompanyreview_score());
+        this.companyreviewRepository.save(companyreview);
+        return companyreview;
+    }
+    
+    // DB 에 저장된 기업리뷰를 삭제하는 코드
+    public void deleteData(Long id_companyreview) {
+        this.companyreviewRepository.deleteById(id_companyreview);
+    }
 }

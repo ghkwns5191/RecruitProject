@@ -44,4 +44,21 @@ public class ActivityService {
                 activityDto.getActivity_detail()));
         return activity;
     }
+    
+    // DB 에 저장된 활동내용을 수정하여 저장하는 코드
+    public Activity inputData(Long id_activity, ActivityDto activityDto) {
+        Optional<Activity> activityData = this.activityRepository.findById(id_activity);
+        Activity activity = activityData.get();
+        activity.setActivity_start(activityDto.getActivity_start());
+        activity.setActivity_end(activityDto.getActivity_end());
+        activity.setActivity_title(activityDto.getActivity_title());
+        activity.setActivity_holdby(activityDto.getActivity_holdby());
+        activity.setActivity_detail(activityDto.getActivity_detail());
+        this.activityRepository.save(activity);
+        return activity;
+    }
+    
+    public void deleteData(Long id_activity) {
+        this.activityRepository.deleteById(id_activity);
+    }
 }

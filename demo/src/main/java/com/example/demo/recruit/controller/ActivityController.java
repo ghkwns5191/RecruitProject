@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,6 +60,28 @@ public class ActivityController {
             return new ResponseEntity<>(activity, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 이력서상 활동내용을 수정하기 위해 사용
+    @PutMapping
+    public ResponseEntity<Activity> reviseData(@PathVariable("id_activity") Long id_activity, @RequestBody ActivityDto activityDto) {
+        try {
+            Activity activity = activityService.inputData(id_activity, activityDto);
+            return new ResponseEntity<>(activity, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 이력서상 활동내용을 삭제하기 위해 사용
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_activity") Long id_activity) {
+        try {
+            activityService.deleteData(id_activity);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
