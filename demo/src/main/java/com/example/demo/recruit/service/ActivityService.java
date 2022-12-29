@@ -11,12 +11,16 @@ import com.example.demo.recruit.dto.ActivityDto;
 import com.example.demo.recruit.entity.Activity;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.ActivityRepository;
+import com.example.demo.recruit.repository.ResumeRepository;
 
 @Service
 public class ActivityService {
 
     @Autowired
     private ActivityRepository activityRepository;
+    
+    @Autowired
+    private ResumeRepository resumeRepository;
     
     //이력서에 해당하는 활동내용 불러내는 코드
     public List<Activity> getactivity(Resume id_resume) {
@@ -58,7 +62,17 @@ public class ActivityService {
         return activity;
     }
     
+    // DB 에 저장된 활동내용을 삭제하는 코드
     public void deleteData(Long id_activity) {
         this.activityRepository.deleteById(id_activity);
+    }
+    
+    // 이력서 삭제 시 사용할 코드
+    public void deleteResume(Long id_resume) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        List<Activity> activitylist = new ArrayList<Activity>();
+        this.activityRepository.findById_Resume(resume).forEach(activitylist::add);
+        this.activityRepository.deleteAll(activitylist);
     }
 }

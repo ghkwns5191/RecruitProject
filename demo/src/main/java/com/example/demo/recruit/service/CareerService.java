@@ -11,12 +11,16 @@ import com.example.demo.recruit.dto.CareerDto;
 import com.example.demo.recruit.entity.Career;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.CareerRepository;
+import com.example.demo.recruit.repository.ResumeRepository;
 
 @Service
 public class CareerService {
 
     @Autowired
     private CareerRepository careerRepository;
+    
+    @Autowired
+    private ResumeRepository resumeRepository;
 
     // 해당 이력서의 경력사항을 불러오는 코드
     public List<Career> getcareer(Resume id_resume) {
@@ -66,5 +70,14 @@ public class CareerService {
     // 경력사항 삭제하는 코드
     public void deleteData(Long id_career) {
         this.careerRepository.deleteById(id_career);
+    }
+    
+    // 이력서 삭제 시 사용할 코드
+    public void deleteResume(Long id_resume) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        List<Career> career = new ArrayList<Career>();
+        this.careerRepository.findById_resume(resume).forEach(career::add);
+        this.careerRepository.deleteAll(career);
     }
 }

@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -56,6 +59,28 @@ public class PortfolioController {
             return new ResponseEntity<>(portfolio, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 포트폴리오 내역을 수정하기 위해 사용
+    @PutMapping
+    public ResponseEntity<Portfolio> reviseData(@PathVariable("id_portfolio") Long id_portfolio, @RequestBody PortfolioDto portfolioDto) {
+        try {
+            Portfolio portfolio = portfolioService.inputData(id_portfolio, portfolioDto);
+            return new ResponseEntity<>(portfolio, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 포트폴리오 내역을 삭제하기 위해 사용
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_portfolio") Long id_portfolio) {
+        try {
+            portfolioService.deleteData(id_portfolio);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

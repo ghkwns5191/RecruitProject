@@ -11,12 +11,16 @@ import com.example.demo.recruit.dto.AcademicDto;
 import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.AcademicRepository;
+import com.example.demo.recruit.repository.ResumeRepository;
 
 @Service
 public class AcademicService {
 
     @Autowired
     public AcademicRepository academicRepository;
+    
+    @Autowired
+    public ResumeRepository resumeRepository;
 
     // 이력서에 해당하는 학력정보를 불러내는 코드
     public List<Academic> getacademic(Resume id_resume) {
@@ -70,6 +74,15 @@ public class AcademicService {
     // DB 에 저장된 학력정보를 삭제하는 코드
     public void deleteData(Long id_academic) {
         this.academicRepository.deleteById(id_academic);
+    }
+    
+    // 이력서 삭제할때 사용할 코드
+    public void deleteResume(Long id_resume) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        List<Academic> academic = new ArrayList<Academic>();
+        this.academicRepository.findById_resume(resume).forEach(academic::add);
+        this.academicRepository.deleteAll(academic);
     }
 
 }

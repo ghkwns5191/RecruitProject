@@ -32,6 +32,7 @@ public class ResumeService {
         return resume;
     }
     
+    // 이력서 정보를 DB 에 저장하는 코드
     public Resume inputData(ResumeDto resumeDto) {
         Resume resume = this.resumeRepository.save(new Resume(
                 resumeDto.getId_member(),
@@ -39,5 +40,21 @@ public class ResumeService {
                 resumeDto.getResume_cv(),
                 resumeDto.getResume_openforheadhunter()));
         return resume;
+    }
+    
+    // DB 에 저장된 이력서 정보를 수정하는 코드
+    public Resume inputData(Long id_resume, ResumeDto resumeDto) {
+        Optional<Resume> resumeData = resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        resume.setResume_photo(resumeDto.getResume_photo());
+        resume.setResume_cv(resumeDto.getResume_cv());
+        resume.setResume_openforheadhunter(resumeDto.getResume_openforheadhunter());
+        this.resumeRepository.save(resume);
+        return resume;
+    }
+    
+    // DB에 저당된 이력서를 삭제하는 코드
+    public void deleteData(Long id_resume) {
+        this.resumeRepository.deleteById(id_resume);
     }
 }

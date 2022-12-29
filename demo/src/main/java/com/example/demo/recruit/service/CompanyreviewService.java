@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.recruit.dto.CompanyreviewDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Companyreview;
+import com.example.demo.recruit.repository.CompanyRepository;
 import com.example.demo.recruit.repository.CompanyreviewRepository;
 
 @Service
@@ -17,11 +18,14 @@ public class CompanyreviewService {
 
     @Autowired
     private CompanyreviewRepository companyreviewRepository;
+    
+    @Autowired
+    private CompanyRepository companyRepository;
 
     // 해당 기업에 대한 기업리뷰를 조회하는 코드
     public List<Companyreview> getcompanyreview(Company id_company) {
         List<Companyreview> companyreview = new ArrayList<Companyreview>();
-        companyreviewRepository.findById_company(id_company).forEach(companyreview::add);
+        this.companyreviewRepository.findById_company(id_company).forEach(companyreview::add);
         return companyreview;
     }
 
@@ -59,5 +63,14 @@ public class CompanyreviewService {
     // DB 에 저장된 기업리뷰를 삭제하는 코드
     public void deleteData(Long id_companyreview) {
         this.companyreviewRepository.deleteById(id_companyreview);
+    }
+    
+    // 기업정보 삭제 시 사용할 코드
+    public void deleteCompany(Long id_company) {
+        Optional<Company> companyData = companyRepository.findById(id_company);
+        Company company = companyData.get();
+        List<Companyreview> companyreview = new ArrayList<Companyreview>();
+        this.companyreviewRepository.findById_company(company).forEach(companyreview::add);
+        this.companyreviewRepository.deleteAll(companyreview);
     }
 }

@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -54,6 +57,28 @@ public class NoticeController {
             return new ResponseEntity<>(notice, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 공지사항을 수정하기 위해 사용
+    @PutMapping
+    public ResponseEntity<Notice> reviseData(@PathVariable("id_notice") Long id_notice, @RequestBody NoticeDto noticeDto) {
+        try {
+            Notice notice = noticeService.inputData(id_notice, noticeDto);
+            return new ResponseEntity<>(notice, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    // 공지사항을 삭제하기 위해 사용
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_notice") Long id_notice) {
+        try {
+            noticeService.deleteData(id_notice);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -11,12 +11,16 @@ import com.example.demo.recruit.dto.EducationDto;
 import com.example.demo.recruit.entity.Education;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.EducationRepository;
+import com.example.demo.recruit.repository.ResumeRepository;
 
 @Service
 public class EducationService {
 
     @Autowired
     private EducationRepository educationRepository;
+    
+    @Autowired
+    private ResumeRepository resumeRepository;
 
     // 해당 이력서 조회 시 교육내용을 함께 조회하기 위한 코드
     public List<Education> geteducation(Resume id_resume) {
@@ -60,5 +64,14 @@ public class EducationService {
     // DB 에 저장된 교육내용을 삭제하는 코드
     public void deleteData(Long id_education) {
         this.educationRepository.deleteById(id_education);
+    }
+    
+    // 이력서 삭제 시 사용할 코드
+    public void deleteResume(Long id_resume) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        List<Education> education = new ArrayList<Education>();
+        this.educationRepository.findById_resume(resume).forEach(education::add);
+        this.educationRepository.deleteAll(education);
     }
 }

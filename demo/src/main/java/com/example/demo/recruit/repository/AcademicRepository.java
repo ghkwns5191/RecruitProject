@@ -11,4 +11,6 @@ public interface AcademicRepository extends JpaRepository<Academic, Long> {
 
     List<Academic> findById_resume(Resume id_resume);
 
+    void deleteById_resume(Resume id_resume);
+
 }

@@ -11,12 +11,16 @@ import com.example.demo.recruit.dto.LanguagesDto;
 import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.LanguagesRepository;
+import com.example.demo.recruit.repository.ResumeRepository;
 
 @Service
 public class LanguagesService {
 
     @Autowired
     private LanguagesRepository languagesRepository;
+    
+    @Autowired
+    private ResumeRepository resumeRepository;
 
     // 이력서 조회 시 어학사항 함께 조회하는 코드
     public List<Languages> getlanguages(Resume id_resume) {
@@ -43,5 +47,33 @@ public class LanguagesService {
                 languagesDto.getLanguages_achievedate(),
                 languagesDto.getLanguages_certificatenumber()));
         return languages;
+    }
+    
+    // DB 에 저장된 어학사항을 수정하는 코드
+    public Languages inputData(Long id_languages, LanguagesDto languagesDto) {
+        Optional<Languages> languagesData = this.languagesRepository.findById(id_languages);
+        Languages languages = languagesData.get();
+        languages.setLanguages_leveltalking(languagesDto.getLanguages_leveltalking());
+        languages.setLanguages_levelwriting(languagesDto.getLanguages_levelwriting());
+        languages.setLanguages_test(languagesDto.getLanguages_test());
+        languages.setLanguages_score(languagesDto.getLanguages_score());
+        languages.setLanguages_achievedate(languagesDto.getLanguages_achievedate());
+        languages.setLanguages_certificatenumber(languagesDto.getLanguages_certificatenumber());
+        this.languagesRepository.save(languages);
+        return languages;
+    }
+    
+    // DB 에 저장된 어학사항을 삭제하는 코드
+    public void deleteData(Long id_languages) {
+        this.languagesRepository.deleteById(id_languages);
+    }
+    
+    // 이력서 삭제 시 사용할 코드
+    public void deleteResume(Long id_resume) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        List<Languages> languages = new ArrayList<Languages>();
+        this.languagesRepository.findById_resume(resume).forEach(languages::add);
+        this.languagesRepository.deleteAll(languages);
     }
 }

@@ -18,12 +18,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.recruit.dto.CompanyDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.service.CompanyService;
+import com.example.demo.recruit.service.CompanyreviewService;
 
 @Controller
 public class CompanyController {
 
     @Autowired
     private CompanyService companyService;
+    
+    @Autowired
+    private CompanyreviewService companyreviewService;
 
     // 모든 기업 리스트를 조회하기 위해 사용
     @GetMapping
@@ -77,6 +81,7 @@ public class CompanyController {
     @DeleteMapping
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_company") Long id_company) {
         try {
+            companyreviewService.deleteCompany(id_company);
             companyService.deleteData(id_company);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

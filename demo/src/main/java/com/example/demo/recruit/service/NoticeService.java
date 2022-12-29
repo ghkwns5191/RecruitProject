@@ -45,5 +45,22 @@ public class NoticeService {
                 null));
         return notice;
     }
+    
+    // DB 에 저장된 공지사항을 수정하는 코드
+    public Notice inputData(Long id_notice, NoticeDto noticeDto) {
+        Optional<Notice> noticeData = this.noticeRepository.findById(id_notice);
+        Notice notice = noticeData.get();
+        notice.setNotice_title(noticeDto.getNotice_title());
+        notice.setNotice_detail(noticeDto.getNotice_detail());
+        notice.setNotice_registerdate(noticeDto.getNotice_registerdate());
+        notice.setNotice_modifydate(LocalDate.now());
+        this.noticeRepository.save(notice);
+        return notice;
+    }
+    
+    // DB 에 저장된 공지사항을 삭제하는 코드
+    public void deleteData(Long id_notice) {
+        this.noticeRepository.deleteById(id_notice);
+    }
 
 }

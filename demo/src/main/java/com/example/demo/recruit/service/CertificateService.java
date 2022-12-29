@@ -11,12 +11,16 @@ import com.example.demo.recruit.dto.CertificateDto;
 import com.example.demo.recruit.entity.Certificate;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.CertificateRepository;
+import com.example.demo.recruit.repository.ResumeRepository;
 
 @Service
 public class CertificateService {
 
     @Autowired
     private CertificateRepository certificateRepository;
+    
+    @Autowired
+    private ResumeRepository resumeRepository;
 
     // 해당 이력서의 자격증 내역을 조회하는 코드
     public List<Certificate> getcertificate(Resume id_resume) {
@@ -60,5 +64,14 @@ public class CertificateService {
     // 자격증 내역을 삭제하는 코드
     public void deleteData(Long id_certificate) {
         this.certificateRepository.deleteById(id_certificate);
+    }
+    
+    // 이력서 삭제 시 사용할 코드
+    public void deleteResume(Long id_resume) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+        Resume resume = resumeData.get();
+        List<Certificate> certificate = new ArrayList<Certificate>();
+        this.certificateRepository.findById_resume(resume).forEach(certificate::add);
+        this.certificateRepository.deleteAll(certificate);
     }
 }
