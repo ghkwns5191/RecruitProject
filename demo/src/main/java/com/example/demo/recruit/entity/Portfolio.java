@@ -21,46 +21,43 @@ public class Portfolio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_portfolio")
-    public Long id_portfolio; // 포트폴리오 고유값
-    
+    @Column(name = "id")
+    public Long id; // 포트폴리오 고유값
+
     @ManyToOne
     @JoinColumn(name = "resume")
     @NotNull
     public Resume resume; // 이력서 고유값(Foreign key)
-    
-    @Column(length = 200, name = "portfolio_title")
+
+    @Column(length = 200, name = "title")
     @NotNull
-    public String portfolio_title; // 포트폴리오 제목
-    
-    @Column(length = 2000, name = "portfolio_file1")
-    public String portfolio_file1; // 포트폴리오 파일1
-    
-    @Column(length = 2000, name = "portfolio_file2")
-    public String portfolio_file2; // 포트폴리오 파일2
-    
-    @Column(length = 200, name = "portfolio_url1")
-    public String portfolio_url1; // 포트폴리오 링크1
-    
-    @Column(length = 200, name = "portfolio_url2")
-    public String portfolio_url2; // 포트폴리오 링크2
-    
+    public String title; // 포트폴리오 제목
+
+    @Column(length = 2000, name = "file1")
+    public String file1; // 포트폴리오 파일1
+
+    @Column(length = 2000, name = "file2")
+    public String file2; // 포트폴리오 파일2
+
+    @Column(length = 200, name = "url1")
+    public String url1; // 포트폴리오 링크1
+
+    @Column(length = 200, name = "url2")
+    public String url2; // 포트폴리오 링크2
+
     public Portfolio() {
-        
+
     }
 
-    public Portfolio(Resume resume, String portfolio_title, String portfolio_file1, String portfolio_file2,
-            String portfolio_url1, String portfolio_url2) {
-        
+    public Portfolio(@NotNull Resume resume, @NotNull String title, String file1, String file2, String url1,
+            String url2) {
+
         this.resume = resume;
-        this.portfolio_title = portfolio_title;
-        this.portfolio_file1 = portfolio_file1;
-        this.portfolio_file2 = portfolio_file2;
-        this.portfolio_url1 = portfolio_url1;
-        this.portfolio_url2 = portfolio_url2;
+        this.title = title;
+        this.file1 = file1;
+        this.file2 = file2;
+        this.url1 = url1;
+        this.url2 = url2;
     }
 
-    
-    
-    
 }

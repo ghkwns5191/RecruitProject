@@ -3,7 +3,7 @@
 <jsp-config>
     <taglib>
          <taglib-uri>http://java.sum.com/jsp/jstl/core</taglib-uri>
-         <taglib-location>/WEB-INF/lib/jstl-1.2.jar</taglib-location>
+         <taglib-location>/WEB-INF/view/lib/jstl-1.2.jar</taglib-location>
     </taglib>
     
 </jsp-config>

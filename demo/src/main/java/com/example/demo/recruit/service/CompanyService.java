@@ -12,11 +12,14 @@ import com.example.demo.recruit.dto.CompanyDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.repository.CompanyRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CompanyService {
 
     @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     // 전체 회사 리스트를 조회하는 코드
     public List<Company> getcompany() {
@@ -26,8 +29,8 @@ public class CompanyService {
     }
     
     // 해당 회사 정보만 조회하는 코드
-    public Company getcompany(Long id_company) {
-        Optional<Company> companyData = companyRepository.findById(id_company);
+    public Company getcompany(Long id) {
+        Optional<Company> companyData = companyRepository.findById(id);
         Company company = companyData.get();
         return company;
     }
@@ -36,32 +39,36 @@ public class CompanyService {
     public Company inputData(CompanyDto companyDto) {
         Company company = this.companyRepository.save(new Company(
                 companyDto.getMember(), 
-                companyDto.getCompany_name(), 
-                companyDto.getCompany_type(), 
-                companyDto.getCompany_address(), 
-                companyDto.getCompany_phone(), 
-                companyDto.getCompany_pp20number(), 
-                companyDto.getCompany_numberofstaff(), 
+                companyDto.getName(), 
+                companyDto.getType(), 
+                companyDto.getAddress(), 
+                companyDto.getPhone(), 
+                companyDto.getPp20number(), 
+                companyDto.getNumberofstaff(), 
                 LocalDate.now()));
         return company;
     }
     
     // DB 에 저장된 기업정보를 불러내어 수정 및 다시 저장하는 코드
-    public Company inputData(Long id_company, CompanyDto companyDto) {
-        Optional<Company> companyData = this.companyRepository.findById(id_company);
+    public Company inputData(Long id, CompanyDto companyDto) {
+        Optional<Company> companyData = this.companyRepository.findById(id);
         Company company = companyData.get();
-        company.setCompany_type(companyDto.getCompany_type());
-        company.setCompany_address(companyDto.getCompany_address());
-        company.setCompany_phone(companyDto.getCompany_phone());
-        company.setCompany_pp20number(companyDto.getCompany_pp20number());
-        company.setCompany_numberofstaff(companyDto.getCompany_numberofstaff());
-        company.setCompany_modifydate(LocalDate.now());
+        company.setType(companyDto.getType());
+        company.setAddress(companyDto.getAddress());
+        company.setPhone(companyDto.getPhone());
+        company.setPp20number(companyDto.getPp20number());
+        company.setNumberofstaff(companyDto.getNumberofstaff());
+        company.setModifydate(LocalDate.now());
         this.companyRepository.save(company);
         return company;
     }
     
     // DB 에 저장된 기업 정보를 삭제하는 코드
-    public void deleteData(Long id_company) {
-        this.companyRepository.deleteById(id_company);
+    public void deleteData(Long id) {
+        this.companyRepository.deleteById(id);
     }
+
+    
+    
+    
 }

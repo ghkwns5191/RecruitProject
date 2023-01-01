@@ -13,48 +13,44 @@ public class RecruitDto {
 
     public Member member; // 회원 고유값(Foreign key)
 
-    public String recruit_title;// 제목
+    public String title;// 제목
 
-    public String recruit_writer;// 작성자
+    public String writer;// 작성자
 
-    public LocalDate recruit_registerdate;// 작성일
+    public LocalDate registerdate;// 작성일
 
-    public LocalDate recruit_modifydate;// 수정일
+    public LocalDate modifydate;// 수정일
 
-    public String recruit_career;// 경력여부
+    public String career;// 경력여부
 
-    public String recruit_salary;// 연봉 or 월급
+    public String salary;// 연봉 or 월급
 
-    public String recruit_workingdays;// 근무일자 ==> 월~금, 월~토, 기타
+    public String workingdays;// 근무일자 ==> 월~금, 월~토, 기타
 
-    public String recruit_detail;// 상세내용
+    public String detail;// 상세내용
 
-    public String recruit_phonenumber; // 공고 연락처
+    public String phonenumber; // 공고 연락처
 
-    public String recruit_attn; // 채용공고 담당자
-    
+    public String attn; // 채용공고 담당자
+
     public RecruitDto() {
-        
+
     }
 
-    public RecruitDto(Member member, String recruit_title, String recruit_writer, LocalDate recruit_registerdate,
-            LocalDate recruit_modifydate, String recruit_career, String recruit_salary, String recruit_workingdays,
-            String recruit_detail, String recruit_phonenumber, String recruit_attn) {
-        
+    public RecruitDto(Member member, String title, String writer, LocalDate registerdate, LocalDate modifydate,
+            String career, String salary, String workingdays, String detail, String phonenumber, String attn) {
+
         this.member = member;
-        this.recruit_title = recruit_title;
-        this.recruit_writer = recruit_writer;
-        this.recruit_registerdate = recruit_registerdate;
-        this.recruit_modifydate = recruit_modifydate;
-        this.recruit_career = recruit_career;
-        this.recruit_salary = recruit_salary;
-        this.recruit_workingdays = recruit_workingdays;
-        this.recruit_detail = recruit_detail;
-        this.recruit_phonenumber = recruit_phonenumber;
-        this.recruit_attn = recruit_attn;
+        this.title = title;
+        this.writer = writer;
+        this.registerdate = registerdate;
+        this.modifydate = modifydate;
+        this.career = career;
+        this.salary = salary;
+        this.workingdays = workingdays;
+        this.detail = detail;
+        this.phonenumber = phonenumber;
+        this.attn = attn;
     }
 
-    
-    
-    
 }

@@ -71,7 +71,7 @@ public class ResumeController {
     }
     
     // 해당 이력서 정보를 조회하기 위해 사용
-    @GetMapping("/resume/detail")
+    @GetMapping("/resume/detail/{id_resume}")
     public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id_resume) {
         try {
             Resume resume = new Resume();

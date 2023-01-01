@@ -16,21 +16,17 @@ public class ApplyDto {
 
     public Recruit recruit; // 채용공고 고유값(Foreign key)
 
-    public LocalDate apply_applydate; // 지원날짜
+    public LocalDate applydate; // 지원날짜
 
     public ApplyDto() {
 
     }
 
-    public ApplyDto(Member member, Recruit recruit, LocalDate apply_applydate) {
-        
+    public ApplyDto(Member member, Recruit recruit, LocalDate applydate) {
+
         this.member = member;
         this.recruit = recruit;
-        this.apply_applydate = apply_applydate;
+        this.applydate = applydate;
     }
-
-    
-
-    
 
 }

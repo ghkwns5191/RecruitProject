@@ -12,11 +12,14 @@ import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ResumeService {
 
     @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
     
     // 회원의 이력서 정보를 불러오는 코드
     public List<Resume> getResume(Member member) {
@@ -26,8 +29,8 @@ public class ResumeService {
     }
 
     // 해당 이력서 정보를 불러오는 코드
-    public Resume getResume(Long id_resume) {
-        Optional<Resume> resumeData = resumeRepository.findById(id_resume);
+    public Resume getResume(Long id) {
+        Optional<Resume> resumeData = resumeRepository.findById(id);
         Resume resume = resumeData.get();
         return resume;
     }
@@ -36,25 +39,25 @@ public class ResumeService {
     public Resume inputData(ResumeDto resumeDto) {
         Resume resume = this.resumeRepository.save(new Resume(
                 resumeDto.getMember(),
-                resumeDto.getResume_photo(),
-                resumeDto.getResume_cv(),
-                resumeDto.getResume_openforheadhunter()));
+                resumeDto.getPhoto(),
+                resumeDto.getCv(),
+                resumeDto.getOpenforheadhunter()));
         return resume;
     }
     
     // DB 에 저장된 이력서 정보를 수정하는 코드
-    public Resume inputData(Long id_resume, ResumeDto resumeDto) {
-        Optional<Resume> resumeData = resumeRepository.findById(id_resume);
+    public Resume inputData(Long id, ResumeDto resumeDto) {
+        Optional<Resume> resumeData = resumeRepository.findById(id);
         Resume resume = resumeData.get();
-        resume.setResume_photo(resumeDto.getResume_photo());
-        resume.setResume_cv(resumeDto.getResume_cv());
-        resume.setResume_openforheadhunter(resumeDto.getResume_openforheadhunter());
+        resume.setPhoto(resumeDto.getPhoto());
+        resume.setCv(resumeDto.getCv());
+        resume.setOpenforheadhunter(resumeDto.getOpenforheadhunter());
         this.resumeRepository.save(resume);
         return resume;
     }
     
     // DB에 저당된 이력서를 삭제하는 코드
-    public void deleteData(Long id_resume) {
-        this.resumeRepository.deleteById(id_resume);
+    public void deleteData(Long id) {
+        this.resumeRepository.deleteById(id);
     }
 }

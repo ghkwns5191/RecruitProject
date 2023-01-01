@@ -13,11 +13,14 @@ import com.example.demo.recruit.dto.NoticeDto;
 import com.example.demo.recruit.entity.Notice;
 import com.example.demo.recruit.repository.NoticeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class NoticeService {
 
     @Autowired
-    private NoticeRepository noticeRepository;
+    private final NoticeRepository noticeRepository;
 
     // 공지사항의 모든 리스트를 불러오는 코드
     @GetMapping
@@ -29,8 +32,8 @@ public class NoticeService {
 
     // 해당 공지사항의 상세 내용을 불러오는 코드
     @GetMapping
-    public Notice getNotice(Long id_notice) {
-        Optional<Notice> noticeData = noticeRepository.findById(id_notice);
+    public Notice getNotice(Long id) {
+        Optional<Notice> noticeData = noticeRepository.findById(id);
         Notice notice = noticeData.get();
         return notice;
     }
@@ -39,28 +42,28 @@ public class NoticeService {
     public Notice inputData(NoticeDto noticeDto) {
         Notice notice = this.noticeRepository.save(new Notice(
                 noticeDto.getMember(),
-                noticeDto.getNotice_title(),
-                noticeDto.getNotice_detail(),
+                noticeDto.getTitle(),
+                noticeDto.getDetail(),
                 LocalDate.now(),
                 null));
         return notice;
     }
     
     // DB 에 저장된 공지사항을 수정하는 코드
-    public Notice inputData(Long id_notice, NoticeDto noticeDto) {
-        Optional<Notice> noticeData = this.noticeRepository.findById(id_notice);
+    public Notice inputData(Long id, NoticeDto noticeDto) {
+        Optional<Notice> noticeData = this.noticeRepository.findById(id);
         Notice notice = noticeData.get();
-        notice.setNotice_title(noticeDto.getNotice_title());
-        notice.setNotice_detail(noticeDto.getNotice_detail());
-        notice.setNotice_registerdate(noticeDto.getNotice_registerdate());
-        notice.setNotice_modifydate(LocalDate.now());
+        notice.setTitle(noticeDto.getTitle());
+        notice.setDetail(noticeDto.getDetail());
+        notice.setRegisterdate(noticeDto.getRegisterdate());
+        notice.setModifydate(LocalDate.now());
         this.noticeRepository.save(notice);
         return notice;
     }
     
     // DB 에 저장된 공지사항을 삭제하는 코드
-    public void deleteData(Long id_notice) {
-        this.noticeRepository.deleteById(id_notice);
+    public void deleteData(Long id) {
+        this.noticeRepository.deleteById(id);
     }
 
 }

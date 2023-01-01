@@ -13,14 +13,17 @@ import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.AcademicRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AcademicService {
 
     @Autowired
-    public AcademicRepository academicRepository;
+    private final AcademicRepository academicRepository;
     
     @Autowired
-    public ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
 
     // 이력서에 해당하는 학력정보를 불러내는 코드
     public List<Academic> getacademic(Resume id_resume) {
@@ -41,44 +44,44 @@ public class AcademicService {
     public Academic inputData(AcademicDto academicDto) {
         Academic academic = this.academicRepository.save(new Academic(
                 academicDto.getResume(),
-                academicDto.getAcademic_start(),
-                academicDto.getAcademic_end(),
-                academicDto.getAcademic_studying(),
-                academicDto.getAcademic_type(),
-                academicDto.getAcademic_name(),
-                academicDto.getAcademic_major(),
-                academicDto.getAcademic_grade(),
-                academicDto.getAcademic_gradefull(),
-                academicDto.getAcademic_detail()));
+                academicDto.getStart(),
+                academicDto.getEnd(),
+                academicDto.getStudying(),
+                academicDto.getType(),
+                academicDto.getName(),
+                academicDto.getMajor(),
+                academicDto.getGrade(),
+                academicDto.getGradefull(),
+                academicDto.getDetail()));
         return academic;
     }
 
     // DB 학력정보를 불러와서 수정 후 DB 에 다시 저장하는 코드
-    public Academic inputData(Long id_academic, AcademicDto academicDto) {
-        Optional<Academic> academicData = this.academicRepository.findById(id_academic);
+    public Academic inputData(Long id, AcademicDto academicDto) {
+        Optional<Academic> academicData = this.academicRepository.findById(id);
         Academic academic = academicData.get();
-        academic.setAcademic_start(academicDto.getAcademic_start());
-        academic.setAcademic_end(academicDto.getAcademic_end());
-        academic.setAcademic_studying(academicDto.getAcademic_studying());
-        academic.setAcademic_type(academicDto.getAcademic_type());
-        academic.setAcademic_name(academicDto.getAcademic_name());
-        academic.setAcademic_major(academicDto.getAcademic_major());
-        academic.setAcademic_grade(academicDto.getAcademic_grade());
-        academic.setAcademic_gradefull(academicDto.getAcademic_gradefull());
-        academic.setAcademic_detail(academicDto.getAcademic_detail());
+        academic.setStart(academicDto.getStart());
+        academic.setEnd(academicDto.getEnd());
+        academic.setStudying(academicDto.getStudying());
+        academic.setType(academicDto.getType());
+        academic.setName(academicDto.getName());
+        academic.setMajor(academicDto.getMajor());
+        academic.setGrade(academicDto.getGrade());
+        academic.setGradefull(academicDto.getGradefull());
+        academic.setDetail(academicDto.getDetail());
         this.academicRepository.save(academic);
         return academic;
 
     }
     
     // DB 에 저장된 학력정보를 삭제하는 코드
-    public void deleteData(Long id_academic) {
-        this.academicRepository.deleteById(id_academic);
+    public void deleteData(Long id) {
+        this.academicRepository.deleteById(id);
     }
     
     // 이력서 삭제할때 사용할 코드
-    public void deleteResume(Long id_resume) {
-        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+    public void deleteResume(Long id) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id);
         Resume resume = resumeData.get();
         List<Academic> academic = new ArrayList<Academic>();
         this.academicRepository.findByResume(resume).forEach(academic::add);

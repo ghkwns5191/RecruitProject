@@ -23,36 +23,31 @@ public class Apply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_apply")
-    public Long id_apply; // 지원 고유값
-    
+    @Column(name = "id")
+    public Long id; // 지원 고유값
+
     @ManyToOne
     @JoinColumn(name = "member")
     @NotNull
     public Member member; // 회원 고유값(Foreign key)
-    
+
     @ManyToOne
     @JoinColumn(name = "recruit")
     @NotNull
     public Recruit recruit; // 채용공고 고유값(Foreign key)
-    
-    @Column(name = "apply_applydate")
-    public LocalDate apply_applydate; // 지원날짜
-    
+
+    @Column(name = "applydate")
+    public LocalDate applydate; // 지원날짜
+
     public Apply() {
-        
+
     }
 
-    public Apply(@NotNull Member member, @NotNull Recruit recruit, LocalDate apply_applydate) {
-        
+    public Apply(@NotNull Member member, @NotNull Recruit recruit, LocalDate applydate) {
+
         this.member = member;
         this.recruit = recruit;
-        this.apply_applydate = apply_applydate;
+        this.applydate = applydate;
     }
 
-    
-
-    
-    
-    
 }

@@ -11,24 +11,22 @@ public class ResumeDto {
 
     public Member member; // 회원 고유값(Foreign key)
 
-    public String resume_photo;// 이력서 사진
+    public String photo;// 이력서 사진
 
-    public String resume_cv;// 이력서 자기소개서
+    public String cv;// 이력서 자기소개서
 
-    public String resume_openforheadhunter;// 이력서 공개여부
+    public String openforheadhunter;// 이력서 공개여부
 
     public ResumeDto() {
 
     }
 
-    public ResumeDto(Member member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
-       
-        this.member = member;
-        this.resume_photo = resume_photo;
-        this.resume_cv = resume_cv;
-        this.resume_openforheadhunter = resume_openforheadhunter;
-    }
+    public ResumeDto(Member member, String photo, String cv, String openforheadhunter) {
 
-    
+        this.member = member;
+        this.photo = photo;
+        this.cv = cv;
+        this.openforheadhunter = openforheadhunter;
+    }
 
 }

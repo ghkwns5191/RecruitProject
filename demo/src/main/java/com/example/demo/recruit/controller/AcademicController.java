@@ -20,11 +20,14 @@ import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.AcademicService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class AcademicController {
 
     @Autowired
-    public AcademicService academicService;
+    public final AcademicService academicService;
 
     //이력서 조회 시 학력정보를 함께 조회하기 위해 사용
     @GetMapping("/academic/list")

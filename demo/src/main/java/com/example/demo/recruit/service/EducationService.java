@@ -13,14 +13,17 @@ import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.EducationRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class EducationService {
 
     @Autowired
-    private EducationRepository educationRepository;
+    private final EducationRepository educationRepository;
     
     @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
 
     // 해당 이력서 조회 시 교육내용을 함께 조회하기 위한 코드
     public List<Education> geteducation(Resume resume) {
@@ -30,8 +33,8 @@ public class EducationService {
     }
 
     // 해당 교육내용만 조회하는 코드
-    public Education geteducation(Long id_education) {
-        Optional<Education> educationData = educationRepository.findById(id_education);
+    public Education geteducation(Long id) {
+        Optional<Education> educationData = educationRepository.findById(id);
         Education education = educationData.get();
         return education;
     }
@@ -40,35 +43,35 @@ public class EducationService {
     public Education inputData(EducationDto educationDto) {
         Education education = this.educationRepository.save(new Education(
                 educationDto.getResume(),
-                educationDto.getEducation_start(),
-                educationDto.getEducation_end(),
-                educationDto.getEducation_title(),
-                educationDto.getEducation_holdby(),
-                educationDto.getEducation_detail()));
+                educationDto.getStart(),
+                educationDto.getEnd(),
+                educationDto.getTitle(),
+                educationDto.getHoldby(),
+                educationDto.getDetail()));
         return education;
     }
     
     // DB 에 저장된 교육내용을 수정하는 코드
-    public Education inputData(Long id_education, EducationDto educationDto) {
-        Optional<Education> educationData = this.educationRepository.findById(id_education);
+    public Education inputData(Long id, EducationDto educationDto) {
+        Optional<Education> educationData = this.educationRepository.findById(id);
         Education education = educationData.get();
-        education.setEducation_start(educationDto.getEducation_start());
-        education.setEducation_end(educationDto.getEducation_end());
-        education.setEducation_title(educationDto.getEducation_title());
-        education.setEducation_holdby(educationDto.getEducation_holdby());
-        education.setEducation_detail(educationDto.getEducation_detail());
+        education.setStart(educationDto.getStart());
+        education.setEnd(educationDto.getEnd());
+        education.setTitle(educationDto.getTitle());
+        education.setHoldby(educationDto.getHoldby());
+        education.setDetail(educationDto.getDetail());
         this.educationRepository.save(education);
         return education;
     }
     
     // DB 에 저장된 교육내용을 삭제하는 코드
-    public void deleteData(Long id_education) {
-        this.educationRepository.deleteById(id_education);
+    public void deleteData(Long id) {
+        this.educationRepository.deleteById(id);
     }
     
     // 이력서 삭제 시 사용할 코드
-    public void deleteResume(Long id_resume) {
-        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+    public void deleteResume(Long id) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id);
         Resume resume = resumeData.get();
         List<Education> education = new ArrayList<Education>();
         this.educationRepository.findByResume(resume).forEach(education::add);

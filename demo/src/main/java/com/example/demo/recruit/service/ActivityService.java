@@ -13,14 +13,17 @@ import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.ActivityRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ActivityService {
 
     @Autowired
-    private ActivityRepository activityRepository;
+    private final ActivityRepository activityRepository;
     
     @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
     
     //이력서에 해당하는 활동내용 불러내는 코드
     public List<Activity> getactivity(Resume resume) {
@@ -41,11 +44,11 @@ public class ActivityService {
     public Activity inputData(ActivityDto activityDto) {
         Activity activity = this.activityRepository.save(new Activity(
                 activityDto.getResume(),
-                activityDto.getActivity_start(),
-                activityDto.getActivity_end(),
-                activityDto.getActivity_title(),
-                activityDto.getActivity_holdby(),
-                activityDto.getActivity_detail()));
+                activityDto.getStart(),
+                activityDto.getEnd(),
+                activityDto.getTitle(),
+                activityDto.getHoldby(),
+                activityDto.getDetail()));
         return activity;
     }
     
@@ -53,23 +56,23 @@ public class ActivityService {
     public Activity inputData(Long id_activity, ActivityDto activityDto) {
         Optional<Activity> activityData = this.activityRepository.findById(id_activity);
         Activity activity = activityData.get();
-        activity.setActivity_start(activityDto.getActivity_start());
-        activity.setActivity_end(activityDto.getActivity_end());
-        activity.setActivity_title(activityDto.getActivity_title());
-        activity.setActivity_holdby(activityDto.getActivity_holdby());
-        activity.setActivity_detail(activityDto.getActivity_detail());
+        activity.setStart(activityDto.getStart());
+        activity.setEnd(activityDto.getEnd());
+        activity.setTitle(activityDto.getTitle());
+        activity.setHoldby(activityDto.getHoldby());
+        activity.setDetail(activityDto.getDetail());
         this.activityRepository.save(activity);
         return activity;
     }
     
     // DB 에 저장된 활동내용을 삭제하는 코드
-    public void deleteData(Long id_activity) {
-        this.activityRepository.deleteById(id_activity);
+    public void deleteData(Long id) {
+        this.activityRepository.deleteById(id);
     }
     
     // 이력서 삭제 시 사용할 코드
-    public void deleteResume(Long id_resume) {
-        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+    public void deleteResume(Long id) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id);
         Resume resume = resumeData.get();
         List<Activity> activitylist = new ArrayList<Activity>();
         this.activityRepository.findByResume(resume).forEach(activitylist::add);

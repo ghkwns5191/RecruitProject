@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.repository.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
     @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public List<Member> getMember() {
         List<Member> member = new ArrayList<Member>();
@@ -22,8 +25,8 @@ public class MemberService {
         return member;
     }
 
-    public Member getMember(Long id_member) {
-        Optional<Member> memberData = memberRepository.findById(id_member);
+    public Member getMember(Long id) {
+        Optional<Member> memberData = memberRepository.findById(id);
         Member member = memberData.get();
         return member;
     }

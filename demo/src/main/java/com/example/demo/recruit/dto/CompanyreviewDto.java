@@ -14,30 +14,27 @@ public class CompanyreviewDto {
 
     public Member member; // 회원 고유값(Foreign key)
 
-    public String companyreview_strength; // 기업리뷰 장점
+    public String strength; // 기업리뷰 장점
 
-    public String companyreview_weakness; // 기업리뷰 단점
+    public String weakness; // 기업리뷰 단점
 
-    public String companyreview_reviewdetail; // 기업리뷰 총평
+    public String reviewdetail; // 기업리뷰 총평
 
-    public Double companyreview_score; // 기업리뷰 평점
-    
+    public Double score; // 기업리뷰 평점
+
     public CompanyreviewDto() {
-        
+
     }
 
-    public CompanyreviewDto(Company company, Member member, String companyreview_strength,
-            String companyreview_weakness, String companyreview_reviewdetail, Double companyreview_score) {
-        super();
+    public CompanyreviewDto(Company company, Member member, String strength, String weakness, String reviewdetail,
+            Double score) {
+
         this.company = company;
         this.member = member;
-        this.companyreview_strength = companyreview_strength;
-        this.companyreview_weakness = companyreview_weakness;
-        this.companyreview_reviewdetail = companyreview_reviewdetail;
-        this.companyreview_score = companyreview_score;
+        this.strength = strength;
+        this.weakness = weakness;
+        this.reviewdetail = reviewdetail;
+        this.score = score;
     }
 
-    
-    
-    
 }

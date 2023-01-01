@@ -13,14 +13,17 @@ import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.CareerRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CareerService {
 
     @Autowired
-    private CareerRepository careerRepository;
+    private final CareerRepository careerRepository;
     
     @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
 
     // 해당 이력서의 경력사항을 불러오는 코드
     public List<Career> getcareer(Resume resume) {
@@ -30,8 +33,8 @@ public class CareerService {
     }
 
     // 해당 경력사항만 불러오는 코드
-    public Career getcareer(Long id_career) {
-        Optional<Career> careerData = this.careerRepository.findById(id_career);
+    public Career getcareer(Long id) {
+        Optional<Career> careerData = this.careerRepository.findById(id);
         Career career = careerData.get();
         return career;
     }
@@ -40,41 +43,41 @@ public class CareerService {
     public Career inputData(CareerDto careerDto) {
         Career career = this.careerRepository.save(new Career(
                 careerDto.getResume(), 
-                careerDto.getCareer_start(), 
-                careerDto.getCareer_end(), 
-                careerDto.getCareer_working(), 
-                careerDto.getCareer_companyname(), 
-                careerDto.getCareer_rank(), 
-                careerDto.getCareer_salary(), 
-                careerDto.getCareer_jobduty(), 
-                careerDto.getCareer_detail()));
+                careerDto.getStart(), 
+                careerDto.getEnd(), 
+                careerDto.getWorking(), 
+                careerDto.getCompanyname(), 
+                careerDto.getRank(), 
+                careerDto.getSalary(), 
+                careerDto.getJobduty(), 
+                careerDto.getDetail()));
         return career;
     }
     
     // 경력사항을 수정하여 DB 에 저장하는 코드
-    public Career inputData(Long id_career, CareerDto careerDto) {
-        Optional<Career> careerData = this.careerRepository.findById(id_career);
+    public Career inputData(Long id, CareerDto careerDto) {
+        Optional<Career> careerData = this.careerRepository.findById(id);
         Career career = careerData.get();
-        career.setCareer_start(careerDto.getCareer_start());
-        career.setCareer_end(careerDto.getCareer_end());
-        career.setCareer_working(careerDto.getCareer_working());
-        career.setCareer_companyname(careerDto.getCareer_companyname());
-        career.setCareer_rank(careerDto.getCareer_rank());
-        career.setCareer_salary(careerDto.getCareer_salary());
-        career.setCareer_jobduty(careerDto.getCareer_jobduty());
-        career.setCareer_detail(careerDto.getCareer_detail());
+        career.setStart(careerDto.getStart());
+        career.setEnd(careerDto.getEnd());
+        career.setWorking(careerDto.getWorking());
+        career.setCompanyname(careerDto.getCompanyname());
+        career.setRank(careerDto.getRank());
+        career.setSalary(careerDto.getSalary());
+        career.setJobduty(careerDto.getJobduty());
+        career.setDetail(careerDto.getDetail());
         this.careerRepository.save(career);
         return career;
     }
     
     // 경력사항 삭제하는 코드
-    public void deleteData(Long id_career) {
-        this.careerRepository.deleteById(id_career);
+    public void deleteData(Long id) {
+        this.careerRepository.deleteById(id);
     }
     
     // 이력서 삭제 시 사용할 코드
-    public void deleteResume(Long id_resume) {
-        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+    public void deleteResume(Long id) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id);
         Resume resume = resumeData.get();
         List<Career> career = new ArrayList<Career>();
         this.careerRepository.findByResume(resume).forEach(career::add);

@@ -13,32 +13,28 @@ public class EducationDto {
 
     public Resume resume; // 이력서 고유값(Foreign key)
 
-    public LocalDate education_start; // 교육 시작일
+    public LocalDate start; // 교육 시작일
 
-    public LocalDate education_end; // 교육 종료일
+    public LocalDate end; // 교육 종료일
 
-    public String education_title; // 수료 교육명
+    public String title; // 수료 교육명
 
-    public String education_holdby; // 교육기관명
+    public String holdby; // 교육기관명
 
-    public String education_detail; // 상세 교육내용
-    
+    public String detail; // 상세 교육내용
+
     public EducationDto() {
-        
+
     }
 
-    public EducationDto(Resume resume, LocalDate education_start, LocalDate education_end, String education_title,
-            String education_holdby, String education_detail) {
-        
+    public EducationDto(Resume resume, LocalDate start, LocalDate end, String title, String holdby, String detail) {
+        super();
         this.resume = resume;
-        this.education_start = education_start;
-        this.education_end = education_end;
-        this.education_title = education_title;
-        this.education_holdby = education_holdby;
-        this.education_detail = education_detail;
+        this.start = start;
+        this.end = end;
+        this.title = title;
+        this.holdby = holdby;
+        this.detail = detail;
     }
 
-    
-    
-    
 }

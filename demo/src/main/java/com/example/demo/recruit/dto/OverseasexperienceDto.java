@@ -13,31 +13,29 @@ public class OverseasexperienceDto {
 
     public Resume resume; // 이력서 고유값(Foreign key)
 
-    public LocalDate overseasexperience_start; // 해외경험 시작일
+    public LocalDate start; // 해외경험 시작일
 
-    public LocalDate overseasexperience_end; // 해외경험 종료일
+    public LocalDate end; // 해외경험 종료일
 
-    public String overseasexperience_staying; // 해외경험 체류중 여부
+    public String staying; // 해외경험 체류중 여부
 
-    public String overseasexperience_country; // 해외경험 국가명
+    public String country; // 해외경험 국가명
 
-    public String overseasexperience_detail; // 해외경험 상세내용
+    public String detail; // 해외경험 상세내용
 
     public OverseasexperienceDto() {
 
     }
 
-    public OverseasexperienceDto(Resume resume, LocalDate overseasexperience_start, LocalDate overseasexperience_end,
-            String overseasexperience_staying, String overseasexperience_country, String overseasexperience_detail) {
-        
-        this.resume = resume;
-        this.overseasexperience_start = overseasexperience_start;
-        this.overseasexperience_end = overseasexperience_end;
-        this.overseasexperience_staying = overseasexperience_staying;
-        this.overseasexperience_country = overseasexperience_country;
-        this.overseasexperience_detail = overseasexperience_detail;
-    }
+    public OverseasexperienceDto(Resume resume, LocalDate start, LocalDate end, String staying, String country,
+            String detail) {
 
-    
+        this.resume = resume;
+        this.start = start;
+        this.end = end;
+        this.staying = staying;
+        this.country = country;
+        this.detail = detail;
+    }
 
 }

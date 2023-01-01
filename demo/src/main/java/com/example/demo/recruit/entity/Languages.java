@@ -20,55 +20,51 @@ import lombok.Setter;
 @Table(name = "languages")
 @Entity
 public class Languages {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_languages")
-    public Long id_languages; // 어학 고유값
-    
+    @Column(name = "id")
+    public Long id; // 어학 고유값
+
     @ManyToOne
     @JoinColumn(name = "resume")
     @NotNull
     public Resume resume; // 이력서 고유값(Foreign key)
-    
-    @Column(length = 100, name = "languages_leveltalking")
+
+    @Column(length = 100, name = "leveltalking")
     @NotNull
-    public String languages_leveltalking; // 어학 회화능력
-    
-    @Column(length = 100, name = "languages_levelwriting")
+    public String leveltalking; // 어학 회화능력
+
+    @Column(length = 100, name = "levelwriting")
     @NotNull
-    public String languages_levelwriting; // 어학 작문독해능력
-    
-    @Column(length = 100, name = "languages_test")
-    public String languages_test; // 어학 시험명
-    
-    @Column(length = 100, name = "languages_score")
-    public String languages_score; // 어학 시험점수 및 등급
-    
-    @Column(name = "languages_achievedate")
-    public LocalDate languages_achievedate; // 어학 시험점수 취득일
-    
-    @Column(length = 100, name = "languages_certificatenumber")
-    public String languages_certificatenumber; // 어학 시험성적표 번호
-    
+    public String levelwriting; // 어학 작문독해능력
+
+    @Column(length = 100, name = "test")
+    public String test; // 어학 시험명
+
+    @Column(length = 100, name = "score")
+    public String score; // 어학 시험점수 및 등급
+
+    @Column(name = "achievedate")
+    public LocalDate achievedate; // 어학 시험점수 취득일
+
+    @Column(length = 100, name = "certificatenumber")
+    public String certificatenumber; // 어학 시험성적표 번호
+
     public Languages() {
-        
+
     }
 
-    public Languages(Resume resume, String languages_leveltalking, String languages_levelwriting,
-            String languages_test, String languages_score, LocalDate languages_achievedate,
-            String languages_certificatenumber) {
-       
+    public Languages(@NotNull Resume resume, @NotNull String leveltalking, @NotNull String levelwriting, String test,
+            String score, LocalDate achievedate, String certificatenumber) {
+
         this.resume = resume;
-        this.languages_leveltalking = languages_leveltalking;
-        this.languages_levelwriting = languages_levelwriting;
-        this.languages_test = languages_test;
-        this.languages_score = languages_score;
-        this.languages_achievedate = languages_achievedate;
-        this.languages_certificatenumber = languages_certificatenumber;
+        this.leveltalking = leveltalking;
+        this.levelwriting = levelwriting;
+        this.test = test;
+        this.score = score;
+        this.achievedate = achievedate;
+        this.certificatenumber = certificatenumber;
     }
 
-    
-    
-    
 }

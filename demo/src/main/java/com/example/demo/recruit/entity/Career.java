@@ -23,66 +23,62 @@ public class Career {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_career")
-    public Long id_career; // 경력사항 고유값
-    
+    @Column(name = "id")
+    public Long id; // 경력사항 고유값
+
     @ManyToOne
     @JoinColumn(name = "resume")
     @NotNull
     public Resume resume; // 이력서 고유값(Foreign key)
-    
-    @Column(name = "career_start")
+
+    @Column(name = "start")
     @NotNull
-    public LocalDate career_start;// 경력 시작일
-    
-    @Column(name = "career_end")
+    public LocalDate start;// 경력 시작일
+
+    @Column(name = "end")
     @NotNull
-    public LocalDate career_end;// 경력 종료일
-    
-    @Column(length = 100, name = "career_working")
+    public LocalDate end;// 경력 종료일
+
+    @Column(length = 100, name = "working")
     @NotNull
-    public String career_working;// 재직중 여부 (재직중 or 퇴사)
-    
-    @Column(length = 100, name = "career_companyname")
+    public String working;// 재직중 여부 (재직중 or 퇴사)
+
+    @Column(length = 100, name = "companyname")
     @NotNull
-    public String career_companyname;// 회사 이름
-    
-    @Column(length = 100, name = "career_rank")
+    public String companyname;// 회사 이름
+
+    @Column(length = 100, name = "rank")
     @NotNull
-    public String career_rank;// 근무 직급
-    
-    @Column(length = 100, name = "career_salary")
+    public String rank;// 근무 직급
+
+    @Column(length = 100, name = "salary")
     @NotNull
-    public String career_salary;// 연봉/월급정보
-    
-    @Column(length = 100, name = "career_jobduty")
+    public String salary;// 연봉/월급정보
+
+    @Column(length = 100, name = "jobduty")
     @NotNull
-    public String career_jobduty;// 직무부서
-    
-    @Column(length = 2000, name = "career_detail")
-    public String career_detail;// 경력 상세내용
-    
+    public String jobduty;// 직무부서
+
+    @Column(length = 2000, name = "detail")
+    public String detail;// 경력 상세내용
+
     public Career() {
-        
+
     }
 
-    public Career(Resume resume, LocalDate career_start, LocalDate career_end, String career_working,
-            String career_companyname, String career_rank, String career_salary, String career_jobduty,
-            String career_detail) {
-       
+    public Career(@NotNull Resume resume, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String working,
+            @NotNull String companyname, @NotNull String rank, @NotNull String salary, @NotNull String jobduty,
+            String detail) {
+
         this.resume = resume;
-        this.career_start = career_start;
-        this.career_end = career_end;
-        this.career_working = career_working;
-        this.career_companyname = career_companyname;
-        this.career_rank = career_rank;
-        this.career_salary = career_salary;
-        this.career_jobduty = career_jobduty;
-        this.career_detail = career_detail;
+        this.start = start;
+        this.end = end;
+        this.working = working;
+        this.companyname = companyname;
+        this.rank = rank;
+        this.salary = salary;
+        this.jobduty = jobduty;
+        this.detail = detail;
     }
 
-    
-    
-    
-    
 }

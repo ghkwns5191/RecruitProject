@@ -20,80 +20,74 @@ import lombok.Setter;
 @Table(name = "recruit")
 @Entity
 public class Recruit {
-	
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_recruit")
-	public Long id_recruit; // 채용공고 고유값
-    
+    @Column(name = "id")
+    public Long id; // 채용공고 고유값
+
     @ManyToOne
     @JoinColumn(name = "member")
     @NotNull
     public Member member; // 회원 고유값(Foreign key)
-	
-    @Column(length = 100, name = "recruit_title")
-    @NotNull
-	public String recruit_title;// 제목
-	
-    @Column(length = 100, name = "recruit_writer")
-    @NotNull
-	public String recruit_writer;// 작성자
 
-    @Column(name = "recruit_registerdate")
+    @Column(length = 100, name = "title")
     @NotNull
-	public LocalDate recruit_registerdate;// 작성일
-	
-    @Column(name = "recruit_modifydate")
-	public LocalDate recruit_modifydate;// 수정일 
-	
-	@Column(length = 100, name = "recruit_career")
-	@NotNull
-	public String recruit_career;// 경력여부
-	
-	@Column(length = 100, name = "recruit_salary")
-	@NotNull
-	public String recruit_salary;// 연봉 or 월급
-	
-	@Column(length = 100, name = "recruit_workingdays")
-	@NotNull
-	public String recruit_workingdays;// 근무일자 ==> 월~금, 월~토, 기타
-	
-	@Column(length = 3000, name = "recruit_detail")
-	public String recruit_detail;// 상세내용
-	
-	@Column(length = 100, name = "recruit_phonenumber")
-	@NotNull
-	public String recruit_phonenumber; // 공고 연락처
-	
-    @Column(length = 100, name = "recruit_attn")
+    public String title;// 제목
+
+    @Column(length = 100, name = "writer")
     @NotNull
-    public String recruit_attn; // 채용공고 담당자
-	
+    public String writer;// 작성자
+
+    @Column(name = "registerdate")
+    @NotNull
+    public LocalDate registerdate;// 작성일
+
+    @Column(name = "modifydate")
+    public LocalDate modifydate;// 수정일
+
+    @Column(length = 100, name = "career")
+    @NotNull
+    public String career;// 경력여부
+
+    @Column(length = 100, name = "salary")
+    @NotNull
+    public String salary;// 연봉 or 월급
+
+    @Column(length = 100, name = "workingdays")
+    @NotNull
+    public String workingdays;// 근무일자 ==> 월~금, 월~토, 기타
+
+    @Column(length = 3000, name = "detail")
+    public String detail;// 상세내용
+
+    @Column(length = 100, name = "phonenumber")
+    @NotNull
+    public String phonenumber; // 공고 연락처
+
+    @Column(length = 100, name = "attn")
+    @NotNull
+    public String attn; // 채용공고 담당자
+
     public Recruit() {
-        
+
     }
 
-    public Recruit(Member member, String recruit_title, String recruit_writer, LocalDate recruit_registerdate,
-            LocalDate recruit_modifydate, String recruit_career, String recruit_salary, String recruit_workingdays,
-            String recruit_detail, String recruit_phonenumber, String recruit_attn) {
-        super();
+    public Recruit(@NotNull Member member, @NotNull String title, @NotNull String writer,
+            @NotNull LocalDate registerdate, LocalDate modifydate, @NotNull String career, @NotNull String salary,
+            @NotNull String workingdays, String detail, @NotNull String phonenumber, @NotNull String attn) {
+
         this.member = member;
-        this.recruit_title = recruit_title;
-        this.recruit_writer = recruit_writer;
-        this.recruit_registerdate = recruit_registerdate;
-        this.recruit_modifydate = recruit_modifydate;
-        this.recruit_career = recruit_career;
-        this.recruit_salary = recruit_salary;
-        this.recruit_workingdays = recruit_workingdays;
-        this.recruit_detail = recruit_detail;
-        this.recruit_phonenumber = recruit_phonenumber;
-        this.recruit_attn = recruit_attn;
+        this.title = title;
+        this.writer = writer;
+        this.registerdate = registerdate;
+        this.modifydate = modifydate;
+        this.career = career;
+        this.salary = salary;
+        this.workingdays = workingdays;
+        this.detail = detail;
+        this.phonenumber = phonenumber;
+        this.attn = attn;
     }
 
-    
-    
-    
-
-	
-	
 }

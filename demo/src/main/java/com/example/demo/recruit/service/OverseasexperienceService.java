@@ -13,14 +13,17 @@ import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.OverseasexperienceRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class OverseasexperienceService {
 
     @Autowired
-    private OverseasexperienceRepository overseasexperienceRepository;
+    private final OverseasexperienceRepository overseasexperienceRepository;
     
     @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
     
     // 해당 이력서의 해외경험 리스트를 조회하는 코드
     public List<Overseasexperience> getoverseasexperience(Resume resume) {
@@ -30,8 +33,8 @@ public class OverseasexperienceService {
     }
     
     // 해당 해외경험만 조회하는 코드
-    public Overseasexperience getoverseasexperience(Long id_overseasexperience) {
-        Optional<Overseasexperience> overseasexperienceData = overseasexperienceRepository.findById(id_overseasexperience);
+    public Overseasexperience getoverseasexperience(Long id) {
+        Optional<Overseasexperience> overseasexperienceData = overseasexperienceRepository.findById(id);
         Overseasexperience overseasexperience = overseasexperienceData.get();
         return overseasexperience;
     }
@@ -40,43 +43,43 @@ public class OverseasexperienceService {
     public Overseasexperience inputData(OverseasexperienceDto overseasexperienceDto) {
         Overseasexperience overseasexperience = this.overseasexperienceRepository.save(new Overseasexperience(
                 overseasexperienceDto.getResume(),
-                overseasexperienceDto.getOverseasexperience_start(),
-                overseasexperienceDto.getOverseasexperience_end(),
-                overseasexperienceDto.getOverseasexperience_staying(),
-                overseasexperienceDto.getOverseasexperience_country(),
-                overseasexperienceDto.getOverseasexperience_detail()
+                overseasexperienceDto.getStart(),
+                overseasexperienceDto.getEnd(),
+                overseasexperienceDto.getStaying(),
+                overseasexperienceDto.getCountry(),
+                overseasexperienceDto.getDetail()
                 ));
         return overseasexperience;
     }
     
     // DB 에 저장된 해외경험을 수정하는 코드
-    public Overseasexperience inputData(Long id_overseasexperience, OverseasexperienceDto overseasexperienceDto) {
+    public Overseasexperience inputData(Long id, OverseasexperienceDto overseasexperienceDto) {
         Optional<Overseasexperience> overseasexperienceData = 
-                this.overseasexperienceRepository.findById(id_overseasexperience);
+                this.overseasexperienceRepository.findById(id);
         Overseasexperience overseasexperience = 
                 overseasexperienceData.get();
-        overseasexperience.setOverseasexperience_start(
-                overseasexperienceDto.getOverseasexperience_start());
-        overseasexperience.setOverseasexperience_end(
-                overseasexperienceDto.getOverseasexperience_end());
-        overseasexperience.setOverseasexperience_staying(
-                overseasexperienceDto.getOverseasexperience_staying());
-        overseasexperience.setOverseasexperience_country(
-                overseasexperienceDto.getOverseasexperience_country());
-        overseasexperience.setOverseasexperience_detail(
-                overseasexperienceDto.getOverseasexperience_detail());
+        overseasexperience.setStart(
+                overseasexperienceDto.getStart());
+        overseasexperience.setEnd(
+                overseasexperienceDto.getEnd());
+        overseasexperience.setStaying(
+                overseasexperienceDto.getStaying());
+        overseasexperience.setCountry(
+                overseasexperienceDto.getCountry());
+        overseasexperience.setDetail(
+                overseasexperienceDto.getDetail());
         this.overseasexperienceRepository.save(overseasexperience);
         return overseasexperience;
     }
     
     // DB 에 저당된 해외경험을 삭제하는 코드
-    public void deleteData(Long id_overseasexperience) {
-        this.overseasexperienceRepository.deleteById(id_overseasexperience);
+    public void deleteData(Long id) {
+        this.overseasexperienceRepository.deleteById(id);
     }
     
     // 이력서 삭제 시 사용할 코드
-    public void deleteResume(Long id_resume) {
-        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+    public void deleteResume(Long id) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id);
         Resume resume = resumeData.get();
         List<Overseasexperience> overseasexperience = new ArrayList<Overseasexperience>();
         this.overseasexperienceRepository.findByResume(resume).

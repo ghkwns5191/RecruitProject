@@ -13,14 +13,17 @@ import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.CertificateRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class CertificateService {
 
     @Autowired
-    private CertificateRepository certificateRepository;
+    private final CertificateRepository certificateRepository;
     
     @Autowired
-    private ResumeRepository resumeRepository;
+    private final ResumeRepository resumeRepository;
 
     // 해당 이력서의 자격증 내역을 조회하는 코드
     public List<Certificate> getcertificate(Resume resume) {
@@ -30,8 +33,8 @@ public class CertificateService {
     }
     
     // 해당 자격증 내역만 조회하는 코드
-    public Certificate getcertificate(Long id_certificate) {
-        Optional<Certificate> certificateData = certificateRepository.findById(id_certificate);
+    public Certificate getcertificate(Long id) {
+        Optional<Certificate> certificateData = certificateRepository.findById(id);
         Certificate certificate = certificateData.get();
         return certificate;
     }
@@ -40,35 +43,35 @@ public class CertificateService {
     public Certificate inputData(CertificateDto certificateDto) {
         Certificate certificate = this.certificateRepository.save(new Certificate(
                 certificateDto.getResume(), 
-                certificateDto.getCertificate_achievedate(), 
-                certificateDto.getCertificate_name(), 
-                certificateDto.getCertificate_grade(), 
-                certificateDto.getCertificate_achievefrom(), 
-                certificateDto.getCertificate_certificatenumber()));
+                certificateDto.getAchievedate(), 
+                certificateDto.getName(), 
+                certificateDto.getGrade(), 
+                certificateDto.getAchievefrom(), 
+                certificateDto.getCertificatenumber()));
         return certificate;
     }
     
     // 자격증 내역을 수정하는 코드
-    public Certificate inputData(Long id_certificate, CertificateDto certificateDto) {
-        Optional<Certificate> certificateData = this.certificateRepository.findById(id_certificate);
+    public Certificate inputData(Long id, CertificateDto certificateDto) {
+        Optional<Certificate> certificateData = this.certificateRepository.findById(id);
         Certificate certificate = certificateData.get();
-        certificate.setCertificate_achievedate(certificateDto.getCertificate_achievedate());
-        certificate.setCertificate_name(certificateDto.getCertificate_name());
-        certificate.setCertificate_grade(certificateDto.getCertificate_grade());
-        certificate.setCertificate_achievefrom(certificateDto.getCertificate_achievefrom());
-        certificate.setCertificate_certificatenumber(certificateDto.getCertificate_certificatenumber());
+        certificate.setAchievedate(certificateDto.getAchievedate());
+        certificate.setName(certificateDto.getName());
+        certificate.setGrade(certificateDto.getGrade());
+        certificate.setAchievefrom(certificateDto.getAchievefrom());
+        certificate.setCertificatenumber(certificateDto.getCertificatenumber());
         this.certificateRepository.save(certificate);
         return certificate;
     }
     
     // 자격증 내역을 삭제하는 코드
-    public void deleteData(Long id_certificate) {
-        this.certificateRepository.deleteById(id_certificate);
+    public void deleteData(Long id) {
+        this.certificateRepository.deleteById(id);
     }
     
     // 이력서 삭제 시 사용할 코드
-    public void deleteResume(Long id_resume) {
-        Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
+    public void deleteResume(Long id) {
+        Optional<Resume> resumeData = this.resumeRepository.findById(id);
         Resume resume = resumeData.get();
         List<Certificate> certificate = new ArrayList<Certificate>();
         this.certificateRepository.findByResume(resume).forEach(certificate::add);

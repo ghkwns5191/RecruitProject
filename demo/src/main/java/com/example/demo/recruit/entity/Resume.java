@@ -21,38 +21,35 @@ public class Resume {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_resume")
-    public Long id_resume; // 이력서 고유값
-    
+    @Column(name = "id")
+    public Long id; // 이력서 고유값
+
     @OneToOne
     @JoinColumn(name = "member")
     @NotNull
     public Member member; // 회원 고유값(Foreign key)
-    
-    @Column(length = 3000, name = "resume_photo")
+
+    @Column(length = 3000, name = "photo")
     @NotNull
-    public String resume_photo;// 이력서 사진
-    
-    @Column(length = 4000, name = "resume_cv")
-    public String resume_cv;// 이력서 자기소개서
-    
-    @Column(length = 4000, name = "resume_openforheadhunter")
+    public String photo;// 이력서 사진
+
+    @Column(length = 4000, name = "cv")
+    public String cv;// 이력서 자기소개서
+
+    @Column(length = 4000, name = "openforheadhunter")
     @NotNull
-    public String resume_openforheadhunter;// 이력서 공개여부
-    
+    public String openforheadhunter;// 이력서 공개여부
+
     public Resume() {
-        
+
     }
 
-    public Resume(Member member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
+    public Resume(@NotNull Member member, @NotNull String photo, String cv, @NotNull String openforheadhunter) {
         super();
         this.member = member;
-        this.resume_photo = resume_photo;
-        this.resume_cv = resume_cv;
-        this.resume_openforheadhunter = resume_openforheadhunter;
+        this.photo = photo;
+        this.cv = cv;
+        this.openforheadhunter = openforheadhunter;
     }
 
-    
-    
-    
 }

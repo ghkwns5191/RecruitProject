@@ -13,38 +13,35 @@ public class CompanyDto {
 
     public Member member; // 회원 고유값(Foreign key)
 
-    public String company_name; // 기업명
+    public String name; // 기업명
 
-    public String company_type; // 업종
+    public String type; // 업종
 
-    public String company_address; // 기업 주소
+    public String address; // 기업 주소
 
-    public String company_phone; // 기업 전화번호
+    public String phone; // 기업 전화번호
 
-    public String company_pp20number;// pp20 번호
+    public String pp20number;// pp20 번호
 
-    public String company_numberofstaff; // 기업 직원수
+    public String numberofstaff; // 기업 직원수
 
-    public LocalDate company_modifydate; // 기업 정보 업데이트일
+    public LocalDate modifydate; // 기업 정보 업데이트일
 
     public CompanyDto() {
 
     }
 
-    public CompanyDto(Member member, String company_name, String company_type, String company_address,
-            String company_phone, String company_pp20number, String company_numberofstaff,
-            LocalDate company_modifydate) {
-        
-        this.member = member;
-        this.company_name = company_name;
-        this.company_type = company_type;
-        this.company_address = company_address;
-        this.company_phone = company_phone;
-        this.company_pp20number = company_pp20number;
-        this.company_numberofstaff = company_numberofstaff;
-        this.company_modifydate = company_modifydate;
-    }
+    public CompanyDto(Member member, String name, String type, String address, String phone, String pp20number,
+            String numberofstaff, LocalDate modifydate) {
 
-    
+        this.member = member;
+        this.name = name;
+        this.type = type;
+        this.address = address;
+        this.phone = phone;
+        this.pp20number = pp20number;
+        this.numberofstaff = numberofstaff;
+        this.modifydate = modifydate;
+    }
 
 }

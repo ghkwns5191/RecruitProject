@@ -23,49 +23,46 @@ public class Education {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_education")
-    public Long id_education; // 교육내용 고유값
-    
+    @Column(name = "id")
+    public Long id; // 교육내용 고유값
+
     @ManyToOne
     @JoinColumn(name = "resume")
     @NotNull
     public Resume resume; // 이력서 고유값(Foreign key)
-    
-    @Column(name = "education_start")
-    @NotNull
-    public LocalDate education_start; // 교육 시작일
-    
-    @Column(name = "education_end")
-    @NotNull
-    public LocalDate education_end; // 교육 종료일
-    
-    @Column(length = 100, name = "education_title")
-    @NotNull
-    public String education_title; // 수료 교육명
-    
-    @Column(length = 100, name = "education_holdby")
-    @NotNull
-    public String education_holdby; // 교육기관명
 
-    @Column(length = 2000, name = "education_detail")
-    public String education_detail; // 상세 교육내용
-    
+    @Column(name = "start")
+    @NotNull
+    public LocalDate start; // 교육 시작일
+
+    @Column(name = "end")
+    @NotNull
+    public LocalDate end; // 교육 종료일
+
+    @Column(length = 100, name = "title")
+    @NotNull
+    public String title; // 수료 교육명
+
+    @Column(length = 100, name = "holdby")
+    @NotNull
+    public String holdby; // 교육기관명
+
+    @Column(length = 2000, name = "detail")
+    public String detail; // 상세 교육내용
+
     public Education() {
-        
+
     }
 
-    public Education(Resume resume, LocalDate education_start, LocalDate education_end, String education_title,
-            String education_holdby, String education_detail) {
-        super();
+    public Education(@NotNull Resume resume, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String title,
+            @NotNull String holdby, String detail) {
+
         this.resume = resume;
-        this.education_start = education_start;
-        this.education_end = education_end;
-        this.education_title = education_title;
-        this.education_holdby = education_holdby;
-        this.education_detail = education_detail;
+        this.start = start;
+        this.end = end;
+        this.title = title;
+        this.holdby = holdby;
+        this.detail = detail;
     }
 
-    
-    
-    
 }

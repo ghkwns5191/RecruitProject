@@ -20,62 +20,57 @@ import lombok.Setter;
 @Table(name = "company")
 @Entity
 public class Company {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_company")
-    public Long id_company; // 기업 고유값
-    
+    @Column(name = "id")
+    public Long id; // 기업 고유값
+
     @ManyToOne
     @JoinColumn(name = "member")
     public Member member; // 회원 고유값(Foreign key)
-    
-    @Column(length = 100, name = "company_name", unique = true)
-    @NotNull
-    public String company_name; // 기업명
-    
-    @Column(length = 100, name = "company_type")
-    @NotNull
-    public String company_type; // 업종
-    
-    @Column(length = 500, name = "company_address")
-    @NotNull
-    public String company_address; // 기업 주소
 
-    @Column(length = 100, name = "company_phone", unique = true)
+    @Column(length = 100, name = "name", unique = true)
     @NotNull
-    public String company_phone; // 기업 전화번호
-    
-    @Column(length = 100, name = "company_pp20number", unique = true)
+    public String name; // 기업명
+
+    @Column(length = 100, name = "type")
     @NotNull
-    public String company_pp20number;// pp20 번호
-    
-    @Column(length = 100, name = "company_numberofstaff")
-    public String company_numberofstaff; // 기업 직원수
-    
-    @Column(name = "company_modifydate")
-    public LocalDate company_modifydate; // 기업 정보 업데이트일
-    
+    public String type; // 업종
+
+    @Column(length = 500, name = "address")
+    @NotNull
+    public String address; // 기업 주소
+
+    @Column(length = 100, name = "phone", unique = true)
+    @NotNull
+    public String phone; // 기업 전화번호
+
+    @Column(length = 100, name = "pp20number", unique = true)
+    @NotNull
+    public String pp20number;// pp20 번호
+
+    @Column(length = 100, name = "numberofstaff")
+    public String numberofstaff; // 기업 직원수
+
+    @Column(name = "modifydate")
+    public LocalDate modifydate; // 기업 정보 업데이트일
+
     public Company() {
-        
+
     }
 
-    public Company(Member member, @NotNull String company_name, @NotNull String company_type,
-            @NotNull String company_address, @NotNull String company_phone, @NotNull String company_pp20number,
-            String company_numberofstaff, LocalDate company_modifydate) {
-        
+    public Company(Member member, @NotNull String name, @NotNull String type, @NotNull String address,
+            @NotNull String phone, @NotNull String pp20number, String numberofstaff, LocalDate modifydate) {
+
         this.member = member;
-        this.company_name = company_name;
-        this.company_type = company_type;
-        this.company_address = company_address;
-        this.company_phone = company_phone;
-        this.company_pp20number = company_pp20number;
-        this.company_numberofstaff = company_numberofstaff;
-        this.company_modifydate = company_modifydate;
+        this.name = name;
+        this.type = type;
+        this.address = address;
+        this.phone = phone;
+        this.pp20number = pp20number;
+        this.numberofstaff = numberofstaff;
+        this.modifydate = modifydate;
     }
 
-    
-    
-    
-    
 }

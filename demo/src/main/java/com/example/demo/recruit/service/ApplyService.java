@@ -13,11 +13,14 @@ import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.repository.ApplyRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ApplyService {
 
     @Autowired
-    private ApplyRepository applyRepository;
+    private final ApplyRepository applyRepository;
 
     // 해당 회원이 지원한 지원 정보를 불러오는 코드
     public List<Apply> getapply(Member member) {
@@ -34,8 +37,8 @@ public class ApplyService {
     }
 
     // 해당 지원 정보만 불러오는 코드
-    public Apply getapply(Long id_apply) {
-        Optional<Apply> applyData = this.applyRepository.findById(id_apply);
+    public Apply getapply(Long id) {
+        Optional<Apply> applyData = this.applyRepository.findById(id);
         Apply apply = applyData.get();
         return apply;
     }
@@ -45,12 +48,12 @@ public class ApplyService {
         Apply apply = this.applyRepository.save(new Apply(
                 applyDto.getMember(),
                 applyDto.getRecruit(), 
-                applyDto.getApply_applydate()));
+                applyDto.getApplydate()));
         return apply;
     }
     
     // 지원 정보를 삭제하는 코드
-    public void deleteData(Long id_apply) {
-        this.applyRepository.deleteById(id_apply);
+    public void deleteData(Long id) {
+        this.applyRepository.deleteById(id);
     }
 }

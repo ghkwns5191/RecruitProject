@@ -21,50 +21,47 @@ public class Companyreview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_companyreview")
-    public Long id_companyreview; // 기업리뷰 고유값
-    
+    @Column(name = "id")
+    public Long id; // 기업리뷰 고유값
+
     @ManyToOne
     @JoinColumn(name = "company")
     public Company company; // 기업 고유값(Foreign key)
-    
+
     @ManyToOne
     @JoinColumn(name = "member")
     @NotNull
     public Member member; // 회원 고유값(Foreign key)
-    
-    @Column(length = 100, name = "companyreview_strength")
+
+    @Column(length = 100, name = "strength")
     @NotNull
-    public String companyreview_strength; // 기업리뷰 장점
-    
-    @Column(length = 100, name = "companyreview_weakness")
+    public String strength; // 기업리뷰 장점
+
+    @Column(length = 100, name = "weakness")
     @NotNull
-    public String companyreview_weakness; // 기업리뷰 단점
-    
-    @Column(length = 100, name = "companyreview_reviewdetail")
+    public String weakness; // 기업리뷰 단점
+
+    @Column(length = 100, name = "reviewdetail")
     @NotNull
-    public String companyreview_reviewdetail; // 기업리뷰 총평
-    
-    @Column(name = "education_holdby")
+    public String reviewdetail; // 기업리뷰 총평
+
+    @Column(name = "score")
     @NotNull
-    public Double companyreview_score; // 기업리뷰 평점
-    
+    public Double score; // 기업리뷰 평점
+
     public Companyreview() {
-        
+
     }
 
-    public Companyreview(Company company, Member member, String companyreview_strength,
-            String companyreview_weakness, String companyreview_reviewdetail, Double companyreview_score) {
-       
+    public Companyreview(Company company, @NotNull Member member, @NotNull String strength, @NotNull String weakness,
+            @NotNull String reviewdetail, @NotNull Double score) {
+
         this.company = company;
         this.member = member;
-        this.companyreview_strength = companyreview_strength;
-        this.companyreview_weakness = companyreview_weakness;
-        this.companyreview_reviewdetail = companyreview_reviewdetail;
-        this.companyreview_score = companyreview_score;
+        this.strength = strength;
+        this.weakness = weakness;
+        this.reviewdetail = reviewdetail;
+        this.score = score;
     }
 
-    
-    
-    
 }

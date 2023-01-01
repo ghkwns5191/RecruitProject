@@ -20,12 +20,15 @@ import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.service.CompanyService;
 import com.example.demo.recruit.service.CompanyreviewService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class CompanyController {
 
     @Autowired
-    private CompanyService companyService;
-    
+    private final CompanyService companyService;
+
     @Autowired
     private CompanyreviewService companyreviewService;
 
@@ -40,7 +43,6 @@ public class CompanyController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
     // 해당 기업의 정보를 조회하기 위해 사용
@@ -65,7 +67,7 @@ public class CompanyController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 기업정보를 수정하기 위해 사용
     @PutMapping("/company/revise")
     public ResponseEntity<Company> reviseData(@PathVariable("id_company") Long id_company, CompanyDto companyDto) {
@@ -76,7 +78,7 @@ public class CompanyController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 기업정보를 삭제하기 위해 사용
     @DeleteMapping("/company/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_company") Long id_company) {
@@ -88,5 +90,5 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }
