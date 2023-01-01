@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class LanguagesDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public String languages_leveltalking; // 어학 회화능력
 
@@ -29,11 +29,11 @@ public class LanguagesDto {
         
     }
 
-    public LanguagesDto(Resume id_resume, String languages_leveltalking, String languages_levelwriting,
+    public LanguagesDto(Resume resume, String languages_leveltalking, String languages_levelwriting,
             String languages_test, String languages_score, LocalDate languages_achievedate,
             String languages_certificatenumber) {
         
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.languages_leveltalking = languages_leveltalking;
         this.languages_levelwriting = languages_levelwriting;
         this.languages_test = languages_test;
@@ -41,6 +41,8 @@ public class LanguagesDto {
         this.languages_achievedate = languages_achievedate;
         this.languages_certificatenumber = languages_certificatenumber;
     }
+
+    
     
     
 }

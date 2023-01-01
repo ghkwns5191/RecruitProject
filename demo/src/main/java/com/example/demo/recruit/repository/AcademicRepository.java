@@ -9,8 +9,8 @@ import com.example.demo.recruit.entity.Resume;
 
 public interface AcademicRepository extends JpaRepository<Academic, Long> {
 
-    List<Academic> findById_resume(Resume id_resume);
+    List<Academic> findByResume(Resume resume);
 
-    void deleteById_resume(Resume id_resume);
+    
 
 }

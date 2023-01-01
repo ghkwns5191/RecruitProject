@@ -27,9 +27,9 @@ public class Education {
     public Long id_education; // 교육내용 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(name = "education_start")
     @NotNull
@@ -54,10 +54,10 @@ public class Education {
         
     }
 
-    public Education(Resume id_resume, LocalDate education_start, LocalDate education_end, String education_title,
+    public Education(Resume resume, LocalDate education_start, LocalDate education_end, String education_title,
             String education_holdby, String education_detail) {
         super();
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.education_start = education_start;
         this.education_end = education_end;
         this.education_title = education_title;

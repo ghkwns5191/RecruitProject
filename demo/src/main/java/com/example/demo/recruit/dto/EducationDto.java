@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class EducationDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public LocalDate education_start; // 교육 시작일
 
@@ -27,16 +27,18 @@ public class EducationDto {
         
     }
 
-    public EducationDto(Resume id_resume, LocalDate education_start, LocalDate education_end, String education_title,
+    public EducationDto(Resume resume, LocalDate education_start, LocalDate education_end, String education_title,
             String education_holdby, String education_detail) {
         
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.education_start = education_start;
         this.education_end = education_end;
         this.education_title = education_title;
         this.education_holdby = education_holdby;
         this.education_detail = education_detail;
     }
+
+    
     
     
 }

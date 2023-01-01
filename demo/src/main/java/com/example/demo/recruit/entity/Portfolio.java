@@ -25,9 +25,9 @@ public class Portfolio {
     public Long id_portfolio; // 포트폴리오 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(length = 200, name = "portfolio_title")
     @NotNull
@@ -49,10 +49,10 @@ public class Portfolio {
         
     }
 
-    public Portfolio(Resume id_resume, String portfolio_title, String portfolio_file1, String portfolio_file2,
+    public Portfolio(Resume resume, String portfolio_title, String portfolio_file1, String portfolio_file2,
             String portfolio_url1, String portfolio_url2) {
         
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.portfolio_title = portfolio_title;
         this.portfolio_file1 = portfolio_file1;
         this.portfolio_file2 = portfolio_file2;

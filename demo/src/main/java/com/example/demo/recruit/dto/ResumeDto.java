@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 public class ResumeDto {
 
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
 
     public String resume_photo;// 이력서 사진
 
@@ -21,12 +21,14 @@ public class ResumeDto {
 
     }
 
-    public ResumeDto(Member id_member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
-
-        this.id_member = id_member;
+    public ResumeDto(Member member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
+       
+        this.member = member;
         this.resume_photo = resume_photo;
         this.resume_cv = resume_cv;
         this.resume_openforheadhunter = resume_openforheadhunter;
     }
+
+    
 
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class CompanyDto {
 
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
 
     public String company_name; // 기업명
 
@@ -31,11 +31,11 @@ public class CompanyDto {
 
     }
 
-    public CompanyDto(Member id_member, String company_name, String company_type, String company_address,
+    public CompanyDto(Member member, String company_name, String company_type, String company_address,
             String company_phone, String company_pp20number, String company_numberofstaff,
             LocalDate company_modifydate) {
         
-        this.id_member = id_member;
+        this.member = member;
         this.company_name = company_name;
         this.company_type = company_type;
         this.company_address = company_address;
@@ -44,5 +44,7 @@ public class CompanyDto {
         this.company_numberofstaff = company_numberofstaff;
         this.company_modifydate = company_modifydate;
     }
+
+    
 
 }

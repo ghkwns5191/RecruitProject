@@ -9,6 +9,6 @@ import com.example.demo.recruit.entity.Resume;
 
 public interface OverseasexperienceRepository extends JpaRepository <Overseasexperience, Long> {
 
-    List<Overseasexperience> findById_resume(Resume id_resume);
+    List<Overseasexperience> findByResume(Resume resume);
 
 }

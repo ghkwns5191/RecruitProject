@@ -27,7 +27,7 @@ public class CompanyreviewController {
     private CompanyreviewService companyreviewService;
     
     // 해당 기업에 대한 기업리뷰를 모두 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/companyreview/list")
     public ResponseEntity<List<Companyreview>> getList(@RequestParam(required = false) Company id_company) {
         try {
             List<Companyreview> companyreview = new ArrayList<Companyreview>();
@@ -39,7 +39,7 @@ public class CompanyreviewController {
     }
     
     // 해당 기업리뷰를 상세 확인하기 위해 사용
-    @GetMapping
+    @GetMapping("/companyreview/detail")
     public ResponseEntity<Companyreview> getcompanyreview(@RequestParam(required = false) Long id_companyreview) {
         try {
             Companyreview companyreview = new Companyreview();
@@ -51,7 +51,7 @@ public class CompanyreviewController {
     }
     
     // 기업리뷰를 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/companyreview/input")
     public ResponseEntity<Companyreview> inputData(@RequestBody CompanyreviewDto companyreviewDto) {
         try {
             Companyreview companyreview = companyreviewService.inputData(companyreviewDto);
@@ -62,7 +62,7 @@ public class CompanyreviewController {
     }
     
     // 기업리뷰를 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/companyreview/revise")
     public ResponseEntity<Companyreview> reviseData(@PathVariable("id_companyreview") Long id_companyreview, CompanyreviewDto companyreviewDto) {
         try {
             Companyreview companyreview = companyreviewService.inputData(id_companyreview, companyreviewDto);
@@ -73,7 +73,7 @@ public class CompanyreviewController {
     }
     
     // 기업리뷰를 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/companyreview/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_companyreview") Long id_companyreview) {
         try {
             companyreviewService.deleteData(id_companyreview);

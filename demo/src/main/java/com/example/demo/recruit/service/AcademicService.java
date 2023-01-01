@@ -25,7 +25,7 @@ public class AcademicService {
     // 이력서에 해당하는 학력정보를 불러내는 코드
     public List<Academic> getacademic(Resume id_resume) {
         List<Academic> academic = new ArrayList<Academic>();
-        this.academicRepository.findById_resume(id_resume).forEach(academic::add);
+        this.academicRepository.findByResume(id_resume).forEach(academic::add);
 
         return academic;
     }
@@ -40,7 +40,7 @@ public class AcademicService {
     // 학력정보를 입력받아 DB 에 저장하는 코드
     public Academic inputData(AcademicDto academicDto) {
         Academic academic = this.academicRepository.save(new Academic(
-                academicDto.getId_resume(),
+                academicDto.getResume(),
                 academicDto.getAcademic_start(),
                 academicDto.getAcademic_end(),
                 academicDto.getAcademic_studying(),
@@ -81,7 +81,7 @@ public class AcademicService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Academic> academic = new ArrayList<Academic>();
-        this.academicRepository.findById_resume(resume).forEach(academic::add);
+        this.academicRepository.findByResume(resume).forEach(academic::add);
         this.academicRepository.deleteAll(academic);
     }
 

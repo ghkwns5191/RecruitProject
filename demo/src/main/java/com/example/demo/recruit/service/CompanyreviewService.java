@@ -23,9 +23,9 @@ public class CompanyreviewService {
     private CompanyRepository companyRepository;
 
     // 해당 기업에 대한 기업리뷰를 조회하는 코드
-    public List<Companyreview> getcompanyreview(Company id_company) {
+    public List<Companyreview> getcompanyreview(Company company) {
         List<Companyreview> companyreview = new ArrayList<Companyreview>();
-        this.companyreviewRepository.findById_company(id_company).forEach(companyreview::add);
+        this.companyreviewRepository.findByCompany(company).forEach(companyreview::add);
         return companyreview;
     }
 
@@ -39,8 +39,8 @@ public class CompanyreviewService {
     // 기업리뷰를 입력받아 DB 에 저장하는 코드
     public Companyreview inputData(CompanyreviewDto companyreviewDto) {
         Companyreview companyreview = this.companyreviewRepository.save(new Companyreview(
-                companyreviewDto.getId_company(),
-                companyreviewDto.getId_member(),
+                companyreviewDto.getCompany(),
+                companyreviewDto.getMember(),
                 companyreviewDto.getCompanyreview_strength(),
                 companyreviewDto.getCompanyreview_weakness(),
                 companyreviewDto.getCompanyreview_reviewdetail(),
@@ -70,7 +70,7 @@ public class CompanyreviewService {
         Optional<Company> companyData = companyRepository.findById(id_company);
         Company company = companyData.get();
         List<Companyreview> companyreview = new ArrayList<Companyreview>();
-        this.companyreviewRepository.findById_company(company).forEach(companyreview::add);
+        this.companyreviewRepository.findByCompany(company).forEach(companyreview::add);
         this.companyreviewRepository.deleteAll(companyreview);
     }
 }

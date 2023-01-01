@@ -9,6 +9,6 @@ import com.example.demo.recruit.entity.Resume;
 
 public interface CertificateRepository extends JpaRepository<Certificate, Long> {
 
-    List<Certificate> findById_resume(Resume id_resume);
+    List<Certificate> findByResume(Resume resume);
 
 }

@@ -30,7 +30,7 @@ public class CompanyController {
     private CompanyreviewService companyreviewService;
 
     // 모든 기업 리스트를 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/company/list")
     public ResponseEntity<List<Company>> getList() {
 
         try {
@@ -44,7 +44,7 @@ public class CompanyController {
     }
 
     // 해당 기업의 정보를 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/company/detail")
     public ResponseEntity<Company> getCompany(@RequestParam(required = false) Long id_company) {
         try {
             Company company = new Company();
@@ -56,7 +56,7 @@ public class CompanyController {
     }
 
     // 기업정보를 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/company/input")
     public ResponseEntity<Company> inputData(@RequestBody CompanyDto companyDto) {
         try {
             Company company = companyService.inputData(companyDto);
@@ -67,7 +67,7 @@ public class CompanyController {
     }
     
     // 기업정보를 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/company/revise")
     public ResponseEntity<Company> reviseData(@PathVariable("id_company") Long id_company, CompanyDto companyDto) {
         try {
             Company company = companyService.inputData(id_company, companyDto);
@@ -78,7 +78,7 @@ public class CompanyController {
     }
     
     // 기업정보를 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/company/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_company") Long id_company) {
         try {
             companyreviewService.deleteCompany(id_company);

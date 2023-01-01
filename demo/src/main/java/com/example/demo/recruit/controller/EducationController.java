@@ -27,7 +27,7 @@ public class EducationController {
     private EducationService educationService;
 
     // 이력서 조회 시 교육내용을 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/education/list")
     public ResponseEntity<List<Education>> getList(@RequestParam(required = false) Resume id_resume) {
 
         try {
@@ -40,7 +40,7 @@ public class EducationController {
     }
     
     // 해당 교육내용만 확인하기 위해 사용
-    @GetMapping
+    @GetMapping("/education/detail")
     public ResponseEntity<Education> getEducaction(@RequestParam(required = false) Long id_education) {
         try {
             Education education = new Education();
@@ -52,7 +52,7 @@ public class EducationController {
     }
     
     // 이력서상 교육정보를 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/education/input")
     public ResponseEntity<Education> inputData(@RequestBody EducationDto educationDto) {
         try {
             Education education = educationService.inputData(educationDto);
@@ -63,7 +63,7 @@ public class EducationController {
     }
     
     //이력서상 교육정보를 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/education/revise")
     public ResponseEntity<Education> reviseData(@PathVariable("id_education") Long id_education, EducationDto educationDto) {
         try {
             Education education = educationService.inputData(id_education, educationDto);
@@ -74,7 +74,7 @@ public class EducationController {
     }
     
     // 이력서상 교육정보를 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/education/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_education") Long id_education) {
         try {
             educationService.deleteData(id_education);

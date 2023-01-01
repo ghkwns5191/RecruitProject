@@ -23,9 +23,9 @@ public class PortfolioService {
     private ResumeRepository resumeRepository;
     
     // 해당 이력서의 포트폴리오 정보를 불러오는 코드
-    public List<Portfolio> getPortfolio(Resume id_resume) {
+    public List<Portfolio> getPortfolio(Resume resume) {
         List<Portfolio> portfolio = new ArrayList<Portfolio>();
-        portfolioRepository.findById_resume(id_resume).forEach(portfolio::add);
+        portfolioRepository.findByResume(resume).forEach(portfolio::add);
         return portfolio;
     }
     
@@ -39,7 +39,7 @@ public class PortfolioService {
     // 입력받은 포트폴리오 정보를 DB 에 저장하는 코드
     public Portfolio inputData(PortfolioDto portfolioDto) {
         Portfolio portfolio = this.portfolioRepository.save(new Portfolio(
-                portfolioDto.getId_resume(),
+                portfolioDto.getResume(),
                 portfolioDto.getPortfolio_title(),
                 portfolioDto.getPortfolio_file1(),
                 portfolioDto.getPortfolio_file2(),
@@ -71,7 +71,7 @@ public class PortfolioService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Portfolio> portfolio = new ArrayList<Portfolio>();
-        this.portfolioRepository.findById_resume(resume).forEach(portfolio::add);
+        this.portfolioRepository.findByResume(resume).forEach(portfolio::add);
         this.portfolioRepository.deleteAll(portfolio);
     }
 }

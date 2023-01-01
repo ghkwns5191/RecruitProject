@@ -26,7 +26,7 @@ public class NoticeController {
     private NoticeService noticeService;
 
     // 모든 공지사항 리스트를 확인하기 위해 사용
-    @GetMapping
+    @GetMapping("/notice/list")
     public ResponseEntity<List<Notice>> getList() {
         try {
             List<Notice> notice = new ArrayList<Notice>();
@@ -38,7 +38,7 @@ public class NoticeController {
     }
 
     // 해당 공지사항의 상세내용을 확인하기 위해 사용
-    @GetMapping
+    @GetMapping("/notice/detail")
     public ResponseEntity<Notice> getNotice(@RequestParam(required = false) Long id_notice) {
         try {
             Notice notice = new Notice();
@@ -50,7 +50,7 @@ public class NoticeController {
     }
     
     // 공지사항 작성내용을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/notice/input")
     public ResponseEntity<Notice> inputData(@RequestBody NoticeDto noticeDto) {
         try {
             Notice notice = noticeService.inputData(noticeDto);
@@ -61,7 +61,7 @@ public class NoticeController {
     }
     
     // 공지사항을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/notice/revise")
     public ResponseEntity<Notice> reviseData(@PathVariable("id_notice") Long id_notice, @RequestBody NoticeDto noticeDto) {
         try {
             Notice notice = noticeService.inputData(id_notice, noticeDto);
@@ -72,7 +72,7 @@ public class NoticeController {
     }
     
     // 공지사항을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/notice/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_notice") Long id_notice) {
         try {
             noticeService.deleteData(id_notice);

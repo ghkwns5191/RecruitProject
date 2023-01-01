@@ -38,7 +38,7 @@ public class NoticeService {
     // 공지사항 작성 내용을 입력받아 DB 에 저장하는 코드
     public Notice inputData(NoticeDto noticeDto) {
         Notice notice = this.noticeRepository.save(new Notice(
-                noticeDto.getId_member(),
+                noticeDto.getMember(),
                 noticeDto.getNotice_title(),
                 noticeDto.getNotice_detail(),
                 LocalDate.now(),

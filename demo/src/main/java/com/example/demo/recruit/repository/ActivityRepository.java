@@ -9,6 +9,6 @@ import com.example.demo.recruit.entity.Resume;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long>{
 
-    List<Activity> findById_Resume(Resume id_resume);
+    List<Activity> findByResume(Resume id_resume);
 
 }

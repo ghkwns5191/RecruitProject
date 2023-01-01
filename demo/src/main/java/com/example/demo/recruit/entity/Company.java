@@ -27,8 +27,8 @@ public class Company {
     public Long id_company; // 기업 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_member")
-    public Member id_member; // 회원 고유값(Foreign key)
+    @JoinColumn(name = "member")
+    public Member member; // 회원 고유값(Foreign key)
     
     @Column(length = 100, name = "company_name", unique = true)
     @NotNull
@@ -60,11 +60,11 @@ public class Company {
         
     }
 
-    public Company(Member id_member, @NotNull String company_name, @NotNull String company_type,
+    public Company(Member member, @NotNull String company_name, @NotNull String company_type,
             @NotNull String company_address, @NotNull String company_phone, @NotNull String company_pp20number,
             String company_numberofstaff, LocalDate company_modifydate) {
         
-        this.id_member = id_member;
+        this.member = member;
         this.company_name = company_name;
         this.company_type = company_type;
         this.company_address = company_address;

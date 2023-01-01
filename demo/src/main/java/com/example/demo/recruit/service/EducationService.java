@@ -23,9 +23,9 @@ public class EducationService {
     private ResumeRepository resumeRepository;
 
     // 해당 이력서 조회 시 교육내용을 함께 조회하기 위한 코드
-    public List<Education> geteducation(Resume id_resume) {
+    public List<Education> geteducation(Resume resume) {
         List<Education> education = new ArrayList<Education>();
-        educationRepository.findById_resume(id_resume).forEach(education::add);
+        educationRepository.findByResume(resume).forEach(education::add);
         return education;
     }
 
@@ -39,7 +39,7 @@ public class EducationService {
     // 교육내용을 입력받아 DB 에 저장하는 코드
     public Education inputData(EducationDto educationDto) {
         Education education = this.educationRepository.save(new Education(
-                educationDto.getId_resume(),
+                educationDto.getResume(),
                 educationDto.getEducation_start(),
                 educationDto.getEducation_end(),
                 educationDto.getEducation_title(),
@@ -71,7 +71,7 @@ public class EducationService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Education> education = new ArrayList<Education>();
-        this.educationRepository.findById_resume(resume).forEach(education::add);
+        this.educationRepository.findByResume(resume).forEach(education::add);
         this.educationRepository.deleteAll(education);
     }
 }

@@ -27,7 +27,7 @@ public class ApplyController {
     private ApplyService applyService;
 
     // 개인 회원의 채용공고 지원 내역을 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/apply/listbymember")
     public ResponseEntity<List<Apply>> getListByMember(@RequestParam(required = false) Member id_member) {
         try {
             List<Apply> applyList = new ArrayList<Apply>();
@@ -39,7 +39,7 @@ public class ApplyController {
     }
 
     // 기업 회원의 채용공고에 지원한 지원 정보를 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/apply/listbyrecruit")
     public ResponseEntity<List<Apply>> getListByRecruit(@RequestParam(required = false) Recruit id_recruit) {
         try {
             List<Apply> applyList = new ArrayList<Apply>();
@@ -51,7 +51,7 @@ public class ApplyController {
     }
 
     // 지원 정보 개별 조회를 위해 사용
-    @GetMapping
+    @GetMapping("/apply/detail")
     public ResponseEntity<Apply> getApply(@RequestParam(required = false) Long id_apply) {
         try {
             Apply apply = new Apply();
@@ -63,7 +63,7 @@ public class ApplyController {
     }
 
     // 개인 회원이 채용공고에 지원 시 해당 지원 정보를 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/apply/input")
     public ResponseEntity<Apply> inputData(@RequestBody ApplyDto applyDto) {
         try {
             Apply apply = applyService.inputData(applyDto);
@@ -74,7 +74,7 @@ public class ApplyController {
     }
     
     // 지원 취소를 진행하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/apply/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_appy") Long id_apply) {
         try {
             applyService.deleteData(id_apply);

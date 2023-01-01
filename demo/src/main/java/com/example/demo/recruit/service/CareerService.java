@@ -23,9 +23,9 @@ public class CareerService {
     private ResumeRepository resumeRepository;
 
     // 해당 이력서의 경력사항을 불러오는 코드
-    public List<Career> getcareer(Resume id_resume) {
+    public List<Career> getcareer(Resume resume) {
         List<Career> career = new ArrayList<Career>();
-        this.careerRepository.findById_resume(id_resume).forEach(career::add);
+        this.careerRepository.findByResume(resume).forEach(career::add);
         return career;
     }
 
@@ -39,7 +39,7 @@ public class CareerService {
     // 경력사항을 입력받아 DB 에 저장하는 코드
     public Career inputData(CareerDto careerDto) {
         Career career = this.careerRepository.save(new Career(
-                careerDto.getId_resume(), 
+                careerDto.getResume(), 
                 careerDto.getCareer_start(), 
                 careerDto.getCareer_end(), 
                 careerDto.getCareer_working(), 
@@ -77,7 +77,7 @@ public class CareerService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Career> career = new ArrayList<Career>();
-        this.careerRepository.findById_resume(resume).forEach(career::add);
+        this.careerRepository.findByResume(resume).forEach(career::add);
         this.careerRepository.deleteAll(career);
     }
 }

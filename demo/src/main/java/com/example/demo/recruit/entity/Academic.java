@@ -27,9 +27,9 @@ public class Academic {
     public Long id_academic; // 학력정보 고유값
 
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     @Column(name = "academic_start")
     @NotNull
@@ -68,11 +68,11 @@ public class Academic {
         // TODO Auto-generated constructor stub
     }
 
-    public Academic(Resume id_resume, LocalDate academic_start, LocalDate academic_end, String academic_studying,
+    public Academic(Resume resume, LocalDate academic_start, LocalDate academic_end, String academic_studying,
             String academic_type, String academic_name, String academic_major, String academic_grade,
             String academic_gradefull, String academic_detail) {
 
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.academic_start = academic_start;
         this.academic_end = academic_end;
         this.academic_studying = academic_studying;

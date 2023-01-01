@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class ActivityDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public LocalDate activity_start; // 대외활동 시작일
 
@@ -27,16 +27,18 @@ public class ActivityDto {
         // TODO Auto-generated constructor stub
     }
 
-    public ActivityDto(Resume id_resume, LocalDate activity_start, LocalDate activity_end, String activity_title,
+    public ActivityDto(Resume resume, LocalDate activity_start, LocalDate activity_end, String activity_title,
             String activity_holdby, String activity_detail) {
-        super();
-        this.id_resume = id_resume;
+      
+        this.resume = resume;
         this.activity_start = activity_start;
         this.activity_end = activity_end;
         this.activity_title = activity_title;
         this.activity_holdby = activity_holdby;
         this.activity_detail = activity_detail;
     }
+
+  
     
     
 }

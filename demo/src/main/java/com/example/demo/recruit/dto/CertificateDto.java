@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class CertificateDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public LocalDate certificate_achievedate; // 자격증 취득일
 
@@ -27,15 +27,17 @@ public class CertificateDto {
 
     }
 
-    public CertificateDto(Resume id_resume, LocalDate certificate_achievedate, String certificate_name,
+    public CertificateDto(Resume resume, LocalDate certificate_achievedate, String certificate_name,
             String certificate_grade, String certificate_achievefrom, String certificate_certificatenumber) {
-
-        this.id_resume = id_resume;
+        
+        this.resume = resume;
         this.certificate_achievedate = certificate_achievedate;
         this.certificate_name = certificate_name;
         this.certificate_grade = certificate_grade;
         this.certificate_achievefrom = certificate_achievefrom;
         this.certificate_certificatenumber = certificate_certificatenumber;
     }
+
+    
 
 }

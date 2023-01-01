@@ -27,7 +27,7 @@ public class LanguagesController {
     private LanguagesService languagesService;
     
     // 해당 이력서 조회 시 어학사항 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/languages/list")
     public ResponseEntity<List<Languages>> getList(@RequestParam(required = false) Resume id_resume) {
         try {
             List<Languages> languagesList = new ArrayList<Languages>();
@@ -39,7 +39,7 @@ public class LanguagesController {
     }
     
     // 해당 어학사항만 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/languages/detail")
     public ResponseEntity<Languages> getLanguages(@RequestParam(required = false) Long id_languages) {
         try {
             Languages languages = new Languages();
@@ -51,7 +51,7 @@ public class LanguagesController {
     }
     
     // 어학사항을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/languages/input")
     public ResponseEntity<Languages> inputData(@RequestBody LanguagesDto languagesDto) {
         try {
             Languages languages = languagesService.inputData(languagesDto);
@@ -62,7 +62,7 @@ public class LanguagesController {
     }
     
     // 어학사항을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/languages/revise")
     public ResponseEntity<Languages> reviseData(@PathVariable("id_languages") Long id_languages, @RequestBody LanguagesDto languagesDto) {
         try {
             Languages languages = languagesService.inputData(id_languages, languagesDto);
@@ -73,7 +73,7 @@ public class LanguagesController {
     }
     
     // 어학사항을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/languages/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_languages") Long id_languages) {
         try {
             languagesService.deleteData(id_languages);

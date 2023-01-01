@@ -27,9 +27,9 @@ public class Career {
     public Long id_career; // 경력사항 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(name = "career_start")
     @NotNull
@@ -66,11 +66,11 @@ public class Career {
         
     }
 
-    public Career(Resume id_resume, LocalDate career_start, LocalDate career_end, String career_working,
+    public Career(Resume resume, LocalDate career_start, LocalDate career_end, String career_working,
             String career_companyname, String career_rank, String career_salary, String career_jobduty,
             String career_detail) {
        
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.career_start = career_start;
         this.career_end = career_end;
         this.career_working = career_working;

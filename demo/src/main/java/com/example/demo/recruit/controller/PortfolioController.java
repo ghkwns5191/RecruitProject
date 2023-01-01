@@ -27,7 +27,7 @@ public class PortfolioController {
     private PortfolioService portfolioService;
 
     // 해당 이력서 조회 시 포트폴리오 내용 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/portfolio/list")
     public ResponseEntity<List<Portfolio>> getList(@RequestParam(required = false) Resume id_resume) {
         try {
             List<Portfolio> portfolio = new ArrayList<Portfolio>();
@@ -40,7 +40,7 @@ public class PortfolioController {
     }
 
     // 해당 포트폴리오 내역만 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/portfolio/detail")
     public ResponseEntity<Portfolio> getPortfolio(@RequestParam(required = false) Long id_portfolio) {
         try {
             Portfolio portfolio = new Portfolio();
@@ -52,7 +52,7 @@ public class PortfolioController {
     }
     
     // 포트폴리오 내용을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/portfolio/input")
     public ResponseEntity<Portfolio> inputData(@RequestBody PortfolioDto portfolioDto) {
         try {
             Portfolio portfolio = portfolioService.inputData(portfolioDto);
@@ -63,7 +63,7 @@ public class PortfolioController {
     }
     
     // 포트폴리오 내역을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/portfolio/revise")
     public ResponseEntity<Portfolio> reviseData(@PathVariable("id_portfolio") Long id_portfolio, @RequestBody PortfolioDto portfolioDto) {
         try {
             Portfolio portfolio = portfolioService.inputData(id_portfolio, portfolioDto);
@@ -74,7 +74,7 @@ public class PortfolioController {
     }
     
     // 포트폴리오 내역을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/portfolio/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_portfolio") Long id_portfolio) {
         try {
             portfolioService.deleteData(id_portfolio);

@@ -9,6 +9,6 @@ import com.example.demo.recruit.entity.Resume;
 
 public interface LanguagesRepository extends JpaRepository<Languages, Long> {
 
-    List<Languages> findById_resume(Resume id_resume);
+    List<Languages> findByResume(Resume resume);
 
 }

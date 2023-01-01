@@ -27,9 +27,9 @@ public class Overseasexperience {
     public Long id_overseasexperience; // 해외경험 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(name = "overseasexperience_start")
     @NotNull
@@ -54,10 +54,10 @@ public class Overseasexperience {
         
     }
 
-    public Overseasexperience(Resume id_resume, LocalDate overseasexperience_start, LocalDate overseasexperience_end,
+    public Overseasexperience(Resume resume, LocalDate overseasexperience_start, LocalDate overseasexperience_end,
             String overseasexperience_staying, String overseasexperience_country, String overseasexperience_detail) {
         
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.overseasexperience_start = overseasexperience_start;
         this.overseasexperience_end = overseasexperience_end;
         this.overseasexperience_staying = overseasexperience_staying;

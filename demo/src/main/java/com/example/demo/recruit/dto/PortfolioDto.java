@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 public class PortfolioDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public String portfolio_title; // 포트폴리오 제목
 
@@ -25,15 +25,17 @@ public class PortfolioDto {
 
     }
 
-    public PortfolioDto(Resume id_resume, String portfolio_title, String portfolio_file1, String portfolio_file2,
+    public PortfolioDto(Resume resume, String portfolio_title, String portfolio_file1, String portfolio_file2,
             String portfolio_url1, String portfolio_url2) {
-
-        this.id_resume = id_resume;
+        
+        this.resume = resume;
         this.portfolio_title = portfolio_title;
         this.portfolio_file1 = portfolio_file1;
         this.portfolio_file2 = portfolio_file2;
         this.portfolio_url1 = portfolio_url1;
         this.portfolio_url2 = portfolio_url2;
     }
+
+    
 
 }

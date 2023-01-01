@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 public class CompanyreviewDto {
 
-    public Company id_company; // 기업 고유값(Foreign key)
+    public Company company; // 기업 고유값(Foreign key)
 
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
 
     public String companyreview_strength; // 기업리뷰 장점
 
@@ -26,16 +26,18 @@ public class CompanyreviewDto {
         
     }
 
-    public CompanyreviewDto(Company id_company, Member id_member, String companyreview_strength,
+    public CompanyreviewDto(Company company, Member member, String companyreview_strength,
             String companyreview_weakness, String companyreview_reviewdetail, Double companyreview_score) {
-       
-        this.id_company = id_company;
-        this.id_member = id_member;
+        super();
+        this.company = company;
+        this.member = member;
         this.companyreview_strength = companyreview_strength;
         this.companyreview_weakness = companyreview_weakness;
         this.companyreview_reviewdetail = companyreview_reviewdetail;
         this.companyreview_score = companyreview_score;
     }
+
+    
     
     
 }

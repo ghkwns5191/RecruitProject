@@ -23,9 +23,9 @@ public class ActivityService {
     private ResumeRepository resumeRepository;
     
     //이력서에 해당하는 활동내용 불러내는 코드
-    public List<Activity> getactivity(Resume id_resume) {
+    public List<Activity> getactivity(Resume resume) {
         List<Activity> activitylist = new ArrayList<Activity>();
-        this.activityRepository.findById_Resume(id_resume).forEach(activitylist::add);
+        this.activityRepository.findByResume(resume).forEach(activitylist::add);
         return activitylist;
 
     }
@@ -40,7 +40,7 @@ public class ActivityService {
     //활동내용을 입력받아 DB에 저장하는 코드
     public Activity inputData(ActivityDto activityDto) {
         Activity activity = this.activityRepository.save(new Activity(
-                activityDto.getId_resume(),
+                activityDto.getResume(),
                 activityDto.getActivity_start(),
                 activityDto.getActivity_end(),
                 activityDto.getActivity_title(),
@@ -72,7 +72,7 @@ public class ActivityService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Activity> activitylist = new ArrayList<Activity>();
-        this.activityRepository.findById_Resume(resume).forEach(activitylist::add);
+        this.activityRepository.findByResume(resume).forEach(activitylist::add);
         this.activityRepository.deleteAll(activitylist);
     }
 }

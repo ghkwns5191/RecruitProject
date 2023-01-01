@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class CareerDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public LocalDate career_start;// 경력 시작일
 
@@ -33,11 +33,11 @@ public class CareerDto {
 
     }
 
-    public CareerDto(Resume id_resume, LocalDate career_start, LocalDate career_end, String career_working,
+    public CareerDto(Resume resume, LocalDate career_start, LocalDate career_end, String career_working,
             String career_companyname, String career_rank, String career_salary, String career_jobduty,
             String career_detail) {
-
-        this.id_resume = id_resume;
+       
+        this.resume = resume;
         this.career_start = career_start;
         this.career_end = career_end;
         this.career_working = career_working;
@@ -47,5 +47,7 @@ public class CareerDto {
         this.career_jobduty = career_jobduty;
         this.career_detail = career_detail;
     }
+
+    
 
 }

@@ -27,7 +27,7 @@ public class CertificateController {
     private CertificateService certificateService;
 
     // 이력서 조회 시 자격증 정보를 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/certificate/list")
     public ResponseEntity<List<Certificate>> getList(@RequestParam(required = false) Resume id_resume) {
 
         try {
@@ -41,7 +41,7 @@ public class CertificateController {
     }
 
     // 해당 자격증 정보만 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/certificate/detail")
     public ResponseEntity<Certificate> getCertificate(@RequestParam(required = false) Long id_certificate) {
         try {
             Certificate certificate = new Certificate();
@@ -53,7 +53,7 @@ public class CertificateController {
     }
 
     // 이력서상 자격증 내역을 입력받아 저정하기 위해 사용
-    @PostMapping
+    @PostMapping("/certificate/input")
     public ResponseEntity<Certificate> inputData(@RequestBody CertificateDto certificateDto) {
         try {
             Certificate certificate = certificateService.inputData(certificateDto);
@@ -64,7 +64,7 @@ public class CertificateController {
     }
     
     // 이력서상 자격증 내역을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/certificate/revise")
     public ResponseEntity<Certificate> reviseData(@PathVariable("id_certificate") Long id_certificate, CertificateDto certificateDto) {
         try {
             Certificate certificate = certificateService.inputData(id_certificate, certificateDto);
@@ -75,7 +75,7 @@ public class CertificateController {
     }
     
     // 이력서상 자격증 내역을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/certificate/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_certificate") Long id_certificate) {
         try {
             certificateService.deleteData(id_certificate);

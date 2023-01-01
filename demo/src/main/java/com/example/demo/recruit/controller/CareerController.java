@@ -27,7 +27,7 @@ public class CareerController {
     private CareerService careerService;
 
     // 이력서 조회 시 경력사항을 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/career/list")
     public ResponseEntity<List<Career>> careerList(@RequestParam(required = false) Resume id_resume) {
         try {
             List<Career> careerList = new ArrayList<Career>();
@@ -40,7 +40,7 @@ public class CareerController {
     }
 
     // 해당 경력사항만 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/career/detail")
     public ResponseEntity<Career> getCareer(@RequestParam(required = false) Long id_career) {
         try {
             Career career = new Career();
@@ -52,7 +52,7 @@ public class CareerController {
     }
 
     // 이력서상 경력사항을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/career/input")
     public ResponseEntity<Career> inputData(@RequestBody CareerDto careerDto) {
         try {
             Career career = careerService.inputData(careerDto);
@@ -63,7 +63,7 @@ public class CareerController {
     }
     
     // 이력서상 경력사항을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/career/revise")
     public ResponseEntity<Career> reviseData(@PathVariable("id_career") Long id_career, @RequestBody CareerDto careerDto) {
         try {
             Career career = careerService.inputData(id_career, careerDto);
@@ -74,7 +74,7 @@ public class CareerController {
     }
     
     // 이력서상 경력사항을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/career/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_career") Long id_career) {
         try {
             careerService.deleteData(id_career);

@@ -27,9 +27,9 @@ public class Notice {
     public Long id_notice; // 공지사항 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_member")
+    @JoinColumn(name = "member")
     @NotNull
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
     
     @Column(length = 200, name = "notice_title")
     @NotNull
@@ -50,10 +50,10 @@ public class Notice {
         
     }
 
-    public Notice(Member id_member, String notice_title, String notice_detail, LocalDate notice_registerdate,
+    public Notice(Member member, String notice_title, String notice_detail, LocalDate notice_registerdate,
             LocalDate notice_modifydate) {
         
-        this.id_member = id_member;
+        this.member = member;
         this.notice_title = notice_title;
         this.notice_detail = notice_detail;
         this.notice_registerdate = notice_registerdate;

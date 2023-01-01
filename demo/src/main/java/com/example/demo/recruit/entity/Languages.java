@@ -27,9 +27,9 @@ public class Languages {
     public Long id_languages; // 어학 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(length = 100, name = "languages_leveltalking")
     @NotNull
@@ -55,11 +55,11 @@ public class Languages {
         
     }
 
-    public Languages(Resume id_resume, String languages_leveltalking, String languages_levelwriting,
+    public Languages(Resume resume, String languages_leveltalking, String languages_levelwriting,
             String languages_test, String languages_score, LocalDate languages_achievedate,
             String languages_certificatenumber) {
        
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.languages_leveltalking = languages_leveltalking;
         this.languages_levelwriting = languages_levelwriting;
         this.languages_test = languages_test;

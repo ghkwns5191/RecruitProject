@@ -27,9 +27,9 @@ public class Recruit {
 	public Long id_recruit; // 채용공고 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_member")
+    @JoinColumn(name = "member")
     @NotNull
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
 	
     @Column(length = 100, name = "recruit_title")
     @NotNull
@@ -73,11 +73,11 @@ public class Recruit {
         
     }
 
-    public Recruit(Member id_member, String recruit_title, String recruit_writer, LocalDate recruit_registerdate,
+    public Recruit(Member member, String recruit_title, String recruit_writer, LocalDate recruit_registerdate,
             LocalDate recruit_modifydate, String recruit_career, String recruit_salary, String recruit_workingdays,
             String recruit_detail, String recruit_phonenumber, String recruit_attn) {
         super();
-        this.id_member = id_member;
+        this.member = member;
         this.recruit_title = recruit_title;
         this.recruit_writer = recruit_writer;
         this.recruit_registerdate = recruit_registerdate;

@@ -25,13 +25,13 @@ public class Companyreview {
     public Long id_companyreview; // 기업리뷰 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_company")
-    public Company id_company; // 기업 고유값(Foreign key)
+    @JoinColumn(name = "company")
+    public Company company; // 기업 고유값(Foreign key)
     
     @ManyToOne
-    @JoinColumn(name = "id_member")
+    @JoinColumn(name = "member")
     @NotNull
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
     
     @Column(length = 100, name = "companyreview_strength")
     @NotNull
@@ -53,11 +53,11 @@ public class Companyreview {
         
     }
 
-    public Companyreview(Company id_company, Member id_member, String companyreview_strength,
+    public Companyreview(Company company, Member member, String companyreview_strength,
             String companyreview_weakness, String companyreview_reviewdetail, Double companyreview_score) {
        
-        this.id_company = id_company;
-        this.id_member = id_member;
+        this.company = company;
+        this.member = member;
         this.companyreview_strength = companyreview_strength;
         this.companyreview_weakness = companyreview_weakness;
         this.companyreview_reviewdetail = companyreview_reviewdetail;

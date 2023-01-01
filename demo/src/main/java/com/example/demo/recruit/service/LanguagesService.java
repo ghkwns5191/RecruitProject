@@ -23,9 +23,9 @@ public class LanguagesService {
     private ResumeRepository resumeRepository;
 
     // 이력서 조회 시 어학사항 함께 조회하는 코드
-    public List<Languages> getlanguages(Resume id_resume) {
+    public List<Languages> getlanguages(Resume resume) {
         List<Languages> languages = new ArrayList<Languages>();
-        languagesRepository.findById_resume(id_resume).forEach(languages::add);
+        languagesRepository.findByResume(resume).forEach(languages::add);
         return languages;
     }
     
@@ -39,7 +39,7 @@ public class LanguagesService {
     // 어학사항을 입력받아 DB 에 저장하는 코드
     public Languages inputData(LanguagesDto languagesDto) {
         Languages languages = this.languagesRepository.save(new Languages(
-                languagesDto.getId_resume(),
+                languagesDto.getResume(),
                 languagesDto.getLanguages_leveltalking(),
                 languagesDto.getLanguages_levelwriting(),
                 languagesDto.getLanguages_test(),
@@ -73,7 +73,7 @@ public class LanguagesService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Languages> languages = new ArrayList<Languages>();
-        this.languagesRepository.findById_resume(resume).forEach(languages::add);
+        this.languagesRepository.findByResume(resume).forEach(languages::add);
         this.languagesRepository.deleteAll(languages);
     }
 }

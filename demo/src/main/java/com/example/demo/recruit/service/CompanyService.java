@@ -35,7 +35,7 @@ public class CompanyService {
     // 회사 정보를 입력받아 DB 에 저장하는 코드
     public Company inputData(CompanyDto companyDto) {
         Company company = this.companyRepository.save(new Company(
-                companyDto.getId_member(), 
+                companyDto.getMember(), 
                 companyDto.getCompany_name(), 
                 companyDto.getCompany_type(), 
                 companyDto.getCompany_address(), 

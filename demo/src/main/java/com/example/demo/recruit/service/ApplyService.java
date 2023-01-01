@@ -20,16 +20,16 @@ public class ApplyService {
     private ApplyRepository applyRepository;
 
     // 해당 회원이 지원한 지원 정보를 불러오는 코드
-    public List<Apply> getapply(Member id_member) {
+    public List<Apply> getapply(Member member) {
         List<Apply> apply = new ArrayList<Apply>();
-        this.applyRepository.findById_member(id_member).forEach(apply::add);
+        this.applyRepository.findByMember(member).forEach(apply::add);
         return apply;
     }
 
     // 해당 채용공고에 지원한 지원 정보를 불러오는 코드
-    public List<Apply> getapply(Recruit id_recruit) {
+    public List<Apply> getapply(Recruit recruit) {
         List<Apply> apply = new ArrayList<Apply>();
-        this.applyRepository.findById_recruit(id_recruit).forEach(apply::add);
+        this.applyRepository.findByRecruit(recruit).forEach(apply::add);
         return apply;
     }
 
@@ -43,8 +43,8 @@ public class ApplyService {
     // 지원 정보를 입력받아 DB 에 저장하는 코드
     public Apply inputData(ApplyDto applyDto) {
         Apply apply = this.applyRepository.save(new Apply(
-                applyDto.getId_member(),
-                applyDto.getId_recruit(), 
+                applyDto.getMember(),
+                applyDto.getRecruit(), 
                 applyDto.getApply_applydate()));
         return apply;
     }

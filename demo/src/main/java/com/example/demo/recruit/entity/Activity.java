@@ -27,9 +27,9 @@ public class Activity {
     public Long id_activity; // 대외활동 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(name = "activity_start")
     @NotNull
@@ -54,10 +54,10 @@ public class Activity {
         
     }
 
-    public Activity(Resume id_resume, LocalDate activity_start, LocalDate activity_end, String activity_title,
+    public Activity(Resume resume, LocalDate activity_start, LocalDate activity_end, String activity_title,
             String activity_holdby, String activity_detail) {
         super();
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.activity_start = activity_start;
         this.activity_end = activity_end;
         this.activity_title = activity_title;

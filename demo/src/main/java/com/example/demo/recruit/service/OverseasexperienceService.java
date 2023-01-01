@@ -23,9 +23,9 @@ public class OverseasexperienceService {
     private ResumeRepository resumeRepository;
     
     // 해당 이력서의 해외경험 리스트를 조회하는 코드
-    public List<Overseasexperience> getoverseasexperience(Resume id_resume) {
+    public List<Overseasexperience> getoverseasexperience(Resume resume) {
         List<Overseasexperience> overseasexperience = new ArrayList<Overseasexperience>();
-        overseasexperienceRepository.findById_resume(id_resume).forEach(overseasexperience::add);
+        overseasexperienceRepository.findByResume(resume).forEach(overseasexperience::add);
         return overseasexperience;
     }
     
@@ -39,7 +39,7 @@ public class OverseasexperienceService {
     // 이력서 작성 시 해외경험을 입력받아 DB 에 저장하는 코드
     public Overseasexperience inputData(OverseasexperienceDto overseasexperienceDto) {
         Overseasexperience overseasexperience = this.overseasexperienceRepository.save(new Overseasexperience(
-                overseasexperienceDto.getId_resume(),
+                overseasexperienceDto.getResume(),
                 overseasexperienceDto.getOverseasexperience_start(),
                 overseasexperienceDto.getOverseasexperience_end(),
                 overseasexperienceDto.getOverseasexperience_staying(),
@@ -79,7 +79,7 @@ public class OverseasexperienceService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Overseasexperience> overseasexperience = new ArrayList<Overseasexperience>();
-        this.overseasexperienceRepository.findById_resume(resume).
+        this.overseasexperienceRepository.findByResume(resume).
         forEach(overseasexperience::add);
         this.overseasexperienceRepository.deleteAll(overseasexperience);
     }

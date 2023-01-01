@@ -27,7 +27,7 @@ public class ActivityController {
     private ActivityService activityService;
 
     // 이력서 조회 시 활동내용을 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/activity/list")
     public ResponseEntity<List<Activity>> getActivity(@RequestParam(required = false) Resume id_resume) {
 
         try {
@@ -41,7 +41,7 @@ public class ActivityController {
     }
 
     // 활동내용만 별도로 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/activity/detail")
     public ResponseEntity<Activity> getActivity(@RequestParam(required = false) Long id_activity) {
         try {
             Activity activity = new Activity();
@@ -53,7 +53,7 @@ public class ActivityController {
     }
 
     // 이력서상 활동내용을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/activity/input")
     public ResponseEntity<Activity> inputData(@RequestBody ActivityDto activityDto) {
         try {
             Activity activity = activityService.inputData(activityDto);
@@ -64,7 +64,7 @@ public class ActivityController {
     }
     
     // 이력서상 활동내용을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/activity/revise")
     public ResponseEntity<Activity> reviseData(@PathVariable("id_activity") Long id_activity, @RequestBody ActivityDto activityDto) {
         try {
             Activity activity = activityService.inputData(id_activity, activityDto);
@@ -75,7 +75,7 @@ public class ActivityController {
     }
     
     // 이력서상 활동내용을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/activity/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_activity") Long id_activity) {
         try {
             activityService.deleteData(id_activity);

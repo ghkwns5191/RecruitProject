@@ -27,7 +27,7 @@ public class OverseasexperienceController {
     private OverseasexperienceService overseasexperienceService;
 
     // 해당 이력성 조회 시 해외경험도 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/overseas/list")
     public ResponseEntity<List<Overseasexperience>> getList(@RequestParam(required = false) Resume id_resume) {
         try {
             List<Overseasexperience> overseasexperience = new ArrayList<Overseasexperience>();
@@ -39,7 +39,7 @@ public class OverseasexperienceController {
     }
     
     // 해당 해외경험만 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/overseas/detail")
     public ResponseEntity<Overseasexperience> getOverseasexperience(@RequestParam(required = false) Long id_overseasexperience) {
         try {
             Overseasexperience overseasexperience = new Overseasexperience();
@@ -51,7 +51,7 @@ public class OverseasexperienceController {
     }
     
     // 해외경험을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/overseas/input")
     public ResponseEntity<Overseasexperience> inputData(@RequestBody OverseasexperienceDto overseasexperienceDto) {
         try {
             Overseasexperience overseasexperience = overseasexperienceService.inputData(overseasexperienceDto);
@@ -62,7 +62,7 @@ public class OverseasexperienceController {
     }
     
     // 해외경험을 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/overseas/revise")
     public ResponseEntity<Overseasexperience> reviseData(@PathVariable("id_overseasexperience") Long id_overseasexperience, @RequestBody OverseasexperienceDto overseasexperienceDto) {
         try {
             Overseasexperience overseasexperience = overseasexperienceService.inputData(id_overseasexperience, overseasexperienceDto);
@@ -73,7 +73,7 @@ public class OverseasexperienceController {
     }
     
     // 해외경험을 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/overseas/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_overseasexperience") Long id_overseasexperience) {
         try {
             overseasexperienceService.deleteData(id_overseasexperience);

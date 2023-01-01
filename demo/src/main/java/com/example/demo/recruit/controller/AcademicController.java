@@ -27,7 +27,7 @@ public class AcademicController {
     public AcademicService academicService;
 
     //이력서 조회 시 학력정보를 함께 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/academic/list")
     public ResponseEntity<List<Academic>> academicList(@RequestParam(required = false) Resume id_resume) {
         try {
             List<Academic> acaList = new ArrayList<Academic>();
@@ -40,7 +40,7 @@ public class AcademicController {
     }
 
     // 학력정보만 별도로 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/academic/detail")
     public ResponseEntity<Academic> getacademic(@RequestParam(required = false) Long id_academic) {
         try {
             Academic academic = new Academic();
@@ -52,7 +52,7 @@ public class AcademicController {
     }
 
     // 이력서상 학력정보를 입력받아 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/academic/input")
     public ResponseEntity<Academic> inputData(@RequestBody AcademicDto academicDto) {
         try {
             Academic academic = academicService.inputData(academicDto);
@@ -63,7 +63,7 @@ public class AcademicController {
     }
     
     // 이력서상 학력정보를 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/academic/revise")
     public ResponseEntity<Academic> reviseData(@PathVariable("id_academic") Long id_academic, @RequestBody AcademicDto academicDto) {
         try {
             Academic academic = academicService.inputData(id_academic, academicDto);
@@ -74,7 +74,7 @@ public class AcademicController {
     }
     
     // 이력서상 학력정보를 삭제하기 위해 사용
-    @DeleteMapping
+    @DeleteMapping("/academic/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_academic") Long id_academic) {
         try {
             academicService.deleteData(id_academic);

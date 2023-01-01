@@ -27,9 +27,9 @@ public class RecruitService {
     }
     
     // 해당 회원이 작성한 채용공고를 불러오는 코드
-    public List<Recruit> getRecruit(Member id_member) {
+    public List<Recruit> getRecruit(Member member) {
         List<Recruit> recruit = new ArrayList<Recruit>();
-        recruitRepository.findById_member(id_member).forEach(recruit::add);
+        recruitRepository.findByMember(member).forEach(recruit::add);
         return recruit;
     }
     
@@ -43,7 +43,7 @@ public class RecruitService {
     // 입력받은 채용공고를 DB 에 저장하는 코드
     public Recruit inputData(RecruitDto recruitDto) {
         Recruit recruit = this.recruitRepository.save(new Recruit(
-                recruitDto.getId_member(),
+                recruitDto.getMember(),
                 recruitDto.getRecruit_title(),
                 recruitDto.getRecruit_writer(),
                 LocalDate.now(),

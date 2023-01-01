@@ -23,9 +23,9 @@ public class CertificateService {
     private ResumeRepository resumeRepository;
 
     // 해당 이력서의 자격증 내역을 조회하는 코드
-    public List<Certificate> getcertificate(Resume id_resume) {
+    public List<Certificate> getcertificate(Resume resume) {
         List<Certificate> certificate = new ArrayList<Certificate>();
-        certificateRepository.findById_resume(id_resume).forEach(certificate::add);
+        certificateRepository.findByResume(resume).forEach(certificate::add);
         return certificate;
     }
     
@@ -39,7 +39,7 @@ public class CertificateService {
     // 자격증 내역을 입력받아 DB 에 저장하는 코드
     public Certificate inputData(CertificateDto certificateDto) {
         Certificate certificate = this.certificateRepository.save(new Certificate(
-                certificateDto.getId_resume(), 
+                certificateDto.getResume(), 
                 certificateDto.getCertificate_achievedate(), 
                 certificateDto.getCertificate_name(), 
                 certificateDto.getCertificate_grade(), 
@@ -71,7 +71,7 @@ public class CertificateService {
         Optional<Resume> resumeData = this.resumeRepository.findById(id_resume);
         Resume resume = resumeData.get();
         List<Certificate> certificate = new ArrayList<Certificate>();
-        this.certificateRepository.findById_resume(resume).forEach(certificate::add);
+        this.certificateRepository.findByResume(resume).forEach(certificate::add);
         this.certificateRepository.deleteAll(certificate);
     }
 }

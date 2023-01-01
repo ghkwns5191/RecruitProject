@@ -19,9 +19,9 @@ public class ResumeService {
     private ResumeRepository resumeRepository;
     
     // 회원의 이력서 정보를 불러오는 코드
-    public List<Resume> getResume(Member id_member) {
+    public List<Resume> getResume(Member member) {
         List<Resume> resume = new ArrayList<Resume>();
-        resumeRepository.findById_member(id_member).forEach(resume::add);
+        resumeRepository.findByMember(member).forEach(resume::add);
         return resume;
     }
 
@@ -35,7 +35,7 @@ public class ResumeService {
     // 이력서 정보를 DB 에 저장하는 코드
     public Resume inputData(ResumeDto resumeDto) {
         Resume resume = this.resumeRepository.save(new Resume(
-                resumeDto.getId_member(),
+                resumeDto.getMember(),
                 resumeDto.getResume_photo(),
                 resumeDto.getResume_cv(),
                 resumeDto.getResume_openforheadhunter()));

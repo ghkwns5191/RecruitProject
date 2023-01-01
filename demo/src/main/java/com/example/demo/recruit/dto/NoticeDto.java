@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class NoticeDto {
 
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
 
     public String notice_title; // 공지사항 제목
 
@@ -25,15 +25,17 @@ public class NoticeDto {
         
     }
 
-    public NoticeDto(Member id_member, String notice_title, String notice_detail, LocalDate notice_registerdate,
+    public NoticeDto(Member member, String notice_title, String notice_detail, LocalDate notice_registerdate,
             LocalDate notice_modifydate) {
         
-        this.id_member = id_member;
+        this.member = member;
         this.notice_title = notice_title;
         this.notice_detail = notice_detail;
         this.notice_registerdate = notice_registerdate;
         this.notice_modifydate = notice_modifydate;
     }
+
+    
     
     
 }

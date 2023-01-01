@@ -27,9 +27,9 @@ public class Certificate {
     public Long id_certificate; // 자격증 고유값
     
     @ManyToOne
-    @JoinColumn(name = "id_resume")
+    @JoinColumn(name = "resume")
     @NotNull
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
     
     @Column(name = "certificate_achievedate")
     @NotNull
@@ -54,10 +54,10 @@ public class Certificate {
         
     }
 
-    public Certificate(Resume id_resume, LocalDate certificate_achievedate, String certificate_name,
+    public Certificate(Resume resume, LocalDate certificate_achievedate, String certificate_name,
             String certificate_grade, String certificate_achievefrom, String certificate_certificatenumber) {
         
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.certificate_achievedate = certificate_achievedate;
         this.certificate_name = certificate_name;
         this.certificate_grade = certificate_grade;

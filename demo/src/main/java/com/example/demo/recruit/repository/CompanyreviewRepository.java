@@ -9,6 +9,6 @@ import com.example.demo.recruit.entity.Companyreview;
 
 public interface CompanyreviewRepository extends JpaRepository<Companyreview, Long> {
 
-    List<Companyreview> findById_company(Company id_company);
+    List<Companyreview> findByCompany(Company company);
 
 }

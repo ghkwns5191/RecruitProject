@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class AcademicDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public LocalDate academic_start;// 학력 시작일
 
@@ -35,11 +35,11 @@ public class AcademicDto {
         // TODO Auto-generated constructor stub
     }
 
-    public AcademicDto(Resume id_resume, LocalDate academic_start, LocalDate academic_end, String academic_studying,
+    public AcademicDto(Resume resume, LocalDate academic_start, LocalDate academic_end, String academic_studying,
             String academic_type, String academic_name, String academic_major, String academic_grade,
             String academic_gradefull, String academic_detail) {
         super();
-        this.id_resume = id_resume;
+        this.resume = resume;
         this.academic_start = academic_start;
         this.academic_end = academic_end;
         this.academic_studying = academic_studying;

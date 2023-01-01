@@ -9,6 +9,6 @@ import com.example.demo.recruit.entity.Resume;
 
 public interface EducationRepository extends JpaRepository<Education, Long> {
 
-    List<Education> findById_resume(Resume id_resume);
+    List<Education> findByResume(Resume resume);
 
 }

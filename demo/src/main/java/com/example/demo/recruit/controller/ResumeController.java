@@ -59,11 +59,11 @@ public class ResumeController {
     private PortfolioService portfolioService;
     
     // 해당 회원의 이력서를 조회하기 위해 사용
-    @GetMapping
-    public ResponseEntity<List<Resume>> getList(@RequestParam(required = false) Member id_member) {
+    @GetMapping("/resume/listbymember")
+    public ResponseEntity<List<Resume>> getList(@RequestParam(required = false) Member member) {
         try {
             List<Resume> resume = new ArrayList<Resume>();
-            resume = resumeService.getResume(id_member);
+            resume = resumeService.getResume(member);
             return new ResponseEntity<>(resume, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,7 +71,7 @@ public class ResumeController {
     }
     
     // 해당 이력서 정보를 조회하기 위해 사용
-    @GetMapping
+    @GetMapping("/resume/detail")
     public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id_resume) {
         try {
             Resume resume = new Resume();
@@ -83,7 +83,7 @@ public class ResumeController {
     }
     
     // 이력서를 작성받아 DB 에 저장하기 위해 사용
-    @PostMapping
+    @PostMapping("/resume/input")
     public ResponseEntity<Resume> inputData(@RequestBody ResumeDto resumeDto) {
         try {
             Resume resume = resumeService.inputData(resumeDto);
@@ -94,7 +94,7 @@ public class ResumeController {
     }
     
     // 이력서를 수정하기 위해 사용
-    @PutMapping
+    @PutMapping("/resume/revise")
     public ResponseEntity<Resume> reviseData(@PathVariable("id_resume") Long id_resume, @RequestBody ResumeDto resumeDto) {
         try {
             Resume resume = resumeService.inputData(id_resume, resumeDto);
@@ -106,7 +106,7 @@ public class ResumeController {
     
     // 이력서를 삭제하기 위해 사용
     // 이력서 하위에 있는 세부 항목들 모두 삭제해야 함.
-    @DeleteMapping
+    @DeleteMapping("/resume/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_resume") Long id_resume) {
         try {
             academicService.deleteResume(id_resume);

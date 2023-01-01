@@ -10,8 +10,8 @@ import com.example.demo.recruit.entity.Recruit;
 
 public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
-    List<Apply> findById_member(Member id_member);
+    List<Apply> findByMember(Member Member);
 
-    List<Apply> findById_recruit(Recruit id_recruit);
+    List<Apply> findByRecruit(Recruit Recruit);
 
 }

@@ -12,9 +12,9 @@ import lombok.Setter;
 @Setter
 public class ApplyDto {
 
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
 
-    public Recruit id_recruit; // 채용공고 고유값(Foreign key)
+    public Recruit recruit; // 채용공고 고유값(Foreign key)
 
     public LocalDate apply_applydate; // 지원날짜
 
@@ -22,11 +22,15 @@ public class ApplyDto {
 
     }
 
-    public ApplyDto(Member id_member, Recruit id_recruit, LocalDate apply_applydate) {
-
-        this.id_member = id_member;
-        this.id_recruit = id_recruit;
+    public ApplyDto(Member member, Recruit recruit, LocalDate apply_applydate) {
+        
+        this.member = member;
+        this.recruit = recruit;
         this.apply_applydate = apply_applydate;
     }
+
+    
+
+    
 
 }

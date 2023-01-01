@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class OverseasexperienceDto {
 
-    public Resume id_resume; // 이력서 고유값(Foreign key)
+    public Resume resume; // 이력서 고유값(Foreign key)
 
     public LocalDate overseasexperience_start; // 해외경험 시작일
 
@@ -27,16 +27,17 @@ public class OverseasexperienceDto {
 
     }
 
-    public OverseasexperienceDto(Resume id_resume, LocalDate overseasexperience_start,
-            LocalDate overseasexperience_end, String overseasexperience_staying, String overseasexperience_country,
-            String overseasexperience_detail) {
-
-        this.id_resume = id_resume;
+    public OverseasexperienceDto(Resume resume, LocalDate overseasexperience_start, LocalDate overseasexperience_end,
+            String overseasexperience_staying, String overseasexperience_country, String overseasexperience_detail) {
+        
+        this.resume = resume;
         this.overseasexperience_start = overseasexperience_start;
         this.overseasexperience_end = overseasexperience_end;
         this.overseasexperience_staying = overseasexperience_staying;
         this.overseasexperience_country = overseasexperience_country;
         this.overseasexperience_detail = overseasexperience_detail;
     }
+
+    
 
 }

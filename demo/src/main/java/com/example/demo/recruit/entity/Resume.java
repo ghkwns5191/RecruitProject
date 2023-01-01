@@ -25,9 +25,9 @@ public class Resume {
     public Long id_resume; // 이력서 고유값
     
     @OneToOne
-    @JoinColumn(name = "id_member")
+    @JoinColumn(name = "member")
     @NotNull
-    public Member id_member; // 회원 고유값(Foreign key)
+    public Member member; // 회원 고유값(Foreign key)
     
     @Column(length = 3000, name = "resume_photo")
     @NotNull
@@ -44,9 +44,9 @@ public class Resume {
         
     }
 
-    public Resume(Member id_member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
+    public Resume(Member member, String resume_photo, String resume_cv, String resume_openforheadhunter) {
         super();
-        this.id_member = id_member;
+        this.member = member;
         this.resume_photo = resume_photo;
         this.resume_cv = resume_cv;
         this.resume_openforheadhunter = resume_openforheadhunter;

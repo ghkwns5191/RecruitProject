@@ -19,7 +19,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping
+    @GetMapping("/member/list")
     public ResponseEntity<List<Member>> getList() {
         try {
             List<Member> memberList = new ArrayList<Member>();
@@ -30,7 +30,7 @@ public class MemberController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/member/detail")
     public ResponseEntity<Member> getMember(@RequestParam(required = false) Long id_member) {
         try {
             Member member = new Member();
