@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.CareerDto;
@@ -20,11 +21,15 @@ import com.example.demo.recruit.entity.Career;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.CareerService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
+@RequestMapping("/")
 public class CareerController {
 
     @Autowired
-    private CareerService careerService;
+    private final CareerService careerService;
 
     // 이력서 조회 시 경력사항을 조회하기 위해 사용
     @GetMapping("/career/list")
@@ -41,10 +46,10 @@ public class CareerController {
 
     // 해당 경력사항만 조회하기 위해 사용
     @GetMapping("/career/detail")
-    public ResponseEntity<Career> getCareer(@RequestParam(required = false) Long id_career) {
+    public ResponseEntity<Career> getCareer(@RequestParam(required = false) Long id) {
         try {
             Career career = new Career();
-            career = careerService.getcareer(id_career);
+            career = careerService.getcareer(id);
             return new ResponseEntity<>(career, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,9 +69,9 @@ public class CareerController {
     
     // 이력서상 경력사항을 수정하기 위해 사용
     @PutMapping("/career/revise")
-    public ResponseEntity<Career> reviseData(@PathVariable("id_career") Long id_career, @RequestBody CareerDto careerDto) {
+    public ResponseEntity<Career> reviseData(@PathVariable("id") Long id, @RequestBody CareerDto careerDto) {
         try {
-            Career career = careerService.inputData(id_career, careerDto);
+            Career career = careerService.inputData(id, careerDto);
             return new ResponseEntity<>(career, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,9 +80,9 @@ public class CareerController {
     
     // 이력서상 경력사항을 삭제하기 위해 사용
     @DeleteMapping("/career/delete")
-    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_career") Long id_career) {
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
-            careerService.deleteData(id_career);
+            careerService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);

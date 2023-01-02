@@ -21,7 +21,7 @@ public class CareerDto {
 
     public String companyname;// 회사 이름
 
-    public String rank;// 근무 직급
+    public String ranks;// 근무 직급
 
     public String salary;// 연봉/월급정보
 
@@ -33,7 +33,7 @@ public class CareerDto {
 
     }
 
-    public CareerDto(Resume resume, LocalDate start, LocalDate end, String working, String companyname, String rank,
+    public CareerDto(Resume resume, LocalDate start, LocalDate end, String working, String companyname, String ranks,
             String salary, String jobduty, String detail) {
 
         this.resume = resume;
@@ -41,7 +41,7 @@ public class CareerDto {
         this.end = end;
         this.working = working;
         this.companyname = companyname;
-        this.rank = rank;
+        this.ranks = ranks;
         this.salary = salary;
         this.jobduty = jobduty;
         this.detail = detail;

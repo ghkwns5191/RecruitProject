@@ -8,9 +8,13 @@ import com.example.demo.recruit.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     
-    Optional<Member> findByUsername(String member_username);
+    Optional<Member> findByUsername(String username);
     
-    Boolean existsByMember_username(String member_username);
+    Boolean existsByUsername(String username);
     
-    Boolean existsByMember_email(String member_email);
+    Boolean existsByEmail(String email);
+
+    Optional<Member> findByPhone(String phone);
+
+    Optional<Member> findByEmail(String email);
 }

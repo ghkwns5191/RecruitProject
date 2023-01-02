@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.CompanyDto;
@@ -24,13 +25,14 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/")
 public class CompanyController {
 
     @Autowired
     private final CompanyService companyService;
 
     @Autowired
-    private CompanyreviewService companyreviewService;
+    private final CompanyreviewService companyreviewService;
 
     // 모든 기업 리스트를 조회하기 위해 사용
     @GetMapping("/company/list")
@@ -47,10 +49,10 @@ public class CompanyController {
 
     // 해당 기업의 정보를 조회하기 위해 사용
     @GetMapping("/company/detail")
-    public ResponseEntity<Company> getCompany(@RequestParam(required = false) Long id_company) {
+    public ResponseEntity<Company> getCompany(@RequestParam(required = false) Long id) {
         try {
             Company company = new Company();
-            company = companyService.getcompany(id_company);
+            company = companyService.getcompany(id);
             return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,9 +72,9 @@ public class CompanyController {
 
     // 기업정보를 수정하기 위해 사용
     @PutMapping("/company/revise")
-    public ResponseEntity<Company> reviseData(@PathVariable("id_company") Long id_company, CompanyDto companyDto) {
+    public ResponseEntity<Company> reviseData(@PathVariable("id") Long id, CompanyDto companyDto) {
         try {
-            Company company = companyService.inputData(id_company, companyDto);
+            Company company = companyService.inputData(id, companyDto);
             return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -81,10 +83,10 @@ public class CompanyController {
 
     // 기업정보를 삭제하기 위해 사용
     @DeleteMapping("/company/delete")
-    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_company") Long id_company) {
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
-            companyreviewService.deleteCompany(id_company);
-            companyService.deleteData(id_company);
+            companyreviewService.deleteCompany(id);
+            companyService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

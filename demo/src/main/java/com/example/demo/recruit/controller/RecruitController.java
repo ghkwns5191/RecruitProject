@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.RecruitDto;
@@ -20,11 +21,15 @@ import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.service.RecruitService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequestMapping("/")
+@RequiredArgsConstructor
 public class RecruitController {
 
     @Autowired
-    private RecruitService recruitService;
+    private final RecruitService recruitService;
 
     // 채용공고 리스트를 조회하기 위해 사용
     @GetMapping("/recruit/list")
@@ -52,9 +57,9 @@ public class RecruitController {
     
     // 채용공고 단수 조회를 위해 사용
     @GetMapping("/recruit/detail")
-    public ResponseEntity<Recruit> getData(@RequestParam(required = false) Long id_recruit) {
+    public ResponseEntity<Recruit> getData(@RequestParam(required = false) Long id) {
         try {
-            Recruit recruit = recruitService.getRecruit(id_recruit);
+            Recruit recruit = recruitService.getRecruit(id);
             return new ResponseEntity<>(recruit, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,9 +79,9 @@ public class RecruitController {
     
     // 채용공고를 수정하기 위해 사용
     @PutMapping("/recruit/revise")
-    public ResponseEntity<Recruit> reviseData(@PathVariable("id_recruit") Long id_recruit, @RequestBody RecruitDto recruitDto) {
+    public ResponseEntity<Recruit> reviseData(@PathVariable("id") Long id, @RequestBody RecruitDto recruitDto) {
         try {
-            Recruit recruit = recruitService.inputData(id_recruit, recruitDto);
+            Recruit recruit = recruitService.inputData(id, recruitDto);
             return new ResponseEntity<>(recruit, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -85,9 +90,9 @@ public class RecruitController {
     
     // 채용공고를 삭제하기 위해 사용
     @DeleteMapping("/recruit/delete")
-    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_recruit") Long id_recruit) {
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
-            recruitService.deleteData(id_recruit);
+            recruitService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

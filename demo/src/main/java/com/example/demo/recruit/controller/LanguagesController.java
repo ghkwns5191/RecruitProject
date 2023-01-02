@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.LanguagesDto;
@@ -20,18 +21,22 @@ import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.LanguagesService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequestMapping("/")
+@RequiredArgsConstructor
 public class LanguagesController {
 
     @Autowired
-    private LanguagesService languagesService;
+    private final LanguagesService languagesService;
     
     // 해당 이력서 조회 시 어학사항 함께 조회하기 위해 사용
     @GetMapping("/languages/list")
-    public ResponseEntity<List<Languages>> getList(@RequestParam(required = false) Resume id_resume) {
+    public ResponseEntity<List<Languages>> getList(@RequestParam(required = false) Resume resume) {
         try {
             List<Languages> languagesList = new ArrayList<Languages>();
-            languagesList = languagesService.getlanguages(id_resume);
+            languagesList = languagesService.getlanguages(resume);
             return new ResponseEntity<>(languagesList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -40,10 +45,10 @@ public class LanguagesController {
     
     // 해당 어학사항만 조회하기 위해 사용
     @GetMapping("/languages/detail")
-    public ResponseEntity<Languages> getLanguages(@RequestParam(required = false) Long id_languages) {
+    public ResponseEntity<Languages> getLanguages(@RequestParam(required = false) Long id) {
         try {
             Languages languages = new Languages();
-            languages = languagesService.getlanguages(id_languages);
+            languages = languagesService.getlanguages(id);
             return new ResponseEntity<>(languages, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,9 +68,9 @@ public class LanguagesController {
     
     // 어학사항을 수정하기 위해 사용
     @PutMapping("/languages/revise")
-    public ResponseEntity<Languages> reviseData(@PathVariable("id_languages") Long id_languages, @RequestBody LanguagesDto languagesDto) {
+    public ResponseEntity<Languages> reviseData(@PathVariable("id") Long id, @RequestBody LanguagesDto languagesDto) {
         try {
-            Languages languages = languagesService.inputData(id_languages, languagesDto);
+            Languages languages = languagesService.inputData(id, languagesDto);
             return new ResponseEntity<>(languages, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,9 +79,9 @@ public class LanguagesController {
     
     // 어학사항을 삭제하기 위해 사용
     @DeleteMapping("/languages/delete")
-    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_languages") Long id_languages) {
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_languages") Long id) {
         try {
-            languagesService.deleteData(id_languages);
+            languagesService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

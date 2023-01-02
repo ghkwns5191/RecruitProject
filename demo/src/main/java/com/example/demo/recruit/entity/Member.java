@@ -1,18 +1,14 @@
 package com.example.demo.recruit.entity;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -23,9 +19,9 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "member", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "member_username"),
-        @UniqueConstraint(columnNames = "member_phone"),
-        @UniqueConstraint(columnNames = "member_email")
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "phone"),
+        @UniqueConstraint(columnNames = "email")
 })
 @Entity
 public class Member {
@@ -66,17 +62,16 @@ public class Member {
     @Column(name = "registerdate")
     public LocalDate registerdate; // 회원 가입일
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "member_role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id_role"))
-    private Set<Role> member_role = new HashSet<>(); // 회원 자격(사용자 or 관리자)
+    @Enumerated(EnumType.STRING)
+    private ERole role;
 
     public Member() {
 
     }
 
     public Member(@NotNull String sort, @NotNull String username, @NotNull String password, @NotNull String name,
-            String phone, String email, LocalDate birthday, String address, LocalDate registerdate) {
-
+            String phone, String email, LocalDate birthday, String address, LocalDate registerdate, ERole role) {
+        
         this.sort = sort;
         this.username = username;
         this.password = password;
@@ -86,6 +81,9 @@ public class Member {
         this.birthday = birthday;
         this.address = address;
         this.registerdate = registerdate;
+        this.role = role;
     }
+    
+    
 
 }

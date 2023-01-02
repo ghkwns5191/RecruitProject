@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.ResumeDto;
@@ -28,35 +29,39 @@ import com.example.demo.recruit.service.OverseasexperienceService;
 import com.example.demo.recruit.service.PortfolioService;
 import com.example.demo.recruit.service.ResumeService;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequestMapping("/")
+@RequiredArgsConstructor
 public class ResumeController {
 
     @Autowired
-    private ResumeService resumeService;
+    private final ResumeService resumeService;
     
     @Autowired
-    private AcademicService academicService;
+    private final AcademicService academicService;
     
     @Autowired
-    private ActivityService activityService;
+    private final ActivityService activityService;
     
     @Autowired
-    private CareerService careerService;
+    private final CareerService careerService;
     
     @Autowired
-    private CertificateService certificateService;
+    private final CertificateService certificateService;
     
     @Autowired
-    private EducationService educationService;
+    private final EducationService educationService;
     
     @Autowired
-    private LanguagesService languagesService;
+    private final LanguagesService languagesService;
     
     @Autowired
-    private OverseasexperienceService overseasexperienceService;
+    private final OverseasexperienceService overseasexperienceService;
     
     @Autowired
-    private PortfolioService portfolioService;
+    private final PortfolioService portfolioService;
     
     // 해당 회원의 이력서를 조회하기 위해 사용
     @GetMapping("/resume/listbymember")
@@ -72,10 +77,10 @@ public class ResumeController {
     
     // 해당 이력서 정보를 조회하기 위해 사용
     @GetMapping("/resume/detail/{id_resume}")
-    public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id_resume) {
+    public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id) {
         try {
             Resume resume = new Resume();
-            resume = resumeService.getResume(id_resume);
+            resume = resumeService.getResume(id);
             return new ResponseEntity<>(resume, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -95,9 +100,9 @@ public class ResumeController {
     
     // 이력서를 수정하기 위해 사용
     @PutMapping("/resume/revise")
-    public ResponseEntity<Resume> reviseData(@PathVariable("id_resume") Long id_resume, @RequestBody ResumeDto resumeDto) {
+    public ResponseEntity<Resume> reviseData(@PathVariable("id") Long id, @RequestBody ResumeDto resumeDto) {
         try {
-            Resume resume = resumeService.inputData(id_resume, resumeDto);
+            Resume resume = resumeService.inputData(id, resumeDto);
             return new ResponseEntity<>(resume, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -107,17 +112,17 @@ public class ResumeController {
     // 이력서를 삭제하기 위해 사용
     // 이력서 하위에 있는 세부 항목들 모두 삭제해야 함.
     @DeleteMapping("/resume/delete")
-    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_resume") Long id_resume) {
+    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
-            academicService.deleteResume(id_resume);
-            activityService.deleteResume(id_resume);
-            careerService.deleteResume(id_resume);
-            certificateService.deleteResume(id_resume);
-            educationService.deleteResume(id_resume);
-            languagesService.deleteResume(id_resume);
-            overseasexperienceService.deleteResume(id_resume);
-            portfolioService.deleteResume(id_resume);
-            resumeService.deleteData(id_resume);
+            academicService.deleteResume(id);
+            activityService.deleteResume(id);
+            careerService.deleteResume(id);
+            certificateService.deleteResume(id);
+            educationService.deleteResume(id);
+            languagesService.deleteResume(id);
+            overseasexperienceService.deleteResume(id);
+            portfolioService.deleteResume(id);
+            resumeService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

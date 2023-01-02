@@ -47,7 +47,7 @@ public class CareerService {
                 careerDto.getEnd(), 
                 careerDto.getWorking(), 
                 careerDto.getCompanyname(), 
-                careerDto.getRank(), 
+                careerDto.getRanks(), 
                 careerDto.getSalary(), 
                 careerDto.getJobduty(), 
                 careerDto.getDetail()));
@@ -62,7 +62,7 @@ public class CareerService {
         career.setEnd(careerDto.getEnd());
         career.setWorking(careerDto.getWorking());
         career.setCompanyname(careerDto.getCompanyname());
-        career.setRank(careerDto.getRank());
+        career.setRanks(careerDto.getRanks());
         career.setSalary(careerDto.getSalary());
         career.setJobduty(careerDto.getJobduty());
         career.setDetail(careerDto.getDetail());

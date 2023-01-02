@@ -47,9 +47,9 @@ public class Career {
     @NotNull
     public String companyname;// 회사 이름
 
-    @Column(length = 100, name = "rank")
+    @Column(length = 100, name = "ranks")
     @NotNull
-    public String rank;// 근무 직급
+    public String ranks;// 근무 직급
 
     @Column(length = 100, name = "salary")
     @NotNull
@@ -67,7 +67,7 @@ public class Career {
     }
 
     public Career(@NotNull Resume resume, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String working,
-            @NotNull String companyname, @NotNull String rank, @NotNull String salary, @NotNull String jobduty,
+            @NotNull String companyname, @NotNull String ranks, @NotNull String salary, @NotNull String jobduty,
             String detail) {
 
         this.resume = resume;
@@ -75,7 +75,7 @@ public class Career {
         this.end = end;
         this.working = working;
         this.companyname = companyname;
-        this.rank = rank;
+        this.ranks = ranks;
         this.salary = salary;
         this.jobduty = jobduty;
         this.detail = detail;
