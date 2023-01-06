@@ -27,7 +27,7 @@ public class Imgfile {
     @Column(name = "imgname")
     private String imgname;
     
-    @Column(name = "oriname")
+    @Column(name = "oriname") 
     private String oriname;
     
     @Column(name = "imgurl")
