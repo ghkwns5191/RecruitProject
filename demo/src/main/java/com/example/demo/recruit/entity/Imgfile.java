@@ -56,5 +56,11 @@ public class Imgfile {
         this.imgurl = imgurl;
     }
     
+    public void updateimg(String oriname, String  imgname, String imgurl) {
+        this.oriname = oriname;
+        this.imgname = imgname;
+        this.imgurl = imgurl;
+    }
+    
     
 }
