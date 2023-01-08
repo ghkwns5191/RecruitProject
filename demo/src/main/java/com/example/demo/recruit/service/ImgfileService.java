@@ -21,7 +21,7 @@ public class ImgfileService {
 
     private final FileService fileService;
 
-    public String saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {
+    public void saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {
         String orifilename = imgfileFile.getOriginalFilename();
         String imgname = "";
         String imgurl = "";
@@ -35,7 +35,7 @@ public class ImgfileService {
         // 이미지 정보 저장
         imgfile.updateimg(orifilename, imgname, imgurl);
         imgfileRepository.save(imgfile);
-        return imgurl;
+        
     }
 
 }

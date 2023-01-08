@@ -42,15 +42,15 @@ public class ResumeService {
 
     // 이력서 정보를 DB 에 저장하는 코드
     public Resume inputData(ResumeDto resumeDto, MultipartFile imgfileList) throws Exception {
-        Resume resume = this.resumeRepository.save(new Resume(
+        Resume resume = resumeRepository.save(new Resume(
                 resumeDto.getMember(),
                 resumeDto.getCv(),
                 resumeDto.getOpenforheadhunter()));
-        
-            Imgfile imgfile = new Imgfile();
-            imgfile.setResume(resume);
-            imgfileService.saveImgfile(imgfile, imgfileList);
-        
+
+        Imgfile imgfile = new Imgfile();
+        imgfile.setResume(resume);
+        imgfileService.saveImgfile(imgfile, imgfileList);
+
         return resume;
     }
 
@@ -60,13 +60,13 @@ public class ResumeService {
         Resume resume = resumeData.get();
         resume.setCv(resumeDto.getCv());
         resume.setOpenforheadhunter(resumeDto.getOpenforheadhunter());
-        this.resumeRepository.save(resume);
+        resumeRepository.save(resume);
         return resume;
     }
 
     // DB에 저당된 이력서를 삭제하는 코드
     public void deleteData(Long id) {
-        this.resumeRepository.deleteById(id);
+        resumeRepository.deleteById(id);
     }
 
 }
