@@ -5,26 +5,25 @@ import com.example.demo.recruit.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class ResumeDto {
 
-    public Member member; // 회원 고유값(Foreign key)
+    private Member member; // 회원 고유값(Foreign key)
 
-    public String photo;// 이력서 사진
+    private String cv;// 이력서 자기소개서
 
-    public String cv;// 이력서 자기소개서
-
-    public String openforheadhunter;// 이력서 공개여부
-
+    private String openforheadhunter;// 이력서 공개여부
+    
     public ResumeDto() {
-
+        // TODO Auto-generated constructor stub
     }
 
-    public ResumeDto(Member member, String photo, String cv, String openforheadhunter) {
+    
+
+    public ResumeDto(Member member, String cv, String openforheadhunter) {
 
         this.member = member;
-        this.photo = photo;
         this.cv = cv;
         this.openforheadhunter = openforheadhunter;
     }

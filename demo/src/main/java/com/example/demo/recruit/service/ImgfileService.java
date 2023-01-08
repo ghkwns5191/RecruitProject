@@ -16,27 +16,26 @@ public class ImgfileService {
 
     @Value("${ImgfileLocation}")
     private String ImgfileLocation;
-    
+
     private final ImgfileRepository imgfileRepository;
-    
+
     private final FileService fileService;
-    
-    public void saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {
+
+    public String saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {
         String orifilename = imgfileFile.getOriginalFilename();
         String imgname = "";
         String imgurl = "";
-        
-     // 파일 업로드 파트
-        if(!StringUtils.isEmpty(orifilename)) {
+
+        // 파일 업로드 파트
+        if (!StringUtils.isEmpty(orifilename)) {
             imgname = fileService.uploadFile(ImgfileLocation, orifilename, imgfileFile.getBytes());
             imgurl = "/이미지 저장위치/" + imgname;
         }
-        
+
         // 이미지 정보 저장
         imgfile.updateimg(orifilename, imgname, imgurl);
         imgfileRepository.save(imgfile);
+        return imgurl;
     }
-    
-    
-    
+
 }

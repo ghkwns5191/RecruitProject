@@ -52,4 +52,13 @@ public class Resume {
         this.openforheadhunter = openforheadhunter;
     }
 
+    public Resume(@NotNull Member member, String cv, @NotNull String openforheadhunter) {
+        
+        this.member = member;
+        this.cv = cv;
+        this.openforheadhunter = openforheadhunter;
+    }
+    
+    
+
 }
