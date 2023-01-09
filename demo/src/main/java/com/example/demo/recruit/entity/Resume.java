@@ -29,10 +29,6 @@ public class Resume {
     @NotNull
     public Member member; // 회원 고유값(Foreign key)
 
-    @Column(length = 3000, name = "photo")
-    @NotNull
-    public String photo;// 이력서 사진
-
     @Column(length = 4000, name = "cv")
     public String cv;// 이력서 자기소개서
 
@@ -44,21 +40,11 @@ public class Resume {
 
     }
 
-    public Resume(@NotNull Member member, @NotNull String photo, String cv, @NotNull String openforheadhunter) {
-        super();
-        this.member = member;
-        this.photo = photo;
-        this.cv = cv;
-        this.openforheadhunter = openforheadhunter;
-    }
-
     public Resume(@NotNull Member member, String cv, @NotNull String openforheadhunter) {
-        
+
         this.member = member;
         this.cv = cv;
         this.openforheadhunter = openforheadhunter;
     }
-    
-    
 
 }

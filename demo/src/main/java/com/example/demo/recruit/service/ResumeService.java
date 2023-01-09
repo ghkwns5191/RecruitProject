@@ -1,7 +1,5 @@
 package com.example.demo.recruit.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +25,9 @@ public class ResumeService {
     private final ImgfileService imgfileService;
 
     // 회원의 이력서 정보를 불러오는 코드
-    public List<Resume> getResume(Member member) {
-        List<Resume> resume = new ArrayList<Resume>();
-        resumeRepository.findByMember(member).forEach(resume::add);
+    public Resume getResume(Member member) {
+        Optional<Resume> resumeData = resumeRepository.findByMember(member);
+        Resume resume = resumeData.get();
         return resume;
     }
 
@@ -37,6 +35,7 @@ public class ResumeService {
     public Resume getResume(Long id) {
         Optional<Resume> resumeData = resumeRepository.findById(id);
         Resume resume = resumeData.get();
+        
         return resume;
     }
 

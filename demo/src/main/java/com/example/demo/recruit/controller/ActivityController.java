@@ -67,7 +67,7 @@ public class ActivityController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 활동내용을 수정하기 위해 사용
     @PutMapping("/activity/revise")
     public ResponseEntity<Activity> reviseData(@PathVariable("id") Long id, @RequestBody ActivityDto activityDto) {
@@ -78,7 +78,7 @@ public class ActivityController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 활동내용을 삭제하기 위해 사용
     @DeleteMapping("/activity/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {

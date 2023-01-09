@@ -1,11 +1,14 @@
 package com.example.demo.recruit.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
 import com.example.demo.recruit.entity.Imgfile;
+import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.ImgfileRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,12 @@ public class ImgfileService {
         imgfile.updateimg(orifilename, imgname, imgurl);
         imgfileRepository.save(imgfile);
         
+    }
+    
+    public Imgfile findImg(Resume resume) {
+        Optional<Imgfile> imgfileData = imgfileRepository.findByResume(resume);
+        Imgfile imgfile = imgfileData.get();
+        return imgfile;
     }
 
 }

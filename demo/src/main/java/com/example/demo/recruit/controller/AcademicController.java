@@ -31,7 +31,7 @@ public class AcademicController {
     @Autowired
     public final AcademicService academicService;
 
-    //이력서 조회 시 학력정보를 함께 조회하기 위해 사용
+    // 이력서 조회 시 학력정보를 함께 조회하기 위해 사용
     @GetMapping("/academic/list")
     public ResponseEntity<List<Academic>> academicList(@RequestParam(required = false) Resume resume) {
         try {
@@ -66,7 +66,7 @@ public class AcademicController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 학력정보를 수정하기 위해 사용
     @PutMapping("/academic/revise")
     public ResponseEntity<Academic> reviseData(@PathVariable("id") Long id, @RequestBody AcademicDto academicDto) {
@@ -77,14 +77,14 @@ public class AcademicController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 학력정보를 삭제하기 위해 사용
     @DeleteMapping("/academic/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             academicService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

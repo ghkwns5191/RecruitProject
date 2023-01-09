@@ -77,7 +77,7 @@ public class ApplyController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 지원 취소를 진행하기 위해 사용
     @DeleteMapping("/apply/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
@@ -87,8 +87,7 @@ public class ApplyController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
-    
-    
+
 }

@@ -1,8 +1,5 @@
 package com.example.demo.recruit.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,23 +65,20 @@ public class ResumeController {
     @Autowired
     private final PortfolioService portfolioService;
 
-    // 해당 회원의 이력서를 조회하기 위해 사용
+    // 해당 회원의 이력서 작성페이지를 띄우기 위해 사용
     @GetMapping("/resume/new")
     public String getList(Model model) {
         model.addAttribute("resumeDto", new ResumeDto());
         return "이력서 작성 페이지";
     }
-    
+
     // 해당 회원의 이력서를 조회하기 위해 사용
-    @GetMapping("/resume/listbymember")
-    public ResponseEntity<List<Resume>> getList(@RequestParam(required = false) Member member) {
-        try {
-            List<Resume> resume = new ArrayList<Resume>();
-            resume = resumeService.getResume(member);
-            return new ResponseEntity<>(resume, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/resume/{memberid}")
+    public String getList(@RequestParam(required = false) Member member, Model model) {
+
+        Resume resume = resumeService.getResume(member);
+        model.addAttribute("resume", resume);
+        return "이력서 조회 페이지";
     }
 
     // 해당 이력서 정보를 조회하기 위해 사용

@@ -67,7 +67,7 @@ public class CertificateController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 자격증 내역을 수정하기 위해 사용
     @PutMapping("/certificate/revise")
     public ResponseEntity<Certificate> reviseData(@PathVariable("id") Long id, CertificateDto certificateDto) {
@@ -78,7 +78,7 @@ public class CertificateController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 자격증 내역을 삭제하기 위해 사용
     @DeleteMapping("/certificate/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {

@@ -14,12 +14,10 @@ public class ResumeDto {
     private String cv;// 이력서 자기소개서
 
     private String openforheadhunter;// 이력서 공개여부
-    
+
     public ResumeDto() {
         // TODO Auto-generated constructor stub
     }
-
-    
 
     public ResumeDto(Member member, String cv, String openforheadhunter) {
 

@@ -18,25 +18,25 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Imgfile {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    
+
     @Column(name = "imgname")
     private String imgname;
-    
-    @Column(name = "oriname") 
+
+    @Column(name = "oriname")
     private String oriname;
-    
+
     @Column(name = "imgurl")
     private String imgurl;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "resume")
     private Resume resume;
-    
+
     public Imgfile() {
         // TODO Auto-generated constructor stub
     }
@@ -55,12 +55,11 @@ public class Imgfile {
         this.oriname = oriname;
         this.imgurl = imgurl;
     }
-    
-    public void updateimg(String oriname, String  imgname, String imgurl) {
+
+    public void updateimg(String oriname, String imgname, String imgurl) {
         this.oriname = oriname;
         this.imgname = imgname;
         this.imgurl = imgurl;
     }
-    
-    
+
 }

@@ -66,7 +66,7 @@ public class CareerController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 경력사항을 수정하기 위해 사용
     @PutMapping("/career/revise")
     public ResponseEntity<Career> reviseData(@PathVariable("id") Long id, @RequestBody CareerDto careerDto) {
@@ -77,7 +77,7 @@ public class CareerController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 이력서상 경력사항을 삭제하기 위해 사용
     @DeleteMapping("/career/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
@@ -85,7 +85,7 @@ public class CareerController {
             careerService.deleteData(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
-            return new ResponseEntity<>( HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
