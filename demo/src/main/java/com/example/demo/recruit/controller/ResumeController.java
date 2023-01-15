@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.recruit.dto.ImgfileDto;
 import com.example.demo.recruit.dto.ResumeDto;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Resume;
@@ -69,6 +70,7 @@ public class ResumeController {
     @GetMapping("/resume/new")
     public String getList(Model model) {
         model.addAttribute("resumeDto", new ResumeDto());
+        model.addAttribute("imgfileDto", new ImgfileDto());
         return "이력서 작성 페이지";
     }
 

@@ -32,5 +32,7 @@ public class ImgfileDto {
         this.imgurl = imgurl;
     }
     
-    
+    public ImgfileDto() {
+        // TODO Auto-generated constructor stub
+    }
 }
