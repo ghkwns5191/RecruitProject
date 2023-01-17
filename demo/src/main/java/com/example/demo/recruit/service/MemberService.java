@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.core.userdetails.User;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.security.core.userdetails.UserDetailsService;
+//import org.springframework.security.core.userdetails.UsernameNotFoundException;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.recruit.dto.MemberDto;
@@ -21,11 +21,10 @@ import com.example.demo.recruit.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class MemberService implements UserDetailsService {
+public class MemberService {
 
     @Autowired
-    private final MemberRepository memberRepository;
+    public MemberRepository memberRepository;
 
     // 모든 회원 리스트를 조회하는 코드
     public List<Member> getMember() {
@@ -68,70 +67,70 @@ public class MemberService implements UserDetailsService {
             throw new IllegalStateException("이미 사용중인 이메일 입니다.");
         }
     }
-
-    public Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder) {
-        // 계정정보 중복여부 Validation
-        validationUsername(memberDto);
-        validationPhone(memberDto);
-        validationEmail(memberDto);
-
-        // 입력받은 정보 member 변수에 저장.
-        Member member = new Member();
-        member.setSort(memberDto.getSort());
-        member.setUsername(memberDto.getUsername());
-        String password = passwordEncoder.encode(memberDto.getPassword());
-        member.setPassword(password);
-        member.setName(memberDto.getName());
-        member.setPhone(memberDto.getPhone());
-        member.setEmail(memberDto.getEmail());
-        member.setBirthday(memberDto.getBirthday());
-        member.setAddress(memberDto.getAddress());
-        member.setRegisterdate(LocalDate.now());
-        member.setRole(ERole.USER);
-
-        // member 변수 내용 DB 에 저장.
-        this.memberRepository.save(member);
-        return member;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Member> memberData = this.memberRepository.findByUsername(username);
-        Member member = memberData.get();
-
-        if (member == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        return User.builder()
-                .username(member.getUsername())
-                .password(member.getPassword())
-                .roles(member.getRole().toString())
-                .build();
-    }
-
-    // 관리자 계정 생성코드
-    public Member createAdmin(MemberDto memberDto, PasswordEncoder passwordEncoder) {
-        // 계정정보 중복여부 Validation
-        validationUsername(memberDto);
-        validationPhone(memberDto);
-        validationEmail(memberDto);
-
-        // 입력받은 정보 member 변수에 저장.
-        Member member = new Member();
-        member.setSort(memberDto.getSort());
-        member.setUsername(memberDto.getUsername());
-        String password = passwordEncoder.encode(memberDto.getPassword());
-        member.setPassword(password);
-        member.setName(memberDto.getName());
-        member.setPhone(memberDto.getPhone());
-        member.setEmail(memberDto.getEmail());
-        member.setBirthday(memberDto.getBirthday());
-        member.setAddress(memberDto.getAddress());
-        member.setRegisterdate(LocalDate.now());
-        member.setRole(ERole.ADMIN);
-
-        // member 변수 내용 DB 에 저장.
-        this.memberRepository.save(member);
-        return member;
-    }
 }
+//    public Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder) {
+//        // 계정정보 중복여부 Validation
+//        validationUsername(memberDto);
+//        validationPhone(memberDto);
+//        validationEmail(memberDto);
+//
+//        // 입력받은 정보 member 변수에 저장.
+//        Member member = new Member();
+//        member.setSort(memberDto.getSort());
+//        member.setUsername(memberDto.getUsername());
+//        String password = passwordEncoder.encode(memberDto.getPassword());
+//        member.setPassword(password);
+//        member.setName(memberDto.getName());
+//        member.setPhone(memberDto.getPhone());
+//        member.setEmail(memberDto.getEmail());
+//        member.setBirthday(memberDto.getBirthday());
+//        member.setAddress(memberDto.getAddress());
+//        member.setRegisterdate(LocalDate.now());
+//        member.setRole(ERole.USER);
+//
+//        // member 변수 내용 DB 에 저장.
+//        this.memberRepository.save(member);
+//        return member;
+//    }
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Optional<Member> memberData = this.memberRepository.findByUsername(username);
+//        Member member = memberData.get();
+//
+//        if (member == null) {
+//            throw new UsernameNotFoundException(username);
+//        }
+//        return User.builder()
+//                .username(member.getUsername())
+//                .password(member.getPassword())
+//                .roles(member.getRole().toString())
+//                .build();
+//    }
+//
+//    // 관리자 계정 생성코드
+//    public Member createAdmin(MemberDto memberDto, PasswordEncoder passwordEncoder) {
+//        // 계정정보 중복여부 Validation
+//        validationUsername(memberDto);
+//        validationPhone(memberDto);
+//        validationEmail(memberDto);
+//
+//        // 입력받은 정보 member 변수에 저장.
+//        Member member = new Member();
+//        member.setSort(memberDto.getSort());
+//        member.setUsername(memberDto.getUsername());
+//        String password = passwordEncoder.encode(memberDto.getPassword());
+//        member.setPassword(password);
+//        member.setName(memberDto.getName());
+//        member.setPhone(memberDto.getPhone());
+//        member.setEmail(memberDto.getEmail());
+//        member.setBirthday(memberDto.getBirthday());
+//        member.setAddress(memberDto.getAddress());
+//        member.setRegisterdate(LocalDate.now());
+//        member.setRole(ERole.ADMIN);
+//
+//        // member 변수 내용 DB 에 저장.
+//        this.memberRepository.save(member);
+//        return member;
+//    }
+//}

@@ -56,7 +56,8 @@ public class RecruitService {
                 recruitDto.getWorkingdays(),
                 recruitDto.getDetail(),
                 recruitDto.getPhonenumber(),
-                recruitDto.getAttn()));
+                recruitDto.getAttn(),
+                recruitDto.getDeadline()));
         return recruit;
     }
     

@@ -32,13 +32,15 @@ public class RecruitDto {
     public String phonenumber; // 공고 연락처
 
     public String attn; // 채용공고 담당자
+    
+    public LocalDate deadline;
 
     public RecruitDto() {
 
     }
 
     public RecruitDto(Member member, String title, String writer, LocalDate registerdate, LocalDate modifydate,
-            String career, String salary, String workingdays, String detail, String phonenumber, String attn) {
+            String career, String salary, String workingdays, String detail, String phonenumber, String attn, LocalDate deadline) {
 
         this.member = member;
         this.title = title;
@@ -51,6 +53,7 @@ public class RecruitDto {
         this.detail = detail;
         this.phonenumber = phonenumber;
         this.attn = attn;
+        this.deadline = deadline;
     }
 
 }

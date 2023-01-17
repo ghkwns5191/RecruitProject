@@ -43,6 +43,7 @@ public class ResumeService {
     public Resume inputData(ResumeDto resumeDto, MultipartFile imgfileList) throws Exception {
         Resume resume = resumeRepository.save(new Resume(
                 resumeDto.getMember(),
+                resumeDto.getTitle(),
                 resumeDto.getCv(),
                 resumeDto.getOpenforheadhunter()));
 
@@ -57,6 +58,7 @@ public class ResumeService {
     public Resume inputData(Long id, ResumeDto resumeDto) {
         Optional<Resume> resumeData = resumeRepository.findById(id);
         Resume resume = resumeData.get();
+        resume.setTitle(resumeDto.getTitle());
         resume.setCv(resumeDto.getCv());
         resume.setOpenforheadhunter(resumeDto.getOpenforheadhunter());
         resumeRepository.save(resume);

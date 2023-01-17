@@ -69,6 +69,10 @@ public class Recruit {
     @Column(length = 100, name = "attn")
     @NotNull
     public String attn; // 채용공고 담당자
+    
+    @Column(name = "deadline")
+    @NotNull
+    public LocalDate deadline;// 마감일
 
     public Recruit() {
 
@@ -76,8 +80,9 @@ public class Recruit {
 
     public Recruit(@NotNull Member member, @NotNull String title, @NotNull String writer,
             @NotNull LocalDate registerdate, LocalDate modifydate, @NotNull String career, @NotNull String salary,
-            @NotNull String workingdays, String detail, @NotNull String phonenumber, @NotNull String attn) {
-
+            @NotNull String workingdays, String detail, @NotNull String phonenumber, @NotNull String attn,
+            @NotNull LocalDate deadline) {
+        
         this.member = member;
         this.title = title;
         this.writer = writer;
@@ -89,6 +94,9 @@ public class Recruit {
         this.detail = detail;
         this.phonenumber = phonenumber;
         this.attn = attn;
+        this.deadline = deadline;
     }
+
+    
 
 }
