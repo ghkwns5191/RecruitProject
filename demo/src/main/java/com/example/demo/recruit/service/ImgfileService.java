@@ -41,7 +41,7 @@ public class ImgfileService {
         
     }
     
-    public Imgfile findImg(Resume resume) {
+    public Imgfile getimgfile(Resume resume) {
         Optional<Imgfile> imgfileData = imgfileRepository.findByResume(resume);
         Imgfile imgfile = imgfileData.get();
         return imgfile;

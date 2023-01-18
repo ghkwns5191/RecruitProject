@@ -8,14 +8,16 @@ public class MainController {
 
     @GetMapping("/")
     public String main() {
+
         return "/view/Home";
+
     }
-    
+
     @GetMapping("/login")
     public String loginPage() {
         return "/view/Login";
     }
-    
+
     @GetMapping("/join")
     public String JoinPage() {
         return "/view/Join";

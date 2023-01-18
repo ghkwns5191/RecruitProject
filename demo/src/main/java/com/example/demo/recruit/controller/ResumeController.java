@@ -1,5 +1,8 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +19,30 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.recruit.dto.ImgfileDto;
 import com.example.demo.recruit.dto.ResumeDto;
+import com.example.demo.recruit.entity.Academic;
+import com.example.demo.recruit.entity.Activity;
+import com.example.demo.recruit.entity.Career;
+import com.example.demo.recruit.entity.Certificate;
+import com.example.demo.recruit.entity.Education;
+import com.example.demo.recruit.entity.Imgfile;
+import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.entity.Overseasexperience;
+import com.example.demo.recruit.entity.Portfolio;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.AcademicService;
 import com.example.demo.recruit.service.ActivityService;
 import com.example.demo.recruit.service.CareerService;
 import com.example.demo.recruit.service.CertificateService;
 import com.example.demo.recruit.service.EducationService;
+import com.example.demo.recruit.service.ImgfileService;
 import com.example.demo.recruit.service.LanguagesService;
+import com.example.demo.recruit.service.MemberService;
 import com.example.demo.recruit.service.OverseasexperienceService;
 import com.example.demo.recruit.service.PortfolioService;
 import com.example.demo.recruit.service.ResumeService;
@@ -66,8 +81,14 @@ public class ResumeController {
     @Autowired
     private final PortfolioService portfolioService;
 
+    @Autowired
+    private final MemberService memberService;
+
+    @Autowired
+    private final ImgfileService imgfileService;
+
     // 해당 회원의 이력서 작성페이지를 띄우기 위해 사용
-    @GetMapping("/resume/new")
+    @GetMapping("/mypage/resume/new")
     public String getList(Model model) {
         model.addAttribute("resumeDto", new ResumeDto());
         model.addAttribute("imgfileDto", new ImgfileDto());
@@ -75,12 +96,39 @@ public class ResumeController {
     }
 
     // 해당 회원의 이력서를 조회하기 위해 사용
-    @GetMapping("/resume/{memberid}")
-    public String getList(@RequestParam(required = false) Member member, Model model) {
-
+    @GetMapping("/mypage/resume")
+    public String getList(Principal principal, Model model) {
+        
+        try {
+        String memberData = principal.getName();
+        Member member = memberService.getMember(memberData);
         Resume resume = resumeService.getResume(member);
+        List<Academic> academicList = academicService.getacademic(resume);
+        List<Activity> activityList = activityService.getactivity(resume);
+        List<Career> careerList = careerService.getcareer(resume);
+        List<Certificate> certificateList = certificateService.getcertificate(resume);
+        List<Education> educationList = educationService.geteducation(resume);
+        Imgfile imgfile = imgfileService.getimgfile(resume);
+        List<Languages> languagesList = languagesService.getlanguages(resume);
+        List<Overseasexperience> overseasExperienceList = overseasexperienceService.getoverseasexperience(resume);
+        List<Portfolio> portfolioList = portfolioService.getPortfolio(resume);
+
+        model.addAttribute("member", member);
         model.addAttribute("resume", resume);
-        return "이력서 조회 페이지";
+        model.addAttribute("academicList", academicList);
+        model.addAttribute("activityList", activityList);
+        model.addAttribute("careerList", careerList);
+        model.addAttribute("certificateList", certificateList);
+        model.addAttribute("educationList", educationList);
+        model.addAttribute("imgfile", imgfile);
+        model.addAttribute("languagesList", languagesList);
+        model.addAttribute("overseasExperienceList", overseasExperienceList);
+        model.addAttribute("portfolioList", portfolioList);
+
+        return "/view/mypage/ViewResume";
+        } catch (Unauthorized e) {
+            return "/view/login";
+        }
     }
 
     // 해당 이력서 정보를 조회하기 위해 사용

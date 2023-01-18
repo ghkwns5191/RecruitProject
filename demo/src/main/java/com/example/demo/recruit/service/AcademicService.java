@@ -26,9 +26,9 @@ public class AcademicService {
     private final ResumeRepository resumeRepository;
 
     // 이력서에 해당하는 학력정보를 불러내는 코드
-    public List<Academic> getacademic(Resume id_resume) {
+    public List<Academic> getacademic(Resume resume) {
         List<Academic> academic = new ArrayList<Academic>();
-        this.academicRepository.findByResume(id_resume).forEach(academic::add);
+        this.academicRepository.findByResume(resume).forEach(academic::add);
 
         return academic;
     }
