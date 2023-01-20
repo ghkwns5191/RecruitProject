@@ -1,6 +1,7 @@
 package com.example.demo.recruit.entity;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,16 +14,14 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "member", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "username"),
-        @UniqueConstraint(columnNames = "phone"),
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "member" )
 @Entity
 public class Member {
 
@@ -54,6 +53,7 @@ public class Member {
     public String email; // 회원 이메일
 
     @Column(name = "birthday")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate birthday; // 회원 생년월일
 
     @Column(length = 500, name = "address")

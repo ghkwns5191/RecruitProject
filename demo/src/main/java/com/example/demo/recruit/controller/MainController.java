@@ -2,6 +2,7 @@ package com.example.demo.recruit.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class MainController {
@@ -9,17 +10,17 @@ public class MainController {
     @GetMapping("/")
     public String main() {
 
-        return "/view/Home";
+        return "view/Home";
 
     }
 
     @GetMapping("/login")
     public String loginPage() {
-        return "/view/Login";
+        return "view/Login";
     }
 
-    @GetMapping("/join")
-    public String JoinPage() {
-        return "/view/Join";
-    }
+//    @GetMapping("/join")
+//    public String JoinPage() {
+//        return "view/Join";
+//    }
 }

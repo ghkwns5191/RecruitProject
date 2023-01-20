@@ -1,6 +1,9 @@
 package com.example.demo.recruit.dto;
 
 import java.time.LocalDate;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +24,7 @@ public class MemberDto {
 
     public String email; // 회원 이메일
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate birthday; // 회원 생년월일
 
     public String address; // 회원 주소

@@ -44,10 +44,13 @@ public class MemberService implements UserDetailsService {
     // 가입계정의 아이디 중복확인하는 코드
     private void validationUsername(MemberDto member) {
         Optional<Member> findUsername = this.memberRepository.findByUsername(member.getUsername());
-
+     
         if (findUsername != null) {
-            throw new IllegalStateException("이미 사용중인 아이디 입니다.");
+        	System.out.println("아이디 중복 발생");;
+        	
+            
         }
+        	
     }
 
     // 가입계정의 전화번호 중복확인하는 코드
@@ -73,9 +76,10 @@ public class MemberService implements UserDetailsService {
 
     public Member createMember(MemberDto memberDto, PasswordEncoder passwordEncoder) {
         // 계정정보 중복여부 Validation
-        validationUsername(memberDto);
-        validationPhone(memberDto);
-        validationEmail(memberDto);
+//        validationUsername(memberDto);
+        
+//        validationPhone(memberDto);
+//        validationEmail(memberDto);
 
         // 입력받은 정보 member 변수에 저장.
         Member member = new Member();
@@ -114,9 +118,9 @@ public class MemberService implements UserDetailsService {
     // 관리자 계정 생성코드
     public Member createAdmin(MemberDto memberDto, PasswordEncoder passwordEncoder) {
         // 계정정보 중복여부 Validation
-        validationUsername(memberDto);
-        validationPhone(memberDto);
-        validationEmail(memberDto);
+//        validationUsername(memberDto);
+//        validationPhone(memberDto);
+//        validationEmail(memberDto);
 
         // 입력받은 정보 member 변수에 저장.
         Member member = new Member();
