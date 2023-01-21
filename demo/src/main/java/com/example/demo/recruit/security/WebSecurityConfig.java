@@ -25,13 +25,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 로그인 및 로그아웃 관련 설정
         http.formLogin()
-                .loginPage("/login")
+                .loginPage("/member/login")
                 .defaultSuccessUrl("/")
                 .usernameParameter("username")
-                .failureUrl("/login")
+                .failureUrl("/member/login/error")
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                 .logoutSuccessUrl("/");
 
         // 페이지 접근 권한

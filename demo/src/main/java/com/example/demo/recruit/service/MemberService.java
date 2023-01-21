@@ -146,4 +146,15 @@ public class MemberService implements UserDetailsService {
         Member member = memberD.get();
         return member;
     }
+    
+    public boolean checkUsername(String username) {
+    	Optional<Member> memberData = memberRepository.findByUsername(username);
+    	if(memberData == null) {
+    		String msg = "사용 가능한 아이디입니다.";
+    		return true;
+    	} else {
+    		String msg = "이미 사용중인 아이디 입니다.";
+    		return false;
+    	}
+    }
 }

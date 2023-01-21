@@ -7,20 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MainController {
 
-    @GetMapping("/")
-    public String main() {
+	@GetMapping("/")
+	public String main() {
 
-        return "view/Home";
+		return "view/Home";
 
-    }
+	}
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "view/Login";
-    }
-
-//    @GetMapping("/join")
-//    public String JoinPage() {
-//        return "view/Join";
-//    }
 }

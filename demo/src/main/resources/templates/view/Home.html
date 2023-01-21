@@ -1,10 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>메인페이지</title>
 </head>
 <body>
-	<div> 메인 페이지 </div>
+	<div th:fragment="content">
+		<button type="button" onClick="location.href='/member/login'">로그인</button>
+		<button type="button" onClick="location.href='/member/join'">회원가입</button>
+	</div>
 </body>
 </html>
