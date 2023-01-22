@@ -76,17 +76,18 @@ public class MemberController {
     }
     
     @PostMapping("/usernamecheck")
-    public String username(String username, Model model) {
+    public String username(@RequestParam("username") String username, Model model) {
     	boolean result = memberService.checkUsername(username);
     	model.addAttribute("result", result);
-    	return null;
+    	System.out.println(result);
+    	return "/view/CheckUsername :: #checkresult";
     }
     
     @GetMapping("/usernamecheck")
     public String usernamecheck(Model model) {
     	String username="";
     	model.addAttribute("username", username);
-    	return "view/CheckUsername";
+    	return "/view/CheckUsername";
     }
 	
 }
