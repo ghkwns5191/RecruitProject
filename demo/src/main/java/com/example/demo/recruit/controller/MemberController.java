@@ -63,31 +63,31 @@ public class MemberController {
 		memberService.createMember(memberDto, passwordEncoder);
 		return "redirect:/";
 	}
-	
-    @GetMapping("/login")
-    public String loginPage() {
-        return "/view/Login";
-    }
-    
-    @GetMapping("/login/error")
-    public String loginError(Model model) {
-    	model.addAttribute("loginError", "아이디 혹은 비밀번호를 재확인 해주세요");
-    	return "/view/Login";
-    }
-    
-    @PostMapping("/usernamecheck")
-    public String username(@RequestParam("username") String username, Model model) {
-    	boolean result = memberService.checkUsername(username);
-    	model.addAttribute("result", result);
-    	System.out.println(result);
-    	return "/view/CheckUsername :: #checkresult";
-    }
-    
-    @GetMapping("/usernamecheck")
-    public String usernamecheck(Model model) {
-    	String username="";
-    	model.addAttribute("username", username);
-    	return "/view/CheckUsername";
-    }
-	
+
+	@GetMapping("/login")
+	public String loginPage() {
+		return "/view/Login";
+	}
+
+	@GetMapping("/login/error")
+	public String loginError(Model model) {
+		model.addAttribute("loginError", "아이디 혹은 비밀번호를 재확인 해주세요");
+		return "/view/Login";
+	}
+
+	@PostMapping("/usernamecheck")
+	public String username(@RequestParam("username") String username, Model model) {
+		boolean result = memberService.checkUsername(username);
+		model.addAttribute("result", result);
+		System.out.println(result);
+		return "/view/CheckUsername :: #checkresult";
+	}
+
+	@GetMapping("/usernamecheck")
+	public String usernamecheck(Model model) {
+		String username = "";
+		model.addAttribute("username", username);
+		return "/view/CheckUsername";
+	}
+
 }

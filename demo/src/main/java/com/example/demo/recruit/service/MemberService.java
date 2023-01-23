@@ -102,7 +102,6 @@ public class MemberService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = this.memberRepository.findByUsername(username);
-		
 
 		if (member == null) {
 			throw new UsernameNotFoundException(username);
@@ -139,22 +138,22 @@ public class MemberService implements UserDetailsService {
 
 	public Member getMember(String memberData) {
 		Member member = memberRepository.findByUsername(memberData);
-		
+
 		return member;
 	}
 
 	public boolean checkUsername(String username) throws NoSuchElementException {
 		Member member = memberRepository.findByUsername(username);
-		
-		
-			if (member != null) {
-				String msg = "이미 사용중인 아이디입니다.";
-				System.out.println(username + "은" + msg);
-				return true;
-			} else {
-				String msg = "서용 가능한 아이디입니다.";
-				System.out.println(username + "은" + msg);
-				return false;
-			} 
+
+		if (member != null) {
+			String msg = "이미 사용중인 아이디입니다.";
+			System.out.println(username + "은 " + msg);
+			return true;
+		} else {
+			String msg = "사용 가능한 아이디입니다.";
+			System.out.println(username + "은 " + msg);
+			return false;
+		}
 	}
+
 }
