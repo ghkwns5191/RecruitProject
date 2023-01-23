@@ -60,7 +60,9 @@ public class MemberController {
 
 	@PostMapping("/join")
 	public String join(MemberDto memberDto) {
+		System.out.println(memberDto.getUsername());
 		memberService.createMember(memberDto, passwordEncoder);
+
 		return "redirect:/";
 	}
 

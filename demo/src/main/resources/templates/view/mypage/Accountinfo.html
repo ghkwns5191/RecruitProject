@@ -11,7 +11,25 @@
 <body>
 	<div th:fragment="content">
 		<label th:for="username">아이디</label>
-		<input disabled="disabled" name="username" th:field="*{username}">
+		<input type="text" disabled="disabled" name="username" th:field="${member.username}">
+	
+		<label th:for="sort">구분</label>
+		<input type="text" disabled="disabled" name="sort" value="${member.sort}">
+	
+		<label th:for="name">성명</label>
+		<input type="text" disabled="disabled" name="name" value="${member.name}">
+	
+		<label th:for="phone">전화번호</label>
+		<input type="text" disabled="disabled" name="phone" value="${member.phone}">
+		
+		<label th:for="email">이메일</label>
+		<input type="text" disabled="disabled" name="email" value="${member.email}">
+		
+		<label th:for="birthday">생년월일</label>
+		<input type="text" disabled="disabled" name="birthday" value="${member.birthday}">
+		
+		<label th:for="address">주소</label>
+		<input type="text" disabled="disabled" name="address" value="${member.address}">
 		
 	</div>
 </body>
