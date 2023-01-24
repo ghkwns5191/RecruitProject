@@ -23,13 +23,13 @@ public class MypageController {
 	@Autowired
 	private final MemberService memberService;
 
-	@GetMapping("/mypage")
+	@GetMapping("/accountinfo")
 	public String mypage() {
 
 		return "/view/mypage/AccountInfo";
 	}
 
-	@GetMapping("/mypage/accountinfo")
+	@GetMapping("/sendMemberData")
 	public ResponseEntity<Member> getMember(Principal principal, Model model) {
 		try {
 			Member member = memberService.getMember(principal.getName());
