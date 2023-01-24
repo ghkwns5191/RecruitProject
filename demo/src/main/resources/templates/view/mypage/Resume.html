@@ -10,27 +10,16 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>
 	<div th:fragment="content">
-		<label th:for="username">아이디</label>
-		<input type="text" disabled="disabled" name="username" th:field="${member.username}">
-	
-		<label th:for="sort">구분</label>
-		<input type="text" disabled="disabled" name="sort" value="${member.sort}">
-	
-		<label th:for="name">성명</label>
-		<input type="text" disabled="disabled" name="name" value="${member.name}">
-	
-		<label th:for="phone">전화번호</label>
-		<input type="text" disabled="disabled" name="phone" value="${member.phone}">
+		<div id="resume" th:if="${resume} != null">
+			<label>이력서 제목</label>
+			<p th:text="${resume.title}"></p>
+			<label>등록일</label>
+			<p th:text="${resume.registerdate}"></p>
+		</div>
 		
-		<label th:for="email">이메일</label>
-		<input type="text" disabled="disabled" name="email" value="${member.email}">
-		
-		<label th:for="birthday">생년월일</label>
-		<input type="text" disabled="disabled" name="birthday" value="${member.birthday}">
-		
-		<label th:for="address">주소</label>
-		<input type="text" disabled="disabled" name="address" value="${member.address}">
-		
+		<div id="resume" th:if="${resume} == null">
+			<button type="button" onClick="location.href='/mypage/resume/new'">이력서 작성</button>
+		</div>
 	</div>
 </body>
 </html>

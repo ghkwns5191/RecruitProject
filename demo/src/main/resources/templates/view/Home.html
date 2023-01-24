@@ -3,6 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>메인페이지</title>
@@ -18,7 +19,11 @@
 		<button sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/member/logout'">로그아웃</button>
 
+		<button sec:authorize="isAuthenticated()" type="button"
+			onClick="location.href='/mypage/accountinfo'">마이페이지 - 회원정보</button>
+
 
 	</div>
 </body>
 </html>
+

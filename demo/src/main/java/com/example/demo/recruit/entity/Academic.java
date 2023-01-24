@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,10 +36,12 @@ public class Academic {
 
     @Column(name = "start")
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate start;// 학력 시작일
 
     @Column(name = "end")
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate end;// 학력 종료일
 
     @Column(length = 100, name = "studying")
