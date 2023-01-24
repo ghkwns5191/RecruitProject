@@ -9,13 +9,16 @@
 </head>
 <body>
 	<div th:fragment="content">
-	<span sec:authorize="isAnonymous()">
-		<button type="button" onClick="location.href='/member/login'">로그인</button>
-		<button type="button" onClick="location.href='/member/join'">회원가입</button>
-	</span>
-	<span sec:authorize="isAuthenticated()">
-		<button type="button">로그아웃</button>
-	</span>
+
+		<button sec:authorize="isAnonymous()" type="button"
+			onClick="location.href='/member/login'">로그인</button>
+		<button sec:authorize="isAnonymous()" type="button"
+			onClick="location.href='/member/join'">회원가입</button>
+
+		<button sec:authorize="isAuthenticated()" type="button"
+			onClick="location.href='/member/logout'">로그아웃</button>
+
+
 	</div>
 </body>
 </html>
