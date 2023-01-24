@@ -50,7 +50,7 @@
 					th:field="*{address}" class="form-control" placeholder="주소를 입력하세요">
 			</div>
 			<button type="submit">회원가입</button>
-			<button>돌아가기</button>
+			<button type="button" onClick="location.href='/'">돌아가기</button>
 
 			<!-- csrf 공격 방어하기 위한 csrf 토큰값이 있어야 함. csrf 토큰이란 실제 서버에서 요청한 것이 맞는지 확인 -->
 			<!-- <input type="hidden" th:name="${_csrf.parameterName}"

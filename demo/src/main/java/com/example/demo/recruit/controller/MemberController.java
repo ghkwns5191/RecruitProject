@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +37,6 @@ public class MemberController {
 			List<Member> memberList = new ArrayList<Member>();
 			memberList = memberService.getMember();
 			return new ResponseEntity<>(memberList, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@GetMapping("/detail")
-	public ResponseEntity<Member> getMember(@RequestParam(required = false) Long id) {
-		try {
-			Member member = new Member();
-			memberService.getMember(id);
-			return new ResponseEntity<>(member, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
