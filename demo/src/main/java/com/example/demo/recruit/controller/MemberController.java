@@ -41,31 +41,21 @@ public class MemberController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
-	@GetMapping("/join")
-	public String newJoin(Model model) {
-		model.addAttribute("memberDto", new MemberDto());
-		return "/view/Join";
+	
+	@GetMapping("/sendMemberData")
+	public ResponseEntity<Member> getMember(Principal principal, Model model) {
+		try {
+			Member member = memberService.getMember(principal.getName());
+			System.out.println(principal.getName());
+			System.out.println(member);
+			return new ResponseEntity<>(member, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-	@PostMapping("/join")
-	public String join(MemberDto memberDto) {
-		System.out.println(memberDto.getUsername());
-		memberService.createMember(memberDto, passwordEncoder);
-
-		return "redirect:/";
-	}
-
-	@GetMapping("/login")
-	public String loginPage() {
-		return "/view/Login";
-	}
-
-	@GetMapping("/login/error")
-	public String loginError(Model model) {
-		model.addAttribute("loginError", "아이디 혹은 비밀번호를 재확인 해주세요");
-		return "/view/Login";
-	}
+	
 
 	@PostMapping("/usernamecheck")
 	public String username(@RequestParam("username") String username, Model model) {

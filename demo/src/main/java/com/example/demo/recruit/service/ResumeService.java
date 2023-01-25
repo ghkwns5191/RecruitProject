@@ -26,8 +26,8 @@ public class ResumeService {
 
     // 회원의 이력서 정보를 불러오는 코드
     public Resume getResume(Member member) {
-        Optional<Resume> resumeData = resumeRepository.findByMember(member);
-        Resume resume = resumeData.get();
+        Resume resume = resumeRepository.findByMember(member);
+        
         return resume;
     }
 

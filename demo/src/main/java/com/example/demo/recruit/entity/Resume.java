@@ -20,37 +20,36 @@ import lombok.Setter;
 @Entity
 public class Resume {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public Long id; // 이력서 고유값
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public Long id; // 이력서 고유값
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member")
-    @NotNull
-    public Member member; // 회원 고유값(Foreign key)
-    
-    @Column(length = 500, name = "title")
-    @NotNull
-    public String title;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member")
+	@NotNull
+	public Member member; // 회원 고유값(Foreign key)
 
-    @Column(length = 4000, name = "cv")
-    public String cv;// 이력서 자기소개서
+	@Column(length = 500, name = "title")
+	@NotNull
+	public String title;
 
-    @Column(length = 4000, name = "openforheadhunter")
-    @NotNull
-    public String openforheadhunter;// 이력서 공개여부
+	@Column(length = 4000, name = "cv")
+	public String cv;// 이력서 자기소개서
 
-    public Resume() {
+	@Column(length = 4000, name = "openforheadhunter")
+	public String openforheadhunter;// 이력서 공개여부
 
-    }
+	public Resume() {
 
-    public Resume(@NotNull Member member, @NotNull String title, String cv, @NotNull String openforheadhunter) {
+	}
 
-        this.member = member;
-        this.title = title;
-        this.cv = cv;
-        this.openforheadhunter = openforheadhunter;
-    }
+	public Resume(@NotNull Member member, @NotNull String title, String cv, String openforheadhunter) {
+
+		this.member = member;
+		this.title = title;
+		this.cv = cv;
+		this.openforheadhunter = openforheadhunter;
+	}
 
 }

@@ -28,5 +28,10 @@ public class ResumeDto {
         this.cv = cv;
         this.openforheadhunter = openforheadhunter;
     }
+    
+    public ResumeDto(String title) {
+
+        this.title = title;
+    }
 
 }

@@ -50,144 +50,136 @@ import com.example.demo.recruit.service.ResumeService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/resume")
 @RequiredArgsConstructor
 public class ResumeController {
 
-    @Autowired
-    private final ResumeService resumeService;
+	@Autowired
+	private final ResumeService resumeService;
 
-    @Autowired
-    private final AcademicService academicService;
+	@Autowired
+	private final AcademicService academicService;
 
-    @Autowired
-    private final ActivityService activityService;
+	@Autowired
+	private final ActivityService activityService;
 
-    @Autowired
-    private final CareerService careerService;
+	@Autowired
+	private final CareerService careerService;
 
-    @Autowired
-    private final CertificateService certificateService;
+	@Autowired
+	private final CertificateService certificateService;
 
-    @Autowired
-    private final EducationService educationService;
+	@Autowired
+	private final EducationService educationService;
 
-    @Autowired
-    private final LanguagesService languagesService;
+	@Autowired
+	private final LanguagesService languagesService;
 
-    @Autowired
-    private final OverseasexperienceService overseasexperienceService;
+	@Autowired
+	private final OverseasexperienceService overseasexperienceService;
 
-    @Autowired
-    private final PortfolioService portfolioService;
+	@Autowired
+	private final PortfolioService portfolioService;
 
-    @Autowired
-    private final MemberService memberService;
+	@Autowired
+	private final MemberService memberService;
 
-    @Autowired
-    private final ImgfileService imgfileService;
+	@Autowired
+	private final ImgfileService imgfileService;
 
-    // 해당 회원의 이력서 작성페이지를 띄우기 위해 사용
-    @GetMapping("/mypage/resume/new")
-    public String getList(Model model) {
-        model.addAttribute("resumeDto", new ResumeDto());
-        model.addAttribute("imgfileDto", new ImgfileDto());
-        return "이력서 작성 페이지";
-    }
+	// 해당 회원의 이력서 작성페이지를 띄우기 위해 사용
+	
 
-    // 해당 회원의 이력서를 조회하기 위해 사용
-    @GetMapping("/mypage/resume")
-    public String getList(Principal principal, Model model) {
-        
-        try {
-        String memberData = principal.getName();
-        Member member = memberService.getMember(memberData);
-        Resume resume = resumeService.getResume(member);
-        List<Academic> academicList = academicService.getacademic(resume);
-        List<Activity> activityList = activityService.getactivity(resume);
-        List<Career> careerList = careerService.getcareer(resume);
-        List<Certificate> certificateList = certificateService.getcertificate(resume);
-        List<Education> educationList = educationService.geteducation(resume);
-        Imgfile imgfile = imgfileService.getimgfile(resume);
-        List<Languages> languagesList = languagesService.getlanguages(resume);
-        List<Overseasexperience> overseasExperienceList = overseasexperienceService.getoverseasexperience(resume);
-        List<Portfolio> portfolioList = portfolioService.getPortfolio(resume);
+	// 해당 회원의 이력서를 조회하기 위해 사용
+	@GetMapping("/detail")
+	public String getList(Principal principal, Model model) {
 
-        model.addAttribute("member", member);
-        model.addAttribute("resume", resume);
-        model.addAttribute("academicList", academicList);
-        model.addAttribute("activityList", activityList);
-        model.addAttribute("careerList", careerList);
-        model.addAttribute("certificateList", certificateList);
-        model.addAttribute("educationList", educationList);
-        model.addAttribute("imgfile", imgfile);
-        model.addAttribute("languagesList", languagesList);
-        model.addAttribute("overseasExperienceList", overseasExperienceList);
-        model.addAttribute("portfolioList", portfolioList);
+		String memberData = principal.getName();
+		Member member = memberService.getMember(memberData);
+		Resume resume = resumeService.getResume(member);
+		List<Academic> academicList = academicService.getacademic(resume);
+		List<Activity> activityList = activityService.getactivity(resume);
+		List<Career> careerList = careerService.getcareer(resume);
+		List<Certificate> certificateList = certificateService.getcertificate(resume);
+		List<Education> educationList = educationService.geteducation(resume);
+		Imgfile imgfile = imgfileService.getimgfile(resume);
+		List<Languages> languagesList = languagesService.getlanguages(resume);
+		List<Overseasexperience> overseasExperienceList = overseasexperienceService.getoverseasexperience(resume);
+		List<Portfolio> portfolioList = portfolioService.getPortfolio(resume);
 
-        return "/view/mypage/ViewResume";
-        } catch (Unauthorized e) {
-            return "/view/login";
-        }
-    }
+		model.addAttribute("member", member);
+		model.addAttribute("resume", resume);
+		model.addAttribute("academicList", academicList);
+		model.addAttribute("activityList", activityList);
+		model.addAttribute("careerList", careerList);
+		model.addAttribute("certificateList", certificateList);
+		model.addAttribute("educationList", educationList);
+		model.addAttribute("imgfile", imgfile);
+		model.addAttribute("languagesList", languagesList);
+		model.addAttribute("overseasExperienceList", overseasExperienceList);
+		model.addAttribute("portfolioList", portfolioList);
 
-    // 해당 이력서 정보를 조회하기 위해 사용
-    @GetMapping("/resume/detail/{id_resume}")
-    public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id) {
-        try {
-            Resume resume = new Resume();
-            resume = resumeService.getResume(id);
-            return new ResponseEntity<>(resume, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+		return "/view/mypage/ViewResume";
 
-    // 이력서를 작성받아 DB 에 저장하기 위해 사용
-    @PostMapping("/resume/input")
-    public String inputData(@Valid ResumeDto resumeDto, BindingResult bindingResult, Model model,
-            @RequestParam("imgfile") MultipartFile imgfile) {
-        if (bindingResult.hasErrors()) {
-            return "이력서 작성 페이지";
-        }
-        try {
-            resumeService.inputData(resumeDto, imgfile);
-            return "이력서 list 조회 페이지";
-        } catch (Exception e) {
-            System.out.println(e);
-            model.addAttribute("errorMessage", "이력서 등록 중 오류가 발생하였습니다.");
-            return "이력서 list 조회 페이지";
-        }
-    }
+	}
 
-    // 이력서를 수정하기 위해 사용
-    @PutMapping("/resume/revise")
-    public ResponseEntity<Resume> reviseData(@PathVariable("id") Long id, @RequestBody ResumeDto resumeDto) {
-        try {
-            Resume resume = resumeService.inputData(id, resumeDto);
-            return new ResponseEntity<>(resume, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+	// 해당 이력서 정보를 조회하기 위해 사용
+	@GetMapping("/resume/detail/{id_resume}")
+	public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id) {
+		try {
+			Resume resume = new Resume();
+			resume = resumeService.getResume(id);
+			return new ResponseEntity<>(resume, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-    // 이력서를 삭제하기 위해 사용
-    // 이력서 하위에 있는 세부 항목들 모두 삭제해야 함.
-    @DeleteMapping("/resume/delete")
-    public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
-        try {
-            academicService.deleteResume(id);
-            activityService.deleteResume(id);
-            careerService.deleteResume(id);
-            certificateService.deleteResume(id);
-            educationService.deleteResume(id);
-            languagesService.deleteResume(id);
-            overseasexperienceService.deleteResume(id);
-            portfolioService.deleteResume(id);
-            resumeService.deleteData(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+	// 이력서를 작성받아 DB 에 저장하기 위해 사용
+	@PostMapping("/resume/input")
+	public String inputData(@Valid ResumeDto resumeDto, BindingResult bindingResult, Model model,
+			@RequestParam("imgfile") MultipartFile imgfile) {
+		if (bindingResult.hasErrors()) {
+			return "이력서 작성 페이지";
+		}
+		try {
+			resumeService.inputData(resumeDto, imgfile);
+			return "이력서 list 조회 페이지";
+		} catch (Exception e) {
+			System.out.println(e);
+			model.addAttribute("errorMessage", "이력서 등록 중 오류가 발생하였습니다.");
+			return "이력서 list 조회 페이지";
+		}
+	}
+
+	// 이력서를 수정하기 위해 사용
+	@PutMapping("/resume/revise")
+	public ResponseEntity<Resume> reviseData(@PathVariable("id") Long id, @RequestBody ResumeDto resumeDto) {
+		try {
+			Resume resume = resumeService.inputData(id, resumeDto);
+			return new ResponseEntity<>(resume, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	// 이력서를 삭제하기 위해 사용
+	// 이력서 하위에 있는 세부 항목들 모두 삭제해야 함.
+	@DeleteMapping("/resume/delete")
+	public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
+		try {
+			academicService.deleteResume(id);
+			activityService.deleteResume(id);
+			careerService.deleteResume(id);
+			certificateService.deleteResume(id);
+			educationService.deleteResume(id);
+			languagesService.deleteResume(id);
+			overseasexperienceService.deleteResume(id);
+			portfolioService.deleteResume(id);
+			resumeService.deleteData(id);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

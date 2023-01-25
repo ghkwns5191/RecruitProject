@@ -12,15 +12,21 @@
 	<div th:fragment="content">
 
 		<button sec:authorize="isAnonymous()" type="button"
-			onClick="location.href='/member/login'">로그인</button>
+			onClick="location.href='/login'">로그인</button>
 		<button sec:authorize="isAnonymous()" type="button"
-			onClick="location.href='/member/join'">회원가입</button>
+			onClick="location.href='/join'">회원가입</button>
 
 		<button sec:authorize="isAuthenticated()" type="button"
-			onClick="location.href='/member/logout'">로그아웃</button>
+			onClick="location.href='/logout'">로그아웃</button>
+
+		<button th:if="${sort}=='company'" type="button"
+			onClick="location.href='/'">업체정보등록</button>
 
 		<button sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/mypage/accountinfo'">마이페이지 - 회원정보</button>
+
+		<button sec:authorize="isAuthenticated()" type="button"
+			onClick="location.href='/mypage/resume'">마이페이지 - 이력서 조회</button>
 
 
 	</div>

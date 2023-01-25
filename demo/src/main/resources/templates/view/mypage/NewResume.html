@@ -15,27 +15,17 @@
 			<div class="form-group">
 				<label th:for="title">이력서 제목</label> <input type="text"
 					placeholder="이력서 제목을 입력하세요" th:field="*{title}"
-					class="form-control" name="title">
+					class="form-control" name="title"> <label>사진</label><input
+					type="file">
 			</div>
-			<div id="acainput">
-				<label>학력 사항</label>
-					<div>
-					<label>학교명</label>
-					<input type="text" id="acaname" placeholder="학교명을 입력하세요">
-					<label>구분</label>
-						<select name="acatype" id="acatype">
-							<option value="고등학교">고등학교</option>
-							<option value="대학교">대학교</option>
-							<option value="대학원">대학원</option>
-							<option value="기타">기타</option>
-						</select>
-					</div>
-				<button type="button">추가히기</button>
-			</div>
-			<div class="form-group">
-				<label th:for="cv">자기소개서</label>
-				<textarea cols="150" rows="40" name="cv" th:field="*{cv}"
-					class="form-control" placeholder="자기소개서를 입력하세요"></textarea>
+			<div>
+
+				<button type="button" onClick="loadInfo()">개인정보 불러오기</button>
+				<label>이름</label><input type="text" name="name" readonly id="name">
+				<label>전화번호</label><input type="text" name="phone" readonly
+					id="phone"> <label>이메일</label><input type="text"
+					name="email" readonly id="email">
+				<p>이름, 전화번호, 이메일은 회원 가입 정보를 기준으로 작성됩니다.</p>
 			</div>
 
 		</form>
@@ -43,3 +33,25 @@
 	</div>
 </body>
 </html>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		function loadInfo() {
+			$.ajax({
+				type : "get",
+				url : "/member/sendMemberData",
+				success : function(member) {
+					console.log(member);
+					document.getElementById("name").value = member.name;
+					document.getElementById("phone").value = member.phone;
+					document.getElementById("email").value = member.email;
+				},
+				error : function(request, status, error) {
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			})
+		}
+	</script>
+</th:block>

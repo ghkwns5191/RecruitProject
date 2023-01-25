@@ -11,10 +11,10 @@
 <body>
 	<div th:fragment="content">
 		<div id="resume" th:if="${resume} != null">
-			<label>이력서 제목</label>
-			<p th:text="${resume.title}"></p>
+			<label th:for="title">이력서 제목</label>
+			<p id="resumetitle" th:field="*{title}" th:text="${resume.title}"></p>
 			<label>등록일</label>
-			<p th:text="${resume.registerdate}"></p>
+			<p th:field="*{registerdate)" th:text="${resume.registerdate}"></p>
 		</div>
 		
 		<div id="resume" th:if="${resume} == null">
@@ -23,3 +23,8 @@
 	</div>
 </body>
 </html>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		
+	</script>
+</th:block>
