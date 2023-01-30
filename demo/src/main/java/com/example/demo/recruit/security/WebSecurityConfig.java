@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.demo.recruit.service.MemberService;
@@ -59,9 +60,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-    // 인증 제외할 하위 디렉토리 설정
+    
     @Override
     public void configure(WebSecurity web) throws Exception {
+     // 인증 제외할 하위 디렉토리 설정
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+     // RequestRejectedException 발생 방지
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowSemicolon(true);
+        firewall.setAllowUrlEncodedPercent(true);
+        web.httpFirewall(firewall);
+        super.configure(web);
     }
+    
+    
 }
