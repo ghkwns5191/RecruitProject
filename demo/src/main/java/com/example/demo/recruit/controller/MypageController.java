@@ -34,10 +34,23 @@ public class MypageController {
     @Autowired
     private final ResumeService resumeService;
 
-    @GetMapping("/accountinfo")
-    public String mypage() {
+    @GetMapping(value = { "", "/" })
+    public String mypagehome() {
 
-        return "/view/mypage/AccountInfo";
+        return "redirect:/mypage/accountinfo";
+    }
+
+    @GetMapping("/accountinfo")
+    public ModelAndView mypage(Principal principal, Map<String, Object> check) {
+        try {
+            String username = principal.getName();
+            System.out.println(username);
+            return new ModelAndView("/view/mypage/AccountInfo");
+        } catch (NullPointerException e) {
+            check.put("check", true);
+            return new ModelAndView("view/Login");
+        }
+
     }
 
     @GetMapping("/resume")
@@ -51,30 +64,30 @@ public class MypageController {
             System.out.println(resume);
             model.addAttribute("resume", resume);
             return new ModelAndView("/view/mypage/Resume");
-        } catch(NullPointerException e) {
+        } catch (NullPointerException e) {
             check.put("check", true);
             return new ModelAndView("view/Login");
         }
     }
-    
+
     @GetMapping("/error")
     public ResponseEntity errorMsg(Principal principal) {
-        if(principal == null) {
+        if (principal == null) {
             return new ResponseEntity("로그인이 필요한 페이지 입니다.", HttpStatus.OK);
         } else {
             return new ResponseEntity(null, HttpStatus.OK);
         }
     }
-    
+
     @GetMapping("/principalcheck")
     public ResponseEntity sessioncheck(Principal principal) {
-        if(principal != null) {
+        if (principal != null) {
             return new ResponseEntity(principal, HttpStatus.OK);
         } else {
             return null;
         }
     }
- 
+
     @GetMapping("/resume/new")
     public String newResume(Model model) {
         System.out.println("작동함?");
@@ -83,8 +96,8 @@ public class MypageController {
     }
 
     @PostMapping("/resume/new")
-    public String newResume(@RequestBody ResumeDto resumeDto, MultipartFile imgfile, Principal principal) {
-
+    public String newResume(ResumeDto resumeDto, MultipartFile imgfile, Principal principal) {
+        System.out.println("반응함?");
         return "redirect:/view/mypage/Resume";
     }
 

@@ -43,6 +43,7 @@ public class LanguagesService {
     public Languages inputData(LanguagesDto languagesDto) {
         Languages languages = this.languagesRepository.save(new Languages(
                 languagesDto.getResume(),
+                languagesDto.getLanguages(),
                 languagesDto.getLeveltalking(),
                 languagesDto.getLevelwriting(),
                 languagesDto.getTest(),

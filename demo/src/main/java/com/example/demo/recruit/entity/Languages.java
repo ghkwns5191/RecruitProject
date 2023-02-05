@@ -31,7 +31,11 @@ public class Languages {
     @JoinColumn(name = "resume")
     @NotNull
     public Resume resume; // 이력서 고유값(Foreign key)
-
+    
+    @Column(length = 100, name = "languages")
+    @NotNull
+    public String languages; // 언어 명
+    
     @Column(length = 100, name = "leveltalking")
     @NotNull
     public String leveltalking; // 어학 회화능력
@@ -56,10 +60,11 @@ public class Languages {
 
     }
 
-    public Languages(@NotNull Resume resume, @NotNull String leveltalking, @NotNull String levelwriting, String test,
+    public Languages(@NotNull Resume resume, @NotNull String languages, @NotNull String leveltalking, @NotNull String levelwriting, String test,
             String score, LocalDate achievedate, String certificatenumber) {
 
         this.resume = resume;
+        this.languages = languages;
         this.leveltalking = leveltalking;
         this.levelwriting = levelwriting;
         this.test = test;
