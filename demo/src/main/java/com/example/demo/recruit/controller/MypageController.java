@@ -79,20 +79,17 @@ public class MypageController {
         }
     }
 
-    @GetMapping("/principalcheck")
-    public ResponseEntity sessioncheck(Principal principal) {
-        if (principal != null) {
-            return new ResponseEntity(principal, HttpStatus.OK);
-        } else {
-            return null;
-        }
-    }
-
     @GetMapping("/resume/new")
-    public String newResume(Model model) {
-        System.out.println("작동함?");
-        model.addAttribute("resumeDto", new ResumeDto());
-        return "/view/mypage/NewResume";
+    public ModelAndView newResume(Model model, Principal principal, Map<String, Object> check) {
+        try {
+            principal.getName();
+            System.out.println("작동함?");
+            model.addAttribute("resumeDto", new ResumeDto());
+            return new ModelAndView("/view/mypage/NewResume");
+        } catch (NullPointerException e) {
+            check.put("check", true);
+            return new ModelAndView("view/Login");
+        }
     }
 
     @PostMapping("/resume/new")
