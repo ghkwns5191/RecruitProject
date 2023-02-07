@@ -1,5 +1,6 @@
 package com.example.demo.recruit.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.recruit.dto.AcademicDto;
 import com.example.demo.recruit.entity.Academic;
+import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.AcademicRepository;
+import com.example.demo.recruit.repository.MemberRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,9 +24,12 @@ public class AcademicService {
 
     @Autowired
     private final AcademicRepository academicRepository;
-    
+
     @Autowired
     private final ResumeRepository resumeRepository;
+
+    @Autowired
+    private final MemberRepository memberRepository;
 
     // 이력서에 해당하는 학력정보를 불러내는 코드
     public List<Academic> getacademic(Resume resume) {
@@ -41,9 +47,12 @@ public class AcademicService {
     }
 
     // 학력정보를 입력받아 DB 에 저장하는 코드
-    public Academic inputData(AcademicDto academicDto) {
+    public Academic inputData(AcademicDto academicDto, Principal principal) {
+        String username = principal.getName();
+        Member member = this.memberRepository.findByUsername(username);
+        Resume resume = this.resumeRepository.findByMember(member);
         Academic academic = this.academicRepository.save(new Academic(
-                academicDto.getResume(),
+                resume,
                 academicDto.getStart(),
                 academicDto.getEnd(),
                 academicDto.getStudying(),
@@ -73,12 +82,12 @@ public class AcademicService {
         return academic;
 
     }
-    
+
     // DB 에 저장된 학력정보를 삭제하는 코드
     public void deleteData(Long id) {
         this.academicRepository.deleteById(id);
     }
-    
+
     // 이력서 삭제할때 사용할 코드
     public void deleteResume(Long id) {
         Optional<Resume> resumeData = this.resumeRepository.findById(id);

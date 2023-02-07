@@ -10,16 +10,15 @@
 </head>
 <body>
 	<div th:fragment="content">
-		<form action="/mypage/resume/new" role="form" method="post"
-			th:object="${resumeDto}">
-			<div class="form-group">
+		
+			<div>
 				<label th:for="title">이력서 제목</label> <input type="text"
-					placeholder="이력서 제목을 입력하세요" th:field="*{title}"
-					class="form-control" name="title"> <br> <label>사진</label><input
+					placeholder="이력서 제목을 입력하세요" id="title"
+					name="title"> <br> <label>사진</label><input
 					type="file">
 			</div>
 			<div>
-				<button type="button" onClick="loadInfo()">개인정보 불러오기</button>
+				
 				<br> <label>이름</label><input type="text" name="name" readonly
 					id="name"><br> <label>전화번호</label><input type="text"
 					name="phone" readonly id="phone"><br> <label>이메일</label><input
@@ -65,33 +64,28 @@
 					<div id="portfolio"></div>
 					<input type="button" onclick="addportfolio()" value="포트폴리오 추가하기">
 				</div>
+				
+				<div>
+					<label>자기소개서</label><br>
+					<textarea name="cv" cols="50" rows="10" id="cv"></textarea>
+				</div>
+				
+				<div id="openforheadhunter">
+					<label>이력서 공개여부</label>
+					<input type="radio" name="openforheadhunter" value="open" checked><label>공개</label>
+					<input type="radio" name="openforheadhunter" value="close"><label>비공개</label>
+				</div>
 			</div>
 
-		</form>
-		<button type="submit">이력서 저장하기</button>
+		
+		<button type="button" onClick="submit()">이력서 저장하기</button>
 	</div>
 </body>
 </html>
 
 
 	<script th:inline="javascript">
-	function loadInfo() {
-		$.ajax({
-			type: "get",
-			url: "/member/sendMemberData",
-			success: function(member) {
-				console.log(member);
-				document.getElementById("name").value = member.name;
-				document.getElementById("phone").value = member.phone;
-				document.getElementById("email").value = member.email;
-			},
-			error: function(request, status, error) {
-				console.log(request);
-				console.log(status);
-				console.log(error);
-			}
-		})
-	}
+	
 	</script>
 	<script type="application/javascript" th:src="@{/js/NewResume.js}"></script>
 

@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +59,9 @@ public class AcademicController {
 
     // 이력서상 학력정보를 입력받아 저장하기 위해 사용
     @PostMapping("/academic/input")
-    public ResponseEntity<Academic> inputData(@RequestBody AcademicDto academicDto) {
+    public ResponseEntity<Academic> inputData(@RequestBody AcademicDto academicDto, Principal principal) {
         try {
-            Academic academic = academicService.inputData(academicDto);
+            Academic academic = academicService.inputData(academicDto, principal);
             return new ResponseEntity<>(academic, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -9,8 +9,8 @@ function addportfolio() {
 	newarea.innerHTML = "<label>제목</label><input type='text' name='title' placeholder='제목을 입력하세요'><br>"
 		+ "<label>제목</label><input type='text' name='file1' placeholder='제목을 입력하세요'><br>"
 		+ "<label>제목</label><input type='text' name='file2' placeholder='제목을 입력하세요'><br>"
-		+ "<label>제목</label><input type='text' name='url1' placeholder='제목을 입력하세요'><br>"
-		+ "<label>제목</label><input type='text' name='url2' placeholder='제목을 입력하세요'><br>"
+		+ "<label>제목</label><input type='text' name='url1' placeholder='url 을 입력하세요'><br>"
+		+ "<label>제목</label><input type='text' name='url2' placeholder='url 을 입력하세요'><br>"
 		+ "<input type='button' value='삭제' onClick='deleteportfolio(this)'>";
 	div.appendChild(newarea);
 }
@@ -170,5 +170,56 @@ function addacademic() {
 function deleteacademic(data) {
 	document.getElementById("academic").removeChild(data.parentNode);
 }
+
+window.onload = function(){
+		$.ajax({
+			type: "get",
+			url: "/member/sendMemberData",
+			success: function(member) {
+				
+				document.getElementById("name").value = member.name;
+				document.getElementById("phone").value = member.phone;
+				document.getElementById("email").value = member.email;
+			},
+			error: function(request, status, error) {
+				console.log(request);
+				console.log(status);
+				console.log(error);
+			}
+		})
+	}
+	
+
+	
+function submit() {
+	console.log("동작");
+	var resume_title = document.getElementById("title").value;
+	var resume_cv = document.getElementById("cv").value;
+	var resume_openforheadhunter = document.querySelector('input[name="openforheadhunter"]:checked').value;
+	console.log(resume_title);
+	console.log(resume_cv);
+	console.log(resume_openforheadhunter);
+		$.ajax({
+			type: "post",
+			url: "/resume/input",
+			data: {
+				title : resume_title,
+				cv : resume_cv,
+				openforheadhunter : resume_openforheadhunter
+			},
+			success: function(data) {
+				console.log(data);
+				console.log("ajax 동작");
+				location.href("/mypage/resume");
+				
+			},
+			error: function(request, status, error) {
+				console.log(request);
+				console.log(status);
+				console.log(error);
+				console.log("ajax 동작")
+			}
+		})
+	}
 
 
