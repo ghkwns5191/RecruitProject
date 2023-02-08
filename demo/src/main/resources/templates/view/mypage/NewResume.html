@@ -10,82 +10,81 @@
 </head>
 <body>
 	<div th:fragment="content">
-		
-			<div>
-				<label th:for="title">이력서 제목</label> <input type="text"
-					placeholder="이력서 제목을 입력하세요" id="title"
-					name="title"> <br> <label>사진</label><input
-					type="file">
+
+		<div>
+			<label th:for="title">이력서 제목</label> <input type="text"
+				placeholder="이력서 제목을 입력하세요" id="title" name="title"> <br>
+			<label>사진</label><input type="file">
+		</div>
+		<div>
+
+			<br> <label>이름</label><input type="text" name="name" readonly
+				id="name"><br> <label>전화번호</label><input type="text"
+				name="phone" readonly id="phone"><br> <label>이메일</label><input
+				type="text" name="email" readonly id="email"><br>
+			<p>이름, 전화번호, 이메일은 회원 가입 정보를 기준으로 작성됩니다.</p>
+			<div style="border: 1px black solid;">
+				학력사항<br>
+				<div id="academic"></div>
+				<input type="button" onclick="addacademic()" value="학력사항 추가하기">
 			</div>
-			<div>
-				
-				<br> <label>이름</label><input type="text" name="name" readonly
-					id="name"><br> <label>전화번호</label><input type="text"
-					name="phone" readonly id="phone"><br> <label>이메일</label><input
-					type="text" name="email" readonly id="email"><br>
-				<p>이름, 전화번호, 이메일은 회원 가입 정보를 기준으로 작성됩니다.</p>
-				<div style="border: 1px black solid;">
-					학력사항<br>
-					<div id="academic"></div>
-					<input type="button" onclick="addacademic()" value="학력사항 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					활동내역<br>
-					<div id="activity"></div>
-					<input type="button" onclick="addactivity()" value="활동내역 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					경력사항<br>
-					<div id="career"></div>
-					<input type="button" onclick="addcareer()" value="경력사항 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					자격증<br>
-					<div id="certificate"></div>
-					<input type="button" onclick="addcertificate()" value="자격증 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					교육내용<br>
-					<div id="education"></div>
-					<input type="button" onclick="addeducation()" value="교육내용 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					어학사항<br>
-					<div id="languages"></div>
-					<input type="button" onclick="addlanguages()" value="어학사항 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					해외경험<br>
-					<div id="oe"></div>
-					<input type="button" onclick="addoe()" value="해외경험 추가하기">
-				</div>
-				<div style="border: 1px black solid;">
-					포트폴리오<br>
-					<div id="portfolio"></div>
-					<input type="button" onclick="addportfolio()" value="포트폴리오 추가하기">
-				</div>
-				
-				<div>
-					<label>자기소개서</label><br>
-					<textarea name="cv" cols="50" rows="10" id="cv"></textarea>
-				</div>
-				
-				<div id="openforheadhunter">
-					<label>이력서 공개여부</label>
-					<input type="radio" name="openforheadhunter" value="open" checked><label>공개</label>
-					<input type="radio" name="openforheadhunter" value="close"><label>비공개</label>
-				</div>
+			<div style="border: 1px black solid;">
+				활동내역<br>
+				<div id="activity"></div>
+				<input type="button" onclick="addactivity()" value="활동내역 추가하기">
+			</div>
+			<div style="border: 1px black solid;">
+				경력사항<br>
+				<div id="career"></div>
+				<input type="button" onclick="addcareer()" value="경력사항 추가하기">
+			</div>
+			<div style="border: 1px black solid;">
+				자격증<br>
+				<div id="certificate"></div>
+				<input type="button" onclick="addcertificate()" value="자격증 추가하기">
+			</div>
+			<div style="border: 1px black solid;">
+				교육내용<br>
+				<div id="education"></div>
+				<input type="button" onclick="addeducation()" value="교육내용 추가하기">
+			</div>
+			<div style="border: 1px black solid;">
+				어학사항<br>
+				<div id="languages"></div>
+				<input type="button" onclick="addlanguages()" value="어학사항 추가하기">
+			</div>
+			<div style="border: 1px black solid;">
+				해외경험<br>
+				<div id="oe"></div>
+				<input type="button" onclick="addoe()" value="해외경험 추가하기">
+			</div>
+			<div style="border: 1px black solid;">
+				포트폴리오<br>
+				<div id="portfolio"></div>
+				<input type="button" onclick="addportfolio()" value="포트폴리오 추가하기">
 			</div>
 
-		
+			<div>
+				<label>자기소개서</label><br>
+				<textarea name="cv" cols="50" rows="10" id="cv"></textarea>
+			</div>
+
+			<div id="openforheadhunter">
+				<label>이력서 공개여부</label> <input type="radio" name="openforheadhunter"
+					value="open" checked><label>공개</label> <input type="radio"
+					name="openforheadhunter" value="close"><label>비공개</label>
+			</div>
+		</div>
+
+
 		<button type="button" onClick="submit()">이력서 저장하기</button>
 	</div>
 </body>
 </html>
 
 
-	<script th:inline="javascript">
+<script th:inline="javascript">
 	
 	</script>
-	<script type="application/javascript" th:src="@{/js/NewResume.js}"></script>
+<script type="application/javascript" th:src="@{/js/NewResume.js}"></script>
 

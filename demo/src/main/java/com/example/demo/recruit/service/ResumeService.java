@@ -46,6 +46,7 @@ public class ResumeService {
 
     // 이력서 정보를 DB 에 저장하는 코드
     public Resume inputData(ResumeDto resumeDto, MultipartFile imgfileList, Principal principal) throws Exception {
+       
         String username = principal.getName();
         Member member = this.memberRepository.findByUsername(username);
         Resume resume = resumeRepository.save(new Resume(
@@ -59,6 +60,7 @@ public class ResumeService {
         imgfileService.saveImgfile(imgfile, imgfileList);
 
         return resume;
+       
     }
 
     // DB 에 저장된 이력서 정보를 수정하는 코드

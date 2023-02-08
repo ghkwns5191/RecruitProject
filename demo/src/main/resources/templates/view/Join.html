@@ -60,25 +60,7 @@
 </body>
 </html>
 
-<th:block layout:fragment="script">
-	<script th:inline="javascript">
+<script th:inline="javascript">
 	
-	
-		function openPop() {
-			window.open("/member/usernamecheck", "usernameVal",
-					"width=350px, height=30px");
-		};
-
-		window.onload = function(){
-			
-			document.getElementById("username").value=localStorage.getItem('username');
-				console.log(localStorage.getItem('username'));
-				console.log(document.getElementById("username").value);
-				window.localStorage.removeItem('username');
-				
-			
-		}
-		
 	</script>
-
-</th:block>
+<script type="application/javascript" th:src="@{/js/Join.js}"></script>
