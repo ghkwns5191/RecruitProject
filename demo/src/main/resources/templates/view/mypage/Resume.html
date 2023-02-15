@@ -18,7 +18,7 @@
 			<label th:for="openforheadhunter">이력서 공개여부</label>
 			<p id="resumeopenforheadhunter" th:field="*{openforheadhunter}" th:text="${resume.openforheadhunter}"></p>
 			<label>사진</label>
-			<img th:src="${imgfile.imgurl}">
+			<img th:src="*{imgurl}">
 		</div>
 		
 		<div id="resume" th:if="${resume} == null">

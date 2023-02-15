@@ -38,7 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 페이지 접근 권한
         http.authorizeRequests()
                 .mvcMatchers("**").permitAll()
-
                 .anyRequest().authenticated();
 
         http.csrf().disable();

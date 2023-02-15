@@ -71,8 +71,10 @@ public class MypageController {
             Resume resume = resumeService.getResume(member);
             System.out.println(resume);
             Imgfile imgfile = imgfileService.getimgfile(resume);
+            String imgurl = imgfile.getImgurl();
             model.addAttribute("resume", resume);
-            model.addAttribute("imgfile", imgfile);
+            model.addAttribute("imgurl", imgurl);
+            System.out.println(imgfile.getImgurl());
             return new ModelAndView("/view/mypage/Resume");
         } catch (NullPointerException e) {
             check.put("check", true);

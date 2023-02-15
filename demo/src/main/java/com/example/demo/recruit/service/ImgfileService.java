@@ -32,7 +32,7 @@ public class ImgfileService {
         // 파일 업로드 파트
         if (!StringUtils.isEmpty(orifilename)) {
             imgname = fileService.uploadFile(ImgfileLocation, orifilename, imgfileFile.getBytes());
-            imgurl = "/images/resumeimg/" + imgname;
+            imgurl = "/imageuploaded/" + imgname;
         }
 
         // 이미지 정보 저장
