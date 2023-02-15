@@ -38,9 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 페이지 접근 권한
         http.authorizeRequests()
                 .mvcMatchers("**").permitAll()
-                
+
                 .anyRequest().authenticated();
-        
+
         http.csrf().disable();
 
 //        // 인증되지 않은 사용자가 리소스 요청 시 오류 발생시킴
@@ -60,18 +60,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
-    
     @Override
     public void configure(WebSecurity web) throws Exception {
-     // 인증 제외할 하위 디렉토리 설정
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
-     // RequestRejectedException 발생 방지
+        // 인증 제외할 하위 디렉토리 설정
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/imageuploaded/**");
+        // RequestRejectedException 발생 방지
         StrictHttpFirewall firewall = new StrictHttpFirewall();
         firewall.setAllowSemicolon(true);
         firewall.setAllowUrlEncodedPercent(true);
         web.httpFirewall(firewall);
         super.configure(web);
     }
-    
-    
+
 }

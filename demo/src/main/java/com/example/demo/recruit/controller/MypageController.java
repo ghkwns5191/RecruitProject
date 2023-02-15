@@ -10,14 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.ResumeDto;
+import com.example.demo.recruit.entity.Imgfile;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Resume;
+import com.example.demo.recruit.repository.ImgfileRepository;
+import com.example.demo.recruit.service.ImgfileService;
 import com.example.demo.recruit.service.MemberService;
 import com.example.demo.recruit.service.ResumeService;
 
@@ -33,6 +35,12 @@ public class MypageController {
 
     @Autowired
     private final ResumeService resumeService;
+    
+    @Autowired
+    private final ImgfileRepository imgfileRepository;
+    
+    @Autowired
+    private final ImgfileService imgfileService;
 
     @GetMapping(value = { "", "/" })
     public String mypagehome() {
@@ -62,7 +70,9 @@ public class MypageController {
             System.out.println(member);
             Resume resume = resumeService.getResume(member);
             System.out.println(resume);
+            Imgfile imgfile = imgfileService.getimgfile(resume);
             model.addAttribute("resume", resume);
+            model.addAttribute("imgfile", imgfile);
             return new ModelAndView("/view/mypage/Resume");
         } catch (NullPointerException e) {
             check.put("check", true);

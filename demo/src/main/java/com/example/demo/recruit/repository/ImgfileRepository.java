@@ -11,6 +11,6 @@ import com.example.demo.recruit.entity.Resume;
 @Repository
 public interface ImgfileRepository extends JpaRepository<Imgfile, Long>{
 
-    Optional<Imgfile> findByResume(Resume resume);
+    Imgfile findByResume(Resume resume);
 
 }

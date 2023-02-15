@@ -13,8 +13,12 @@
 		<div id="resume" th:if="${resume} != null">
 			<label th:for="title">이력서 제목</label>
 			<p id="resumetitle" th:field="*{title}" th:text="${resume.title}"></p>
-			<label>등록일</label>
-			
+			<label th:for="cv">이력서 내용</label>
+			<p id="resumecv" th:field="*{cv}" th:text="${resume.cv}"></p>
+			<label th:for="openforheadhunter">이력서 공개여부</label>
+			<p id="resumeopenforheadhunter" th:field="*{openforheadhunter}" th:text="${resume.openforheadhunter}"></p>
+			<label>사진</label>
+			<img th:src="${imgfile.imgurl}">
 		</div>
 		
 		<div id="resume" th:if="${resume} == null">

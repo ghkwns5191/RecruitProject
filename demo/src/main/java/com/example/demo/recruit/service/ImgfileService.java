@@ -24,7 +24,7 @@ public class ImgfileService {
 
     private final FileService fileService;
 
-    public void saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {
+    public Imgfile saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {
         String orifilename = imgfileFile.getOriginalFilename();
         String imgname = "";
         String imgurl = "";
@@ -32,18 +32,19 @@ public class ImgfileService {
         // 파일 업로드 파트
         if (!StringUtils.isEmpty(orifilename)) {
             imgname = fileService.uploadFile(ImgfileLocation, orifilename, imgfileFile.getBytes());
-            imgurl = "/이미지 저장위치/" + imgname;
+            imgurl = "/images/resumeimg/" + imgname;
         }
 
         // 이미지 정보 저장
         imgfile.updateimg(orifilename, imgname, imgurl);
-        imgfileRepository.save(imgfile);
+        Imgfile result = imgfileRepository.save(imgfile);
+        
+        return result;
         
     }
     
     public Imgfile getimgfile(Resume resume) {
-        Optional<Imgfile> imgfileData = imgfileRepository.findByResume(resume);
-        Imgfile imgfile = imgfileData.get();
+        Imgfile imgfile = imgfileRepository.findByResume(resume);
         return imgfile;
     }
 

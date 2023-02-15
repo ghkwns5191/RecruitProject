@@ -187,6 +187,8 @@ window.onload = function() {
 			console.log(error);
 		}
 	})
+
+	bindDomEvent();
 }
 
 
@@ -196,6 +198,12 @@ function submit() {
 	var resume_title = document.getElementById("title").value;
 	var resume_cv = document.getElementById("cv").value;
 	var resume_openforheadhunter = document.querySelector('input[name="openforheadhunter"]:checked').value;
+
+	const imageInput = $("#imgfile")[0].files[0];
+
+	const formData = new FormData();
+	formData.append("imgfile", imageInput);
+
 	console.log(resume_title);
 	console.log(resume_cv);
 	console.log(resume_openforheadhunter);
@@ -205,12 +213,29 @@ function submit() {
 		data: {
 			title: resume_title,
 			cv: resume_cv,
-			openforheadhunter: resume_openforheadhunter
+			openforheadhunter: resume_openforheadhunter,
+
 		},
 		success: function(data) {
 			console.log(data);
 			console.log("ajax 동작");
-			location.href("/mypage/resume");
+			$.ajax({
+				type: "post",
+				url: "/imgfile/new",
+				data: formData,
+				contentType: false,
+				processData: false,
+				success: function(data) {
+					console.log(data);
+					console.log("사진파일 입력");
+					location.replace("/mypage/resume");
+				},
+				error: function(request, status, error) {
+					console.log(request);
+					console.log(status);
+					console.log(error);
+				}
+			});
 
 		},
 		error: function(request, status, error) {
@@ -220,6 +245,24 @@ function submit() {
 			console.log("ajax 동작")
 		}
 	})
+
+	
 }
+
+function bindDomEvent() {
+	$("#imgfile").on("change", function() {
+		var fileName = $(this).val().split("\\").pop(); // 이미지 파일명
+		var fileExt = fileName.substring(fileName.lastIndexOf(".") + 1); // 확장자 추출
+		fileExt = fileExt.toLowerCase(); // 확장자 소문자로 변환
+		if (fileExt != "jpg" && fileExt != "jpeg" && fileExt != "gif" && fileExt != "png" && fileExt != "bmp") {
+			window.alert("이미지 파일만 등록 가능합니다.");
+			return;
+		}
+
+		$(this).siblings("#imgfile").html(fileName);
+	})
+}
+
+
 
 

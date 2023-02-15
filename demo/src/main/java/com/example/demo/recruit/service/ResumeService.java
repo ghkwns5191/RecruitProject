@@ -5,10 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.recruit.dto.ResumeDto;
-import com.example.demo.recruit.entity.Imgfile;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.MemberRepository;
@@ -24,15 +22,12 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
 
     @Autowired
-    private final ImgfileService imgfileService;
-    
-    @Autowired
     private final MemberRepository memberRepository;
 
     // 회원의 이력서 정보를 불러오는 코드
     public Resume getResume(Member member) {
         Resume resume = resumeRepository.findByMember(member);
-        
+
         return resume;
     }
 
@@ -40,13 +35,14 @@ public class ResumeService {
     public Resume getResume(Long id) {
         Optional<Resume> resumeData = resumeRepository.findById(id);
         Resume resume = resumeData.get();
-        
+
         return resume;
     }
 
     // 이력서 정보를 DB 에 저장하는 코드
-    public Resume inputData(ResumeDto resumeDto, MultipartFile imgfileList, Principal principal) throws Exception {
-       
+    public Resume inputData(ResumeDto resumeDto, Principal principal) throws Exception {
+
+        // 이력서 등록
         String username = principal.getName();
         Member member = this.memberRepository.findByUsername(username);
         Resume resume = resumeRepository.save(new Resume(
@@ -55,12 +51,8 @@ public class ResumeService {
                 resumeDto.getCv(),
                 resumeDto.getOpenforheadhunter()));
 
-        Imgfile imgfile = new Imgfile();
-        imgfile.setResume(resume);
-        imgfileService.saveImgfile(imgfile, imgfileList);
-
         return resume;
-       
+
     }
 
     // DB 에 저장된 이력서 정보를 수정하는 코드

@@ -18,7 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/images/**")
-                .addResourceLocations(uploadPath, "classpath:/static/");
+                .addResourceLocations(uploadPath);
     }
 
     // RequestRejectedException 발생 방지용
