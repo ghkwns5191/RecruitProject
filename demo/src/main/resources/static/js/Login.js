@@ -10,7 +10,7 @@ if (check == "true") {
 		url: "/mypage/error",
 		success: function(done) {
 			console.log("status:" + status);
-			window.alert(done);
+			window.alert("로그인이 필요합니다.");
 		},
 		error: function() {
 			console.log("ajax failure")

@@ -2,6 +2,7 @@ package com.example.demo.recruit.controller;
 
 import java.security.Principal;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,10 +36,10 @@ public class MypageController {
 
     @Autowired
     private final ResumeService resumeService;
-    
+
     @Autowired
     private final ImgfileRepository imgfileRepository;
-    
+
     @Autowired
     private final ImgfileService imgfileService;
 
@@ -64,22 +65,26 @@ public class MypageController {
     @GetMapping("/resume")
     public ModelAndView resumeList(Model model, Principal principal, Map<String, Object> check) {
         try {
+            
             String username = principal.getName();
             System.out.println(username);
             Member member = memberService.getMember(username);
             System.out.println(member);
             Resume resume = resumeService.getResume(member);
             System.out.println(resume);
-            Imgfile imgfile = imgfileService.getimgfile(resume);
-            String imgurl = imgfile.getImgurl();
+            if (imgfileService.getimgfile(resume) != null) {
+                Imgfile imgfile = imgfileService.getimgfile(resume);
+                String imgurl = imgfile.getImgurl();
+                model.addAttribute("imgurl", imgurl);
+                System.out.println(imgfile.getImgurl());
+            }
             model.addAttribute("resume", resume);
-            model.addAttribute("imgurl", imgurl);
-            System.out.println(imgfile.getImgurl());
+
             return new ModelAndView("/view/mypage/Resume");
         } catch (NullPointerException e) {
             check.put("check", true);
             return new ModelAndView("view/Login");
-        }
+        } 
     }
 
     @GetMapping("/error")

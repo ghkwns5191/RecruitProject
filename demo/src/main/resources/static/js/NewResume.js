@@ -214,7 +214,6 @@ function submit() {
 			title: resume_title,
 			cv: resume_cv,
 			openforheadhunter: resume_openforheadhunter,
-
 		},
 		success: function(data) {
 			console.log(data);
@@ -228,7 +227,7 @@ function submit() {
 				success: function(data) {
 					console.log(data);
 					console.log("사진파일 입력");
-					location.replace("/mypage/resume");
+					setTimeout(location.replace("/mypage/resume"), 5000);
 				},
 				error: function(request, status, error) {
 					console.log(request);

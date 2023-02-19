@@ -17,8 +17,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ImgfileService {
 
-    @Value("${ImgfileLocation}")
-    private String ImgfileLocation;
+    @Value("${ImgfileLocation1}")
+    private String ImgfileLocation1;
+    
+    @Value("${ImgfileLocation2}")
+    private String ImgfileLocation2;
 
     private final ImgfileRepository imgfileRepository;
 
@@ -31,7 +34,7 @@ public class ImgfileService {
 
         // 파일 업로드 파트
         if (!StringUtils.isEmpty(orifilename)) {
-            imgname = fileService.uploadFile(ImgfileLocation, orifilename, imgfileFile.getBytes());
+            imgname = fileService.uploadFile(ImgfileLocation1, ImgfileLocation2, orifilename, imgfileFile.getBytes());
             imgurl = "/imageuploaded/" + imgname;
         }
 
