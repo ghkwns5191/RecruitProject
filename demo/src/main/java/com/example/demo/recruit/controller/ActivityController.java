@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,14 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/activity")
 public class ActivityController {
 
     @Autowired
     private final ActivityService activityService;
 
     // 이력서 조회 시 활동내용을 함께 조회하기 위해 사용
-    @GetMapping("/activity/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Activity>> getActivity(@RequestParam(required = false) Resume resume) {
 
         try {
@@ -46,7 +47,7 @@ public class ActivityController {
     }
 
     // 활동내용만 별도로 조회하기 위해 사용
-    @GetMapping("/activity/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Activity> getActivity(@RequestParam(required = false) Long id) {
         try {
             Activity activity = new Activity();
@@ -58,18 +59,18 @@ public class ActivityController {
     }
 
     // 이력서상 활동내용을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping("/activity/input")
-    public ResponseEntity<Activity> inputData(@RequestBody ActivityDto activityDto) {
+    @PostMapping("/input")
+    public ResponseEntity<List<Activity>> inputData(@RequestBody List<ActivityDto> activityDtoList, Principal principal) {
         try {
-            Activity activity = activityService.inputData(activityDto);
-            return new ResponseEntity<>(activity, HttpStatus.OK);
+            List<Activity> activityList = activityService.inputData(activityDtoList, principal);
+            return new ResponseEntity<>(activityList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     // 이력서상 활동내용을 수정하기 위해 사용
-    @PutMapping("/activity/revise")
+    @PutMapping("/revise")
     public ResponseEntity<Activity> reviseData(@PathVariable("id") Long id, @RequestBody ActivityDto activityDto) {
         try {
             Activity activity = activityService.inputData(id, activityDto);
@@ -80,7 +81,7 @@ public class ActivityController {
     }
 
     // 이력서상 활동내용을 삭제하기 위해 사용
-    @DeleteMapping("/activity/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             activityService.deleteData(id);

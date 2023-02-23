@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import com.example.demo.recruit.service.EducationService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/education")
 @RequiredArgsConstructor
 public class EducationController {
 
@@ -32,7 +33,7 @@ public class EducationController {
     private final EducationService educationService;
 
     // 이력서 조회 시 교육내용을 함께 조회하기 위해 사용
-    @GetMapping("/education/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Education>> getList(@RequestParam(required = false) Resume resume) {
 
         try {
@@ -45,7 +46,7 @@ public class EducationController {
     }
     
     // 해당 교육내용만 확인하기 위해 사용
-    @GetMapping("/education/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Education> getEducaction(@RequestParam(required = false) Long id) {
         try {
             Education education = new Education();
@@ -57,18 +58,18 @@ public class EducationController {
     }
     
     // 이력서상 교육정보를 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping("/education/input")
-    public ResponseEntity<Education> inputData(@RequestBody EducationDto educationDto) {
+    @PostMapping("/input")
+    public ResponseEntity<List<Education>> inputData(@RequestBody List<EducationDto> educationDtoList, Principal principal) {
         try {
-            Education education = educationService.inputData(educationDto);
-            return new ResponseEntity<>(education, HttpStatus.OK);
+            List<Education> educationList = educationService.inputData(educationDtoList, principal);
+            return new ResponseEntity<>(educationList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
     //이력서상 교육정보를 수정하기 위해 사용
-    @PutMapping("/education/revise")
+    @PutMapping("/revise")
     public ResponseEntity<Education> reviseData(@PathVariable("id") Long id, EducationDto educationDto) {
         try {
             Education education = educationService.inputData(id, educationDto);
@@ -79,7 +80,7 @@ public class EducationController {
     }
     
     // 이력서상 교육정보를 삭제하기 위해 사용
-    @DeleteMapping("/education/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             educationService.deleteData(id);

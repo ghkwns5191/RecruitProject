@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ import com.example.demo.recruit.service.OverseasexperienceService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/overseas")
 @RequiredArgsConstructor
 public class OverseasexperienceController {
 
@@ -32,7 +33,7 @@ public class OverseasexperienceController {
     private final OverseasexperienceService overseasexperienceService;
 
     // 해당 이력성 조회 시 해외경험도 함께 조회하기 위해 사용
-    @GetMapping("/overseas/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Overseasexperience>> getList(@RequestParam(required = false) Resume resume) {
         try {
             List<Overseasexperience> overseasexperience = new ArrayList<Overseasexperience>();
@@ -42,9 +43,9 @@ public class OverseasexperienceController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 해당 해외경험만 조회하기 위해 사용
-    @GetMapping("/overseas/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Overseasexperience> getOverseasexperience(@RequestParam(required = false) Long id) {
         try {
             Overseasexperience overseasexperience = new Overseasexperience();
@@ -54,21 +55,24 @@ public class OverseasexperienceController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 해외경험을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping("/overseas/input")
-    public ResponseEntity<Overseasexperience> inputData(@RequestBody OverseasexperienceDto overseasexperienceDto) {
+    @PostMapping("/input")
+    public ResponseEntity<List<Overseasexperience>> inputData(
+            @RequestBody List<OverseasexperienceDto> overseasexperienceDtoList, Principal principal) {
         try {
-            Overseasexperience overseasexperience = overseasexperienceService.inputData(overseasexperienceDto);
-            return new ResponseEntity<>(overseasexperience, HttpStatus.OK);
+            List<Overseasexperience> overseasexperienceList = overseasexperienceService
+                    .inputData(overseasexperienceDtoList, principal);
+            return new ResponseEntity<>(overseasexperienceList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 해외경험을 수정하기 위해 사용
-    @PutMapping("/overseas/revise")
-    public ResponseEntity<Overseasexperience> reviseData(@PathVariable("id") Long id, @RequestBody OverseasexperienceDto overseasexperienceDto) {
+    @PutMapping("/revise")
+    public ResponseEntity<Overseasexperience> reviseData(@PathVariable("id") Long id,
+            @RequestBody OverseasexperienceDto overseasexperienceDto) {
         try {
             Overseasexperience overseasexperience = overseasexperienceService.inputData(id, overseasexperienceDto);
             return new ResponseEntity<>(overseasexperience, HttpStatus.OK);
@@ -76,9 +80,9 @@ public class OverseasexperienceController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 해외경험을 삭제하기 위해 사용
-    @DeleteMapping("/overseas/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_overseasexperience") Long id) {
         try {
             overseasexperienceService.deleteData(id);
