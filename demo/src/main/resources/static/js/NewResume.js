@@ -1,6 +1,14 @@
 /**
  * 
  */
+var academicLength = 0;
+var activityLength = 0;
+var careerLength = 0;
+var certificateLength = 0;
+var educationLength = 0;
+var langaugesLength = 0;
+var oeLength = 0;
+var portfolioLength = 0;
 
 function addportfolio() {
 	console.log("함수작동");
@@ -13,10 +21,12 @@ function addportfolio() {
 		+ "<label>제목</label><input type='text' name='url2' placeholder='url 을 입력하세요'><br>"
 		+ "<input type='button' value='삭제' onClick='deleteportfolio(this)'>";
 	div.appendChild(newarea);
+	portfolioLength++;
 }
 
 function deleteportfolio(data) {
 	document.getElementById("portfolio").removeChild(data.parentNode);
+	portfolioLength--;
 }
 
 function addoe() {
@@ -32,10 +42,12 @@ function addoe() {
 		+ "<label>상세 내용</label><br><textarea rows='15' cols='60' name='detail' placeholder='상세 근무내용을 입력하세요'></textarea><br>"
 		+ "<input type='button' value='삭제' onClick='deleteoe(this)'>";
 	div.appendChild(newarea);
+	oeLength++;
 }
 
 function deleteoe(data) {
 	document.getElementById("oe").removeChild(data.parentNode);
+	oeLength--;
 }
 
 function addlanguages() {
@@ -57,10 +69,12 @@ function addlanguages() {
 		+ "<label>성적표 번호</label><input type='text' placeholder='취득한 성적표 번호를 입력하세요'><br>"
 		+ "<input type='button' value='삭제' onClick='deletelanguages(this)'>";
 	div.appendChild(newarea);
+	langaugesLength++;
 }
 
 function deletelanguages(data) {
 	document.getElementById("languages").removeChild(data.parentNode);
+	langaugesLength--;
 }
 
 function addeducation() {
@@ -74,10 +88,12 @@ function addeducation() {
 		+ "<label>교육 상세내용</label><br><textarea rows='15' cols='60' placeholder='교육 상세내용을 입력하세요'></textarea><br>"
 		+ "<input type='button' value='삭제' onClick='deleteeducation(this)'>";
 	div.appendChild(newarea);
+	educationLength++;
 }
 
 function deleteeducation(data) {
 	document.getElementById("education").removeChild(data.parentNode);
+	educationLength--;
 }
 
 function addcertificate() {
@@ -91,10 +107,12 @@ function addcertificate() {
 		+ "<label>자격증 번호</label><input type='text' placeholder='자격증 번호를 입력하세요'><br>"
 		+ "<input type='button' value='삭제' onClick='deletecertificate(this)'>";
 	div.appendChild(newarea);
+	certificateLength++;
 }
 
 function deletecertificate(data) {
 	document.getElementById("certificate").removeChild(data.parentNode);
+	certificateLength--;
 }
 
 function addcareer() {
@@ -114,10 +132,12 @@ function addcareer() {
 		+ "<label>상세 근무내용</label><br><textarea rows='15' cols='60' placeholder='상세 근무내용을 입력하세요'></textarea><br>"
 		+ "<input type='button' value='삭제' onClick='deletecareer(this)'>";
 	div.appendChild(newarea);
+	careerLength++;
 }
 
 function deletecareer(data) {
 	document.getElementById("career").removeChild(data.parentNode);
+	careerLength--;
 }
 
 function addactivity() {
@@ -131,44 +151,48 @@ function addactivity() {
 		+ "<label>활동 상세내용</label><br><textarea rows='15' cols='60' placeholder='활동 상세내용을 입력하세요'></textarea><br>"
 		+ "<input type='button' value='삭제' onClick='deleteactivity(this)'>";
 	div.appendChild(newarea);
+	activityLength++;
 }
 
 function deleteactivity(data) {
 	document.getElementById("activity").removeChild(data.parentNode);
+	activityLength--;
 }
 
 function addacademic() {
 	console.log("함수작동");
 	var div = document.getElementById("academic");
 	var newarea = document.createElement("p");
-	newarea.innerHTML = "<label>학교명</label><input type='text' placeholder='학교명을 입력하세요'><br>"
-		+ "<label>구분</label><select>"
+	newarea.innerHTML = "<label>학교명</label><input type='text' placeholder='학교명을 입력하세요' class='academic_name'><br>"
+		+ "<label>구분</label><select class='academic_type'>"
 		+ "<option value='unselected' selected disabled>구분</option>"
 		+ "<option value='highschool' >고등학교</option> "
 		+ "<option value='university' >대학교</option>"
 		+ "<option value='graduateSchool' >대학원</option>"
 		+ "</select><br>"
-		+ "<label>시작일</label><input type='date'><br>"
-		+ "<label>종료일</label><input type='date'><br>"
-		+ "<label>졸업여부</label><select>"
+		+ "<label>시작일</label><input type='date' class='academic_start'><br>"
+		+ "<label>종료일</label><input type='date' class='academic_end'><br>"
+		+ "<label>졸업여부</label><select class='academic_studying'>"
 		+ "<option value='unselected' selected disabled>선택</option>"
 		+ "<option value='attending'>재학중</option>"
 		+ "<option value='off'>휴학중</option>"
 		+ "<option value='graduated'>졸업</option>"
 		+ "</select><br>"
-		+ "<label>전공</label><input type='text' placeholder='전공명을 입력하세요'><br>"
-		+ "<label>학점</label><input type='text' placeholder='학점'> / <select>"
+		+ "<label>전공</label><input type='text' placeholder='전공명을 입력하세요' class='academic_major'><br>"
+		+ "<label>학점</label><input type='text' placeholder='학점' class='academic_grade'> / <select class='academic_gradefull'>"
 		+ "<option value='4.0'>4.0</option>"
 		+ "<option value='4.3' selected>4.3</option>"
 		+ "<option value='4.5'>4.5</option>"
 		+ "</select><br>"
-		+ "<label>학력 상세내용</label><br><textarea rows='15' cols='60' placeholder='상세 학습 내용을 입력하세요'></textarea><br>"
+		+ "<label>학력 상세내용</label><br><textarea rows='15' cols='60' placeholder='상세 학습 내용을 입력하세요' class='academic_detail'></textarea><br>"
 		+ "<input type='button' value='삭제' onClick='deleteacademic(this)'>";
 	div.appendChild(newarea);
+	academicLength++;
 }
 
 function deleteacademic(data) {
 	document.getElementById("academic").removeChild(data.parentNode);
+	academicLength--;
 }
 
 window.onload = function() {
@@ -194,6 +218,11 @@ window.onload = function() {
 
 
 function submit() {
+	var resumeOk = false;
+	var imgOk = false;
+	var academicOk = false;
+	console.log('academic 개수 : ' + academicLength);
+
 	console.log("동작");
 	var resume_title = document.getElementById("title").value;
 	var resume_cv = document.getElementById("cv").value;
@@ -207,6 +236,38 @@ function submit() {
 	console.log(resume_title);
 	console.log(resume_cv);
 	console.log(resume_openforheadhunter);
+
+	var academicList = [];
+	for (let i = 0; i < academicLength; i++) {
+		var academic_start = document.getElementsByClassName('academic_start')[i].value;
+		var academic_end = document.getElementsByClassName('academic_end')[i].value;
+		var academic_studying = document.getElementsByClassName('academic_studying')[i].value;
+		var academic_type = document.getElementsByClassName('academic_type')[i].value;
+		var academic_name = document.getElementsByClassName('academic_name')[i].value;
+		var academic_major = document.getElementsByClassName('academic_major')[i].value;
+		var academic_grade = document.getElementsByClassName('academic_grade')[i].value;
+		var academic_gradefull = document.getElementsByClassName('academic_gradefull')[i].value;
+		var academic_detail = document.getElementsByClassName('academic_detail')[i].value;
+		
+		console.log(i +"의 시작일"+ academic_start);
+		
+		
+		
+		var academicDto = {
+			start : academic_start,
+			end : academic_end,
+			studying : academic_studying,
+			type : academic_type,
+			name : academic_name,
+			major : academic_major,
+			grade : academic_grade,
+			gradefull : academic_gradefull,
+			detail : academic_detail
+		};
+		academicList.push(academicDto);
+	}
+	console.log("학력사항 리스트 첫번째 데이터 : " + academicList[0].detail);
+	
 	$.ajax({
 		type: "post",
 		url: "/resume/input",
@@ -216,6 +277,7 @@ function submit() {
 			openforheadhunter: resume_openforheadhunter,
 		},
 		success: function(data) {
+			resumeOk = true;
 			console.log(data);
 			console.log("ajax 동작");
 			$.ajax({
@@ -225,16 +287,36 @@ function submit() {
 				contentType: false,
 				processData: false,
 				success: function(data) {
+					imgOk = true;
 					console.log(data);
 					console.log("사진파일 입력");
-					setTimeout(location.replace("/mypage/resume"), 5000);
+
 				},
 				error: function(request, status, error) {
-					console.log(request);
+					console.log(request.toString());
 					console.log(status);
 					console.log(error);
 				}
 			});
+
+			$.ajax({
+				type: "post",
+				url: "/academic/input",
+				contentType: "application/json",
+				data: JSON.stringify(academicList),
+				success: function(data) {
+					academicOk = true;
+					console.log(data);
+					console.log("학력사항 입력");
+
+				},
+				error: function(request, status, error) {
+					console.log("요청 : " + request);
+					console.log("상태 : " +  status);
+					console.log("error 내용 :" + error);
+				}
+			});
+
 
 		},
 		error: function(request, status, error) {
@@ -245,7 +327,10 @@ function submit() {
 		}
 	})
 
-	
+	if (resumeOk && imgOk && academicOk) {
+		setTimeout(location.replace("/mypage/resume"), 5000);
+	}
+
 }
 
 function bindDomEvent() {

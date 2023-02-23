@@ -26,14 +26,14 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/academic")
 public class AcademicController {
 
     @Autowired
     public final AcademicService academicService;
 
     // 이력서 조회 시 학력정보를 함께 조회하기 위해 사용
-    @GetMapping("/academic/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Academic>> academicList(@RequestParam(required = false) Resume resume) {
         try {
             List<Academic> acaList = new ArrayList<Academic>();
@@ -46,7 +46,7 @@ public class AcademicController {
     }
 
     // 학력정보만 별도로 조회하기 위해 사용
-    @GetMapping("/academic/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Academic> getacademic(@RequestParam(required = false) Long id) {
         try {
             Academic academic = new Academic();
@@ -58,18 +58,18 @@ public class AcademicController {
     }
 
     // 이력서상 학력정보를 입력받아 저장하기 위해 사용
-    @PostMapping("/academic/input")
-    public ResponseEntity<Academic> inputData(@RequestBody AcademicDto academicDto, Principal principal) {
+    @PostMapping("/input")
+    public ResponseEntity<List<Academic>> inputData(@RequestBody List<AcademicDto> academicDtoList, Principal principal) {
         try {
-            Academic academic = academicService.inputData(academicDto, principal);
-            return new ResponseEntity<>(academic, HttpStatus.OK);
+            List<Academic> academicList = academicService.inputData(academicDtoList, principal);
+            return new ResponseEntity<>(academicList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     // 이력서상 학력정보를 수정하기 위해 사용
-    @PutMapping("/academic/revise")
+    @PutMapping("/revise")
     public ResponseEntity<Academic> reviseData(@PathVariable("id") Long id, @RequestBody AcademicDto academicDto) {
         try {
             Academic academic = academicService.inputData(id, academicDto);
@@ -80,7 +80,7 @@ public class AcademicController {
     }
 
     // 이력서상 학력정보를 삭제하기 위해 사용
-    @DeleteMapping("/academic/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             academicService.deleteData(id);

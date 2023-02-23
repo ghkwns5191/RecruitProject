@@ -99,7 +99,7 @@ public class MypageController {
     @GetMapping("/resume/new")
     public ModelAndView newResume(Model model, Principal principal, Map<String, Object> check) {
         try {
-            principal.getName();
+           
             System.out.println("작동함?");
             model.addAttribute("resumeDto", new ResumeDto());
             return new ModelAndView("/view/mypage/NewResume");

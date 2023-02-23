@@ -47,22 +47,29 @@ public class AcademicService {
     }
 
     // 학력정보를 입력받아 DB 에 저장하는 코드
-    public Academic inputData(AcademicDto academicDto, Principal principal) {
+    public List<Academic> inputData(List<AcademicDto> academicDtoList, Principal principal) {
         String username = principal.getName();
         Member member = this.memberRepository.findByUsername(username);
         Resume resume = this.resumeRepository.findByMember(member);
-        Academic academic = this.academicRepository.save(new Academic(
-                resume,
-                academicDto.getStart(),
-                academicDto.getEnd(),
-                academicDto.getStudying(),
-                academicDto.getType(),
-                academicDto.getName(),
-                academicDto.getMajor(),
-                academicDto.getGrade(),
-                academicDto.getGradefull(),
-                academicDto.getDetail()));
-        return academic;
+        List<Academic> academicList = new ArrayList<>();
+        for(int i = 0; i < academicDtoList.size(); i++) {
+            AcademicDto academicDto = academicDtoList.get(i);
+            Academic academic = 
+                    this.academicRepository.save(new Academic(
+                    resume,
+                    academicDto.getStart(),
+                    academicDto.getEnd(),
+                    academicDto.getStudying(),
+                    academicDto.getType(),
+                    academicDto.getName(),
+                    academicDto.getMajor(),
+                    academicDto.getGrade(),
+                    academicDto.getGradefull(),
+                    academicDto.getDetail()));
+            
+            academicList.add(academic);
+        }
+        return academicList;
     }
 
     // DB 학력정보를 불러와서 수정 후 DB 에 다시 저장하는 코드
