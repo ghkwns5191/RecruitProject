@@ -54,7 +54,7 @@ public class LanguagesService {
         for (int i = 0; i < languagesDtoList.size(); i++) {
             LanguagesDto languagesDto = languagesDtoList.get(i);
             Languages languages = this.languagesRepository.save(new Languages(
-                    languagesDto.getResume(),
+                    resume,
                     languagesDto.getLanguages(),
                     languagesDto.getLeveltalking(),
                     languagesDto.getLevelwriting(),

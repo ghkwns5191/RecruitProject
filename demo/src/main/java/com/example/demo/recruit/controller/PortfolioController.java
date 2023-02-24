@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,18 +56,19 @@ public class PortfolioController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 포트폴리오 내용을 입력받아 DB 에 저장하기 위해 사용
     @PostMapping("/portfolio/input")
-    public ResponseEntity<Portfolio> inputData(@RequestBody PortfolioDto portfolioDto) {
+    public ResponseEntity<List<Portfolio>> inputData(@RequestBody List<PortfolioDto> portfolioDtoList,
+            Principal principal) {
         try {
-            Portfolio portfolio = portfolioService.inputData(portfolioDto);
-            return new ResponseEntity<>(portfolio, HttpStatus.OK);
+            List<Portfolio> portfolioList = portfolioService.inputData(portfolioDtoList, principal);
+            return new ResponseEntity<>(portfolioList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 포트폴리오 내역을 수정하기 위해 사용
     @PutMapping("/portfolio/revise")
     public ResponseEntity<Portfolio> reviseData(@PathVariable("id") Long id, @RequestBody PortfolioDto portfolioDto) {
@@ -77,7 +79,7 @@ public class PortfolioController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 포트폴리오 내역을 삭제하기 위해 사용
     @DeleteMapping("/portfolio/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {

@@ -6,7 +6,7 @@ var activityLength = 0;
 var careerLength = 0;
 var certificateLength = 0;
 var educationLength = 0;
-var langaugesLength = 0;
+var languagesLength = 0;
 var oeLength = 0;
 var portfolioLength = 0;
 
@@ -14,11 +14,9 @@ function addportfolio() {
 	console.log("함수작동");
 	var div = document.getElementById("portfolio");
 	var newarea = document.createElement("p");
-	newarea.innerHTML = "<label>제목</label><input type='text' name='title' placeholder='제목을 입력하세요'><br>"
-		+ "<label>제목</label><input type='text' name='file1' placeholder='제목을 입력하세요'><br>"
-		+ "<label>제목</label><input type='text' name='file2' placeholder='제목을 입력하세요'><br>"
-		+ "<label>제목</label><input type='text' name='url1' placeholder='url 을 입력하세요'><br>"
-		+ "<label>제목</label><input type='text' name='url2' placeholder='url 을 입력하세요'><br>"
+	newarea.innerHTML = "<label>제목</label><input type='text' name='title' placeholder='제목을 입력하세요' class='portfolio_title'><br>"
+		+ "<label>제목</label><input type='text' name='url1' placeholder='url 을 입력하세요' class='portfolio_url1'><br>"
+		+ "<label>제목</label><input type='text' name='url2' placeholder='url 을 입력하세요' class='portfolio_url2'><br>"
 		+ "<input type='button' value='삭제' onClick='deleteportfolio(this)'>";
 	div.appendChild(newarea);
 	portfolioLength++;
@@ -36,8 +34,8 @@ function addoe() {
 	newarea.innerHTML = "<label>체류 국가명</label><input type='text' name='country' placeholder='체류 국가명을 입력하세요' class='oe_country'><br>"
 		+ "<label>시작일</label><input type='date' class='oe_start'><br>"
 		+ "<label>종료일</label><input type='date' class='oe_end'><br>"
-		+ "<label>현재 체류 여부</label><select class='oe_staying'"
-		+ "<option value='staying' selected>현재 체류 중</option"
+		+ "<label>현재 체류 여부</label><select class='oe_staying'>"
+		+ "<option value='staying' selected>현재 체류 중</option>"
 		+ "<option value='back'>현재 체류 중 아님</option>"
 		+ "</select><br>"
 		+ "<label>상세 내용</label><br><textarea rows='15' cols='60' name='detail' placeholder='상세 근무내용을 입력하세요' class='oe_detail'></textarea><br>"
@@ -56,12 +54,12 @@ function addlanguages() {
 	var div = document.getElementById("languages");
 	var newarea = document.createElement("p");
 	newarea.innerHTML = "<label>언어명</label><input type='text' placeholder='활용 가능한 언어를 입력하세요' class='languages_languages'><br>"
-		+ "<label>회화 능력</label><select class='languages_leveltaking'>"
+		+ "<label>회화 능력</label><select class='languages_leveltalking'>"
 		+ "<option value='novice' selected>기초 일상 회화</option>"
 		+ "<option value='intermediate'>비즈니스 회화</option>"
 		+ "<option value='native'>원어민 수준</option>"
 		+ "</select><br>"
-		+ "<label>작문/독해 능력</label><select class='langauges_levelwriting>'"
+		+ "<label>작문/독해 능력</label><select class='languages_levelwriting'>"
 		+ "<option value='novice' selected>기초 작문/독해</option>"
 		+ "<option value='intermediate'>비즈니스 작문/독해</option>"
 		+ "<option value='native'>원어민 수준</option>"
@@ -72,12 +70,12 @@ function addlanguages() {
 		+ "<label>성적표 번호</label><input type='text' placeholder='취득한 성적표 번호를 입력하세요' class='languages_certificatenumber'><br>"
 		+ "<input type='button' value='삭제' onClick='deletelanguages(this)'>";
 	div.appendChild(newarea);
-	langaugesLength++;
+	languagesLength++;
 }
 
 function deletelanguages(data) {
 	document.getElementById("languages").removeChild(data.parentNode);
-	langaugesLength--;
+	languagesLength--;
 }
 
 function addeducation() {
@@ -221,8 +219,8 @@ window.onload = function() {
 
 
 function submit() {
-	
-	
+
+
 	console.log('academic 개수 : ' + academicLength);
 
 	// resume 입력 정보
@@ -246,24 +244,24 @@ function submit() {
 		var academic_major = document.getElementsByClassName('academic_major')[i].value;
 		var academic_grade = document.getElementsByClassName('academic_grade')[i].value;
 		var academic_gradefull = document.getElementsByClassName('academic_gradefull')[i].value;
-		var academic_detail = document.getElementsByClassName('academic_detail')[i].value;	
-		
-		console.log(i +"의 시작일"+ academic_start);	
-		
+		var academic_detail = document.getElementsByClassName('academic_detail')[i].value;
+
+		console.log(i + "의 시작일" + academic_start);
+
 		var academicDto = {
-			start : academic_start,
-			end : academic_end,
-			studying : academic_studying,
-			type : academic_type,
-			name : academic_name,
-			major : academic_major,
-			grade : academic_grade,
-			gradefull : academic_gradefull,
-			detail : academic_detail
+			start: academic_start,
+			end: academic_end,
+			studying: academic_studying,
+			type: academic_type,
+			name: academic_name,
+			major: academic_major,
+			grade: academic_grade,
+			gradefull: academic_gradefull,
+			detail: academic_detail
 		};
 		academicList.push(academicDto);
 	}
-	
+
 	// activity 입력정보
 	var activityList = [];
 	for (let i = 0; i < activityLength; i++) {
@@ -272,43 +270,43 @@ function submit() {
 		var activity_title = document.getElementsByClassName('activity_title')[i].value;
 		var activity_holdby = document.getElementsByClassName('activity_holdby')[i].value;
 		var activity_detail = document.getElementsByClassName('activity_detail')[i].value;
-		
+
 		var activityDto = {
-			start : activity_start,
-			end : activity_end,
-			title : activity_title,
-			holdby : activity_holdby,
-			detail : activity_detail
+			start: activity_start,
+			end: activity_end,
+			title: activity_title,
+			holdby: activity_holdby,
+			detail: activity_detail
 		};
-		
+
 		activityList.push(activityDto);
 	}
-	
+
 	// career 입력정보
 	var careerList = [];
 	for (let i = 0; i < careerLength; i++) {
-		var career_start = document.getElementsByClassName('career_start')[i].value; 
-		var career_end = document.getElementsByClassName('career_end')[i].value; 
-		var career_working = document.getElementsByClassName('career_working')[i].value; 
-		var career_companyname = document.getElementsByClassName('career_companyname')[i].value; 
-		var career_ranks = document.getElementsByClassName('career_ranks')[i].value; 
-		var career_salary = document.getElementsByClassName('career_salary')[i].value; 
-		var career_jobduty = document.getElementsByClassName('career_jobduty')[i].value; 
-		var career_detail = document.getElementsByClassName('career_detail')[i].value; 
-		
+		var career_start = document.getElementsByClassName('career_start')[i].value;
+		var career_end = document.getElementsByClassName('career_end')[i].value;
+		var career_working = document.getElementsByClassName('career_working')[i].value;
+		var career_companyname = document.getElementsByClassName('career_companyname')[i].value;
+		var career_ranks = document.getElementsByClassName('career_ranks')[i].value;
+		var career_salary = document.getElementsByClassName('career_salary')[i].value;
+		var career_jobduty = document.getElementsByClassName('career_jobduty')[i].value;
+		var career_detail = document.getElementsByClassName('career_detail')[i].value;
+
 		var careerDto = {
-			start : career_start,
-			end : career_end,
-			working : career_working,
-			companyname : career_companyname,
-			ranks : career_ranks,
-			salary : career_salary,
-			jobduty : career_jobduty,
-			detail : career_detail
+			start: career_start,
+			end: career_end,
+			working: career_working,
+			companyname: career_companyname,
+			ranks: career_ranks,
+			salary: career_salary,
+			jobduty: career_jobduty,
+			detail: career_detail
 		};
 		careerList.push(careerDto);
 	}
-	
+
 	// certificate 입력정보
 	var certificateList = [];
 	for (let i = 0; i < certificateLength; i++) {
@@ -317,17 +315,17 @@ function submit() {
 		var certificate_grade = document.getElementsByClassName('certificate_grade')[i].value;
 		var certificate_achievefrom = document.getElementsByClassName('certificate_achievefrom')[i].value;
 		var certificate_certificatenumber = document.getElementsByClassName('certificate_certificatenumber')[i].value;
-		
+
 		var certificateDto = {
-			achievedate : certificate_achievedate,
-			name : certificate_name,
-			grade : certificate_grade,
-			achievefrom : certificate_achievefrom,
-			certificatenumber : certificate_certificatenumber
+			achievedate: certificate_achievedate,
+			name: certificate_name,
+			grade: certificate_grade,
+			achievefrom: certificate_achievefrom,
+			certificatenumber: certificate_certificatenumber
 		};
 		certificateList.push(certificateDto);
 	}
-	
+
 	// education 입력정보
 	var educationList = [];
 	for (let i = 0; i < educationLength; i++) {
@@ -336,40 +334,40 @@ function submit() {
 		var education_title = document.getElementsByClassName('education_title')[i].value;
 		var education_holdby = document.getElementsByClassName('education_holdby')[i].value;
 		var education_detail = document.getElementsByClassName('education_detail')[i].value;
-		
+
 		var educationDto = {
-			start : education_start,
-			end : education_end,
-			title : education_title,
-			holdby : education_holdby,
-			detail : education_detail
+			start: education_start,
+			end: education_end,
+			title: education_title,
+			holdby: education_holdby,
+			detail: education_detail
 		};
 		educationList.push(educationDto);
 	}
-	
+
 	// languages 입력정보
 	var languagesList = [];
 	for (let i = 0; i < languagesLength; i++) {
-		var langauges_langauges = document.getElementsByClassName('languages_languages')[i].value;
-		var langauges_leveltalking = document.getElementsByClassName('languages_leveltalking')[i].value;
-		var langauges_levelwriting = document.getElementsByClassName('languages_levelwriting')[i].value;
-		var langauges_test = document.getElementsByClassName('languages_test')[i].value;
-		var langauges_score = document.getElementsByClassName('languages_score')[i].value;
-		var langauges_achievedate = document.getElementsByClassName('languages_achievedate')[i].value;
-		var langauges_certificatenumber = document.getElementsByClassName('languages_certificatenumber')[i].value;
-		
+		var languages_languages = document.getElementsByClassName('languages_languages')[i].value;
+		var languages_leveltalking = document.getElementsByClassName('languages_leveltalking')[i].value;
+		var languages_levelwriting = document.getElementsByClassName('languages_levelwriting')[i].value;
+		var languages_test = document.getElementsByClassName('languages_test')[i].value;
+		var languages_score = document.getElementsByClassName('languages_score')[i].value;
+		var languages_achievedate = document.getElementsByClassName('languages_achievedate')[i].value;
+		var languages_certificatenumber = document.getElementsByClassName('languages_certificatenumber')[i].value;
+
 		var langaugesDto = {
-			langauges = languages_langauges,
-			leveltalking = languages_leveltalking,
-			levelwriting = languages_levelwriting,
-			test = languages_test,
-			score = languages_score,
-			achievedate = languages_achievedate,
-			certificatenumber = languages_certificatenumber
+			languages: languages_languages,
+			leveltalking: languages_leveltalking,
+			levelwriting: languages_levelwriting,
+			test: languages_test,
+			score: languages_score,
+			achievedate: languages_achievedate,
+			certificatenumber: languages_certificatenumber
 		};
 		languagesList.push(langaugesDto);
 	}
-	
+
 	// oe 입력정보
 	var oeList = [];
 	for (let i = 0; i < oeLength; i++) {
@@ -378,17 +376,32 @@ function submit() {
 		var oe_staying = document.getElementsByClassName('oe_staying')[i].value;
 		var oe_country = document.getElementsByClassName('oe_country')[i].value;
 		var oe_detail = document.getElementsByClassName('oe_detail')[i].value;
-		
+
 		var oeDto = {
-			start : oe_start,
-			end : oe_end,
-			staying : oe_staying,
-			country : oe_country,
-			detail : oe_detail
+			start: oe_start,
+			end: oe_end,
+			staying: oe_staying,
+			country: oe_country,
+			detail: oe_detail
 		};
 		oeList.push(oeDto);
 	}
-	
+
+	// portfolio 입력정보
+	var portfolioList = [];
+	for (let i = 0; i < portfolioLength; i++) {
+		var portfolio_title = document.getElementsByClassName('portfolio_title')[i].value;
+		var portfolio_url1 = document.getElementsByClassName('portfolio_url1')[i].value;
+		var portfolio_url2 = document.getElementsByClassName('portfolio_url2')[i].value;
+
+		var portfolioDto = {
+			title: portfolio_title,
+			url1: portfolio_url1,
+			url2: portfolio_url2
+		};
+		portfolioList.push(portfolioDto);
+	}
+
 	// resume 저장하는 ajax
 	$.ajax({
 		type: "post",
@@ -410,7 +423,7 @@ function submit() {
 				contentType: false,
 				processData: false,
 				success: function(data) {
-					
+
 					console.log(data);
 					console.log("imgfile 입력");
 
@@ -428,13 +441,13 @@ function submit() {
 				contentType: "application/json",
 				data: JSON.stringify(academicList),
 				success: function(data) {
-					
+
 					console.log(data);
 					console.log("academic 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
@@ -445,13 +458,13 @@ function submit() {
 				contentType: "application/json",
 				data: JSON.stringify(activityList),
 				success: function(data) {
-					
+
 					console.log(data);
 					console.log("activity 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
@@ -462,13 +475,13 @@ function submit() {
 				contentType: "application/json",
 				data: JSON.stringify(careerList),
 				success: function(data) {
-					
+
 					console.log(data);
 					console.log("career 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
@@ -479,13 +492,13 @@ function submit() {
 				contentType: "application/json",
 				data: JSON.stringify(certificateList),
 				success: function(data) {
-					
+
 					console.log(data);
 					console.log("certificate 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
@@ -496,13 +509,13 @@ function submit() {
 				contentType: "application/json",
 				data: JSON.stringify(educationList),
 				success: function(data) {
-					
+
 					console.log(data);
-					console.log("certificate 입력");
+					console.log("education 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
@@ -513,30 +526,47 @@ function submit() {
 				contentType: "application/json",
 				data: JSON.stringify(languagesList),
 				success: function(data) {
-					
+
 					console.log(data);
-					console.log("certificate 입력");
+					console.log("languages 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
 			//oe 저장하는 ajax
 			$.ajax({
 				type: "post",
-				url: "/languages/input",
+				url: "/overseas/input",
 				contentType: "application/json",
 				data: JSON.stringify(oeList),
 				success: function(data) {
-					
+
 					console.log(data);
-					console.log("certificate 입력");
+					console.log("oe 입력");
 				},
 				error: function(request, status, error) {
 					console.log("요청 : " + request);
-					console.log("상태 : " +  status);
+					console.log("상태 : " + status);
+					console.log("error 내용 :" + error);
+				}
+			});
+			// portfolio 저장하는 ajax
+			$.ajax({
+				type: "post",
+				url: "/portfolio/input",
+				contentType: "application/json",
+				data: JSON.stringify(portfolioList),
+				success: function(data) {
+
+					console.log(data);
+					console.log("portfolio 입력");
+				},
+				error: function(request, status, error) {
+					console.log("요청 : " + request);
+					console.log("상태 : " + status);
 					console.log("error 내용 :" + error);
 				}
 			});
@@ -547,8 +577,11 @@ function submit() {
 			console.log(error);
 			console.log("ajax 동작")
 		}
-	})
-		setTimeout(location.replace("/mypage/resume"), 5000);
+	});
+	
+	// 5초 이후 이력서 목록으로 이동.
+	setTimeout(() => location.href = '/mypage/resume', 5000);
+	
 }
 
 function bindDomEvent() {

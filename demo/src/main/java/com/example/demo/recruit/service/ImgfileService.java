@@ -1,7 +1,5 @@
 package com.example.demo.recruit.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,7 +41,6 @@ public class ImgfileService {
         Imgfile result = imgfileRepository.save(imgfile);
         
         return result;
-        
     }
     
     public Imgfile getimgfile(Resume resume) {
