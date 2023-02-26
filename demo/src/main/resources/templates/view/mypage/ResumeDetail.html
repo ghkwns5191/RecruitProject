@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<link th:href="@{/css/ResumeDetail.css}" rel="stylesheet">
+<link th:href="@{/css/common.css}" rel="stylesheet">
+<meta charset="UTF-8">
+<title>회원 정보</title>
+</head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">
+<body>
+	<div th:fragment="content">
+
+		<table id="resume_title">
+			<tbody>
+				<tr>
+					<td id="label_resume_title">이력서 제목</td>
+					<td id="text_resumetitle" th:field="*{title}"
+						th:text="${resume.title}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<br> <label>기본 정보</label><br>
+		<div>
+
+			<table>
+				<thead>
+					<th colspan="3" id="basic_info">기본정보</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan="7"><img th:src="*{imgurl}" id="resume_img"></td>
+						<td>이름</td>
+						<td id="resume_name">유화준</td>
+					</tr>
+					<tr>
+
+						<td>생년월일</td>
+						<td id="resume_birth"></td>
+					</tr>
+					<tr>
+
+						<td>전화번호</td>
+						<td id="resume_phone"></td>
+					</tr>
+					<tr>
+						<td>이메일</td>
+						<td id="resume_email"></td>
+					</tr>
+					<tr>
+						<td rowspan="3">주소</td>
+						<td id="resume_address1">주소 1</td>
+					</tr>
+					<tr>
+						<td id="resume_address2">주소 2</td>
+					</tr>
+					<tr>
+						<td id="resume_address3">주소 3</td>
+					</tr>
+				</tbody>
+
+			</table>
+		</div>
+		<label th:for="title">이력서 제목</label>
+		<p id="resumetitle" th:field="*{title}" th:text="${resume.title}"></p>
+		<label th:for="cv">이력서 내용</label>
+		<p id="resumecv" th:field="*{cv}" th:text="${resume.cv}"></p>
+		<label th:for="openforheadhunter">이력서 공개여부</label>
+		<p id="resumeopenforheadhunter" th:field="*{openforheadhunter}"
+			th:text="${resume.openforheadhunter}"></p>
+		<label>사진</label> <img th:src="*{imgurl}">
+
+
+
+	</div>
+</body>
+</html>
+<script th:inline="javascript">
+	
+</script>
+<script type="application/javascript" th:src="@{/js/ResumeDetail.js}"></script>

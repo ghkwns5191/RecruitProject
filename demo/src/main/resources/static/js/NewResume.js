@@ -406,24 +406,26 @@ function submit() {
 	$.ajax({
 		type: "post",
 		url: "/resume/input",
+		async : false,
 		data: {
 			title: resume_title,
 			cv: resume_cv,
 			openforheadhunter: resume_openforheadhunter,
 		},
 		success: function(data) {
-			resumeOk = true;
+			
 			console.log(data);
 			console.log("ajax 동작");
 			// imgfile 저장하는 ajax
 			$.ajax({
 				type: "post",
 				url: "/imgfile/new",
+				async : false,
 				data: formData,
 				contentType: false,
 				processData: false,
 				success: function(data) {
-
+					
 					console.log(data);
 					console.log("imgfile 입력");
 
@@ -438,6 +440,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/academic/input",
+				async : false,
 				contentType: "application/json",
 				data: JSON.stringify(academicList),
 				success: function(data) {
@@ -455,6 +458,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/activity/input",
+				async : false,
 				contentType: "application/json",
 				data: JSON.stringify(activityList),
 				success: function(data) {
@@ -472,6 +476,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/career/input",
+				async : false,
 				contentType: "application/json",
 				data: JSON.stringify(careerList),
 				success: function(data) {
@@ -489,6 +494,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/certificate/input",
+				async : false,
 				contentType: "application/json",
 				data: JSON.stringify(certificateList),
 				success: function(data) {
@@ -505,6 +511,7 @@ function submit() {
 			// education 저장하는 ajax
 			$.ajax({
 				type: "post",
+				async : false,
 				url: "/education/input",
 				contentType: "application/json",
 				data: JSON.stringify(educationList),
@@ -522,6 +529,7 @@ function submit() {
 			//langauges 저장하는 ajax
 			$.ajax({
 				type: "post",
+				async : false,
 				url: "/languages/input",
 				contentType: "application/json",
 				data: JSON.stringify(languagesList),
@@ -539,6 +547,7 @@ function submit() {
 			//oe 저장하는 ajax
 			$.ajax({
 				type: "post",
+				async : false,
 				url: "/overseas/input",
 				contentType: "application/json",
 				data: JSON.stringify(oeList),
@@ -556,6 +565,7 @@ function submit() {
 			// portfolio 저장하는 ajax
 			$.ajax({
 				type: "post",
+				async : false,
 				url: "/portfolio/input",
 				contentType: "application/json",
 				data: JSON.stringify(portfolioList),
@@ -580,8 +590,7 @@ function submit() {
 	});
 	
 	// 5초 이후 이력서 목록으로 이동.
-	setTimeout(() => location.href = '/mypage/resume', 5000);
-	
+	setTimeout(() => location.href = '/mypage/resume', 0000);
 }
 
 function bindDomEvent() {

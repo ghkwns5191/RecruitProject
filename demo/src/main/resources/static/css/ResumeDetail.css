@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+
+#resume_img {
+	width: 100px;
+	height: 140px;
+}
+
+#basic_info {
+	text-align: left;
+}
+
+table {
+	width: 250px;
+}
