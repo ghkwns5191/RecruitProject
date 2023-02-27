@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/company")
 public class CompanyController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class CompanyController {
     private final CompanyreviewService companyreviewService;
 
     // 모든 기업 리스트를 조회하기 위해 사용
-    @GetMapping("/company/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Company>> getList() {
 
         try {
@@ -48,7 +49,7 @@ public class CompanyController {
     }
 
     // 해당 기업의 정보를 조회하기 위해 사용
-    @GetMapping("/company/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Company> getCompany(@RequestParam(required = false) Long id) {
         try {
             Company company = new Company();
@@ -60,10 +61,10 @@ public class CompanyController {
     }
 
     // 기업정보를 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping("/company/input")
-    public ResponseEntity<Company> inputData(@RequestBody CompanyDto companyDto) {
+    @PostMapping("/input")
+    public ResponseEntity<Company> inputData(@RequestBody CompanyDto companyDto, Principal principal) {
         try {
-            Company company = companyService.inputData(companyDto);
+            Company company = companyService.inputData(companyDto, principal);
             return new ResponseEntity<>(company, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,7 +72,7 @@ public class CompanyController {
     }
 
     // 기업정보를 수정하기 위해 사용
-    @PutMapping("/company/revise")
+    @PutMapping("/revise")
     public ResponseEntity<Company> reviseData(@PathVariable("id") Long id, CompanyDto companyDto) {
         try {
             Company company = companyService.inputData(id, companyDto);
@@ -82,7 +83,7 @@ public class CompanyController {
     }
 
     // 기업정보를 삭제하기 위해 사용
-    @DeleteMapping("/company/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             companyreviewService.deleteCompany(id);

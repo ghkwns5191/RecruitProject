@@ -41,6 +41,11 @@ public class MemberService implements UserDetailsService {
 		Member member = memberData.get();
 		return member;
 	}
+	
+	public Member getMemberinfo(String username) {
+	    Member member = this.memberRepository.findByUsername(username);
+	    return member;
+	}
 
 	// 가입계정의 아이디 중복확인하는 코드
 	private void validationUsername(MemberDto member) {

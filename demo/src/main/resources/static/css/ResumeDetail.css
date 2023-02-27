@@ -6,10 +6,23 @@
 	height: 140px;
 }
 
-#basic_info {
+.table_head {
 	text-align: left;
+	
 }
 
 table {
-	width: 250px;
+	width: 650px;
+	margin-bottom: 40px;
+	border-bottom: black 2.5px solid;
 }
+
+.indexprint {
+	vertical-align: top;
+}
+
+.tablebody {
+	margin-bottom: 40px;
+}
+
+

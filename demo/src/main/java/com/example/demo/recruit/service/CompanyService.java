@@ -1,5 +1,6 @@
 package com.example.demo.recruit.service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.recruit.dto.CompanyDto;
 import com.example.demo.recruit.entity.Company;
+import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.repository.CompanyRepository;
+import com.example.demo.recruit.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +23,9 @@ public class CompanyService {
 
     @Autowired
     private final CompanyRepository companyRepository;
+    
+    @Autowired
+    private final MemberRepository memberRepository;
 
     // 전체 회사 리스트를 조회하는 코드
     public List<Company> getcompany() {
@@ -36,9 +42,11 @@ public class CompanyService {
     }
    
     // 회사 정보를 입력받아 DB 에 저장하는 코드
-    public Company inputData(CompanyDto companyDto) {
+    public Company inputData(CompanyDto companyDto, Principal principal) {
+        String username = principal.getName();
+        Member member = this.memberRepository.findByUsername(username);
         Company company = this.companyRepository.save(new Company(
-                companyDto.getMember(), 
+                member, 
                 companyDto.getName(), 
                 companyDto.getType(), 
                 companyDto.getAddress(), 
@@ -70,5 +78,4 @@ public class CompanyService {
 
     
     
-    
-}
+    }

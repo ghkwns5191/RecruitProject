@@ -47,8 +47,7 @@ public class Company {
     @NotNull
     public String phone; // 기업 전화번호
 
-    @Column(length = 100, name = "pp20number", unique = true)
-    @NotNull
+    @Column(length = 100, name = "pp20number")
     public String pp20number;// pp20 번호
 
     @Column(length = 100, name = "numberofstaff")
@@ -62,7 +61,7 @@ public class Company {
     }
 
     public Company(Member member, @NotNull String name, @NotNull String type, @NotNull String address,
-            @NotNull String phone, @NotNull String pp20number, String numberofstaff, LocalDate modifydate) {
+            @NotNull String phone, String pp20number, String numberofstaff, LocalDate modifydate) {
 
         this.member = member;
         this.name = name;

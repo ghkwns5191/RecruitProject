@@ -12,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.demo.recruit.dto.CompanyDto;
 import com.example.demo.recruit.dto.ResumeDto;
 import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Activity;
@@ -146,15 +148,17 @@ public class MypageController {
             List<Languages> languagesList = this.LanguageService.getlanguages(resume);
             List<Overseasexperience> oeList = this.oeService.getoverseasexperience(resume);
             List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
-            
+
             if (imgfileService.getimgfile(resume) != null) {
                 Imgfile imgfile = imgfileService.getimgfile(resume);
                 String imgurl = imgfile.getImgurl();
                 model.addAttribute("imgurl", imgurl);
                 System.out.println(imgfile.getImgurl());
+
             }
-            
+
             if (resume.getMember() == member && resume != null) {
+                model.addAttribute("member", member);
                 model.addAttribute("resume", resume);
                 if (academicList != null)
                     model.addAttribute("academicList", academicList);
@@ -171,11 +175,11 @@ public class MypageController {
                 if (oeList != null)
                     model.addAttribute("oeList", oeList);
                 if (portfolioList != null)
-                    model.addAttribute("portfolioList", academicList);
+                    model.addAttribute("portfolioList", portfolioList);
             }
-            
+
             return new ModelAndView("/view/mypage/ResumeDetail");
-            
+
         } catch (NullPointerException e) {
             /*
              * principal 이 null 로 되어있으면 (계정 접속이 되어있지 않으면)
@@ -213,6 +217,20 @@ public class MypageController {
     public String newResume(ResumeDto resumeDto, MultipartFile imgfile, Principal principal) {
         System.out.println("반응함?");
         return "redirect:/view/mypage/Resume";
+    }
+
+    @GetMapping("/companyinput")
+    public ModelAndView newCompany(Map<String, Object> check, Principal principal, Model model) {
+        try {
+            String username = principal.getName();
+            Member member = this.memberService.getMemberinfo(username);
+            String sort = member.getSort();
+            model.addAttribute("sort", sort);
+            return new ModelAndView("/view/mypage/NewCompany");
+        } catch (NullPointerException e) {
+            check.put("check", true);
+            return new ModelAndView("view/Login");
+        }
     }
 
 }

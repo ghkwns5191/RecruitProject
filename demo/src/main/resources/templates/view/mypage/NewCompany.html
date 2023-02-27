@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<head>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+<meta charset="UTF-8">
+<title>업체정보등록</title>
+</head>
+<body>
+	<table>
+		<tbody>
+			<tr>
+				<td>기업명</td>
+				<td><input type="text" id="name_company" placeholder="기업명을 입력하세요"></td>
+			</tr>
+			
+			<tr>
+				<td>업종</td>
+				<td><input type="text" id="type_company" placeholder="업종을 입력하세요"></td>
+			</tr>
+			
+			<tr>
+				<td>직원 수</td>
+				<td><input type="text" id="numberofstaff_company" placeholder="사무실 직원 수를 입력하세요"></td>
+			</tr>
+			
+			<tr>
+				<td>전화번호</td>
+				<td><input type="text" id="phone_company" placeholder="전화번호를 입력하세요"></td>
+			</tr>
+			
+			<tr>
+				<td>주소</td>
+				<td><input type="text" id="address_company" placeholder="주소를 입력하세요"></td>
+			</tr>
+			
+			<tr>
+				<td><button onClick="inputData()">등록하기</button></td>
+				<td><button>돌아가기</button></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
+<script th:inline="javascript">
+	
+	</script>
+<script type="application/javascript" th:src="@{/js/NewCompany.js}"></script>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">
+

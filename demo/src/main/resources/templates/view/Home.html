@@ -5,6 +5,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
+<link th:href="@{/css/common.css}" rel="stylesheet">
 <meta charset="UTF-8">
 <title>메인페이지</title>
 </head>
@@ -20,16 +21,20 @@
 			onClick="location.href='/logout'">로그아웃</button>
 
 		<button th:if="${sort}=='company'" type="button"
-			onClick="location.href='/'">업체정보등록</button>
+			onClick="location.href='/mypage/companyinput'">업체정보등록</button>
 
 		<button sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/mypage/accountinfo'">마이페이지 - 회원정보</button>
 
-		<button sec:authorize="isAuthenticated()" type="button"
+		<button th:if="${sort}=='individual'" sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/mypage/resume'">마이페이지 - 이력서 조회</button>
 
 
 	</div>
 </body>
 </html>
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">
 
