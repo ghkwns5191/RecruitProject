@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.demo.recruit.dto.MemberDto;
+import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.service.CompanyService;
 import com.example.demo.recruit.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,9 @@ public class MainController {
 
     @Autowired
     private final MemberService memberService;
+    
+    @Autowired
+    private final CompanyService companyService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -36,6 +41,10 @@ public class MainController {
             String username = principal.getName();
             Member member = memberService.getMember(username);
             String sort = member.getSort();
+            if(companyService.getData(member) != null) {
+                Company company = this.companyService.getData(member);
+                model.addAttribute("company", company);
+            }
             model.addAttribute("sort", sort);
             model.addAttribute("username", username);
             return "view/Home";

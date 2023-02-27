@@ -20,13 +20,17 @@
 		<button sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/logout'">로그아웃</button>
 
-		<button th:if="${sort}=='company'" type="button"
-			onClick="location.href='/mypage/companyinput'">업체정보등록</button>
+		<button th:if="${sort}=='company' and ${company} == null"
+			type="button" onClick="location.href='/mypage/companyinput'">업체정보등록</button>
+
+		<button th:if="${sort}=='company' and ${company} != null"
+			type="button" onClick="location.href='/mypage/company/detail'">업체정보조회</button>
 
 		<button sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/mypage/accountinfo'">마이페이지 - 회원정보</button>
 
-		<button th:if="${sort}=='individual'" sec:authorize="isAuthenticated()" type="button"
+		<button th:if="${sort}=='individual'"
+			sec:authorize="isAuthenticated()" type="button"
 			onClick="location.href='/mypage/resume'">마이페이지 - 이력서 조회</button>
 
 

@@ -23,7 +23,7 @@ public class CompanyService {
 
     @Autowired
     private final CompanyRepository companyRepository;
-    
+
     @Autowired
     private final MemberRepository memberRepository;
 
@@ -33,30 +33,30 @@ public class CompanyService {
         companyRepository.findAll().forEach(company::add);
         return company;
     }
-    
+
     // 해당 회사 정보만 조회하는 코드
     public Company getcompany(Long id) {
         Optional<Company> companyData = companyRepository.findById(id);
         Company company = companyData.get();
         return company;
     }
-   
+
     // 회사 정보를 입력받아 DB 에 저장하는 코드
     public Company inputData(CompanyDto companyDto, Principal principal) {
         String username = principal.getName();
         Member member = this.memberRepository.findByUsername(username);
         Company company = this.companyRepository.save(new Company(
-                member, 
-                companyDto.getName(), 
-                companyDto.getType(), 
-                companyDto.getAddress(), 
-                companyDto.getPhone(), 
-                companyDto.getPp20number(), 
-                companyDto.getNumberofstaff(), 
+                member,
+                companyDto.getName(),
+                companyDto.getType(),
+                companyDto.getAddress(),
+                companyDto.getPhone(),
+                companyDto.getPp20number(),
+                companyDto.getNumberofstaff(),
                 LocalDate.now()));
         return company;
     }
-    
+
     // DB 에 저장된 기업정보를 불러내어 수정 및 다시 저장하는 코드
     public Company inputData(Long id, CompanyDto companyDto) {
         Optional<Company> companyData = this.companyRepository.findById(id);
@@ -70,12 +70,15 @@ public class CompanyService {
         this.companyRepository.save(company);
         return company;
     }
-    
+
     // DB 에 저장된 기업 정보를 삭제하는 코드
     public void deleteData(Long id) {
         this.companyRepository.deleteById(id);
     }
 
-    
-    
+    public Company getData(Member member) {
+        Company company = this.companyRepository.findByMember(member);
+        return company;
     }
+
+}
