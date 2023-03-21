@@ -24,7 +24,7 @@ import com.example.demo.recruit.service.RecruitService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/recruit")
 @RequiredArgsConstructor
 public class RecruitController {
 
@@ -32,7 +32,7 @@ public class RecruitController {
     private final RecruitService recruitService;
 
     // 채용공고 리스트를 조회하기 위해 사용
-    @GetMapping("/recruit/list")
+    @GetMapping("/list")
     public ResponseEntity<List<Recruit>> getList() {
         try {
             List<Recruit> recruit = new ArrayList<Recruit>();
@@ -43,8 +43,19 @@ public class RecruitController {
         }
     }
     
+    @GetMapping("/list/represent")
+    public ResponseEntity<List<Recruit>> get5() {
+        try {
+            List<Recruit> recruit = new ArrayList<Recruit>();      
+            recruit = recruitService.getRecruit();
+            return new ResponseEntity<>(recruit, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     // 기업 회원이 작성한 채용공고만 조회하기 위해 사용
-    @GetMapping("/recruit/listbymember")
+    @GetMapping("/listbymember")
     public ResponseEntity<List<Recruit>> getList(@RequestParam(required = false) Member member) {
         try {
             List<Recruit> recruit = new ArrayList<Recruit>();
@@ -56,7 +67,7 @@ public class RecruitController {
     }
     
     // 채용공고 단수 조회를 위해 사용
-    @GetMapping("/recruit/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Recruit> getData(@RequestParam(required = false) Long id) {
         try {
             Recruit recruit = recruitService.getRecruit(id);
@@ -67,7 +78,7 @@ public class RecruitController {
     }
     
     // 채용공고 내용을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping("/recruit/input")
+    @PostMapping("/input")
     public ResponseEntity<Recruit> inputData(@RequestBody RecruitDto recruitDto) {
         try {
             Recruit recruit = recruitService.inputData(recruitDto);
@@ -78,7 +89,7 @@ public class RecruitController {
     }
     
     // 채용공고를 수정하기 위해 사용
-    @PutMapping("/recruit/revise")
+    @PutMapping("/revise")
     public ResponseEntity<Recruit> reviseData(@PathVariable("id") Long id, @RequestBody RecruitDto recruitDto) {
         try {
             Recruit recruit = recruitService.inputData(id, recruitDto);
@@ -89,7 +100,7 @@ public class RecruitController {
     }
     
     // 채용공고를 삭제하기 위해 사용
-    @DeleteMapping("/recruit/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             recruitService.deleteData(id);

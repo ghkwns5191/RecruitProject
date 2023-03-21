@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
+<link th:href="@{/css/common.css}" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+	<table>
+		<thead>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성 / 수정일</th>
+			<th>마감일</th>
+		</thead>
 
+		<tbody>
+			<tr th:if="${recruitList != null}" th:each = "recruitList : ${recruitList}" >
+				<td th:text="${recruitListStat.index + 1}"></td>
+				<td th:text="${recruitList.title}"></td>
+				<td th:text="${recruitList.writer}"></td>
+				<td th:if="${recruitList.modifydate == null}" th:text="${recruitList.registerdate}"></td>
+				<td th:unless="${recruitList.modifydate != null}" th:text="${recruitList.modifydate}"></td>
+				<td th:text="deadline"></td>
+			</tr>
+		</tbody>
+
+	</table>
 </body>
 </html>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">
+
+
+
