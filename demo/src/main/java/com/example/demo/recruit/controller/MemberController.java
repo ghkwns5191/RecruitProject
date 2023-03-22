@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.recruit.dto.MemberDto;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.service.MemberService;
 

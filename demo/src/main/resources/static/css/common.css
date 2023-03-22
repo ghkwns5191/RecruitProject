@@ -4,4 +4,20 @@
 	margin: 0 auto;
 	padding: 0;
 	font-family: 'Noto Sans KR', sans-serif;
+	text-decoration-line: none;
+}
+
+#navbarhead {
+	background-color: grey;
+	width: 80%;
+	font-size: 1.25rem;
+	border-radius: 20px;
+}
+
+#logoimg {
+	width: 400px;
+	height: 150px;
+	text-align: center;
+	margin: auto;
+	display: block;
 }
