@@ -1,10 +1,148 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
 <head>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>아이디 중복확인</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>
+
+	<!--  헤더 및 Navigation Bar -->
+	<header>
+		<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
+
+		<nav class="navbar navbar-expand-lg" id="navbarhead">
+			<div class="container-fluid">
+
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="#">채용공고</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">기업리뷰</a></li>
+						<li class="nav-item"><a class="nav-link disabled">Disabled</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item" sec:authorize="isAnonymous()"><a
+							class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+						<li class="nav-item" sec:authorize="isAnonymous()"><a
+							class="nav-link active" aria-current="page" href="/join">회원가입</a></li>
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link active" aria-current="page" href="/logout">마이페이지</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- 새로운 채용공고 입력 공간 -->
+	<table>
+		<thead>
+
+		</thead>
+		<tbody>
+			<tr>
+				<td name="recruit_title">제목</td>
+				<td><input type="text" name="recruit_title" id="title"
+					placeholder="구인공고 제목을 입력하세요"></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_detail">상세공고</td>
+				<td><textarea cols="30" rows="60" name="recruit_detail" id="detail"
+					placeholder="구인공고 상세 내용을 입력하세요"></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_career">경력</td>
+				<td><select name="recruit_career" id="career">
+						<option name="recruit_career" selected disabled>경력을 선택하세요</option>
+						<option value="new" name="recruit_career">신입</option>
+						<option value="1~3" name="recruit_career">1~3년차</option>
+						<option value="3~5" name="recruit_career">3~5년차</option>
+						<option value="5~10" name="recruit_career">5~10년차</option>
+						<option value="10~" name="recruit_career">10년 이상</option>
+				</select></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_salary">예상 연봉 정보</td>
+				<td><select id="period_salary" name="period">
+						<option name="period" value="" selected disabled>연봉 / 월급 선택</option>
+						<option name="period" value="yearly">연봉</option>
+						<option name="period" value="monthly">월급</option>
+				</select><input type="text" name="recruit_salary" id="salary"
+					placehoder="연봉 혹은 월급을 입력하세요"> <select name="currency"
+					id="salary_currency">
+						<option name="currency" value="">화폐단위를 선택하세요</option>
+						<option name="currency" value="바트">바트</option>
+						<option name="currency" value="만원">만원</option>
+				</select></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_workingdays">근무일</td>
+				<td><select id="workingdays">
+						<option value="mon to fri">월~금</option>
+						<option value="mon to sat">월~토</option>
+						<option value="sat to sun">토~일</option>
+						<option value="input manually">직접입력</option>
+				</select><input type="text" id="input_manual" placeholder="근무일을 입력하세요"></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_attn">채용공고 담당자명</td>
+				<td><input type="text" name="recruit_attn" id="attn"
+					placehoder="담당자명을 입력하세요"></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_phonenumber">연락처</td>
+				<td><input type="text" name="recruit_phonenumber"
+					id="phonenumber" placehoder="연락처를 입력하세요 "></td>
+			</tr>
+
+			<tr>
+				<td name="recruit_deadline">채용공고 마감일</td>
+				<td><input type="date" name="recruit_deadline" id="deadline"></td>
+			</tr>
+		</tbody>
+	</table>
+	<table>
+		<tbody>
+			<tr>
+				<td><button onClick="register()">등록하기</button></td>
+				<td><button onClick="backtoList()">취소하기</button></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Footer 제작 공간 -->
+	<footer
+		style="text-align: center; margin-top: 300px; border-top: 1px black solid; width: 80%;">
+		<div>Footer 입니다.</div>
+	</footer>
 
 </body>
 </html>
+
+<script th:inline="javascript">
+	
+</script>
+<script type="application/javascript" th:src="@{/js/NewRecruit.js}"></script>
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">
