@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,9 +44,11 @@ public class Recruit {
 
     @Column(name = "registerdate")
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate registerdate;// 작성일
 
     @Column(name = "modifydate")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate modifydate;// 수정일
 
     @Column(length = 100, name = "career")
@@ -72,6 +76,7 @@ public class Recruit {
     
     @Column(name = "deadline")
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate deadline;// 마감일
 
     public Recruit() {

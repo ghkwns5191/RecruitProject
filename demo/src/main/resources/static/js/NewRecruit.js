@@ -2,8 +2,6 @@
  * 
  */
 
-
-
 // 등록하기 버튼 누르면 동작
 function register() {
 	var recruit_title = document.getElementById('title').value;
@@ -39,18 +37,16 @@ function register() {
 		success: function(data) {
 			console.log(data);
 			console.log("채용공고 등록정보 전송");
-			// 채용공고 리스트로 이동
-			location.href("");
+			// 채용공고 리스트 페이지로 이동
+			location.href("/");
 		},
 		error: function(error) {
 			console.log(error);
 		}
 	});
-	
-	
 }
 
 // 취소하기 버튼 누르면 동작 (채용공고 리스트 페이지로 이동)
 function backtoList() {
-	location.href="/";
+	location.href("/");
 }

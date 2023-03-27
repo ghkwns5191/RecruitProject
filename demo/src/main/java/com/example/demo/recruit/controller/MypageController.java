@@ -203,9 +203,10 @@ public class MypageController {
     @GetMapping("/resume/new")
     public ModelAndView newResume(Model model, Principal principal, Map<String, Object> check) {
         try {
-
+            String username = principal.getName();
             System.out.println("작동함?");
             model.addAttribute("resumeDto", new ResumeDto());
+            model.addAttribute("username", username);
             return new ModelAndView("/view/mypage/NewResume");
         } catch (NullPointerException e) {
             check.put("check", true);

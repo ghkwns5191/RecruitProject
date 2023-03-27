@@ -89,7 +89,7 @@ public class RecruitController {
     }
     
     // 채용공고를 수정하기 위해 사용
-    @PutMapping("/revise")
+    @PutMapping("/revise/{id}")
     public ResponseEntity<Recruit> reviseData(@PathVariable("id") Long id, @RequestBody RecruitDto recruitDto) {
         try {
             Recruit recruit = recruitService.inputData(id, recruitDto);
