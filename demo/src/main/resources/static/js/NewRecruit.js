@@ -32,7 +32,7 @@ function register() {
 		type: 'post',
 		async: false,
 		url: '',
-		contentType: 'applycation/json',
+		contentType: 'application/json',
 		data: recruitDto,
 		success: function(data) {
 			console.log(data);

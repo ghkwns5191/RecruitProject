@@ -88,8 +88,9 @@
 </html>
 
 <script th:inline="javascript">
-	
-</script>
+		var check = "[[${check}]]";
+		console.log(check);
+	</script>
 <script type="application/javascript" th:src="@{/js/RecruitList.js}"></script>
 
 <link

@@ -1,10 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>메인페이지</title>
 </head>
 <body>
 
+	<!--  헤더 및 Navigation Bar -->
+	<header>
+		<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
+
+		<nav class="navbar navbar-expand-lg" id="navbarhead">
+			<div class="container-fluid">
+
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="#">채용공고</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">기업리뷰</a></li>
+						<li class="nav-item"><a class="nav-link disabled">Disabled</a>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item" sec:authorize="isAnonymous()"><a
+							class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+						<li class="nav-item" sec:authorize="isAnonymous()"><a
+							class="nav-link active" aria-current="page" href="/join">회원가입</a></li>
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link active" aria-current="page" href="/logout">마이페이지</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- 본문 -->
+	<div th:fragment="content">
+		<table>
+			<thead>
+				<th th:text="${recruit.title}" colspan="2"></th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>작성자</td>
+					<td th:text="recruit.writer"></td>
+				</tr>
+				<tr>
+					<td>작성 / 수정일</td>
+					<td th:text="recruit.writer"></td>
+					<td th:if="${recruit.modifydate} == null"
+						th:text="recruit.registerdate"></td>
+					<td th:if="${recruit.modifydate} != null"
+						th:text="recruit.modifydate"></td>
+				</tr>
+
+				<tr>
+					<td>경력</td>
+					<td th:if="${recruit.career} == 'new'">신입</td>
+					<td th:if="${recruit.career} == '1~3'">1~3년차</td>
+					<td th:if="${recruit.career} == '3~5'">3~5년차</td>
+					<td th:if="${recruit.career} == '5~10'">5~10년차</td>
+					<td th:if="${recruit.career} == '10~'">10년 이상</td>
+				</tr>
+
+				<tr>
+					<td>예상 연봉</td>
+					<td th:text="${recruit.salary}"></td>
+				</tr>
+
+				<tr>
+					<td>근무일</td>
+					<td th:if="${recruit.workingdays} == 'mon to fri'" text="월~금"></td>
+					<td th:if="${recruit.workingdays} == 'mon to sat'" text="월~토"></td>
+					<td th:if="${recruit.workingdays} == 'sat to sun'" text="토~일"></td>
+					<td
+						th:unless="${recruit.workingdays} == 'mon to fri' or ${recruit.workingdays} == 'mon to sat' or ${recruit.workingdays} == 'sat to sun'"
+						th:text="${recruit.workingdays}"></td>
+				</tr>
+
+				<tr>
+					<td>상세정보</td>
+					<td th:text="${recruit.detail}"></td>
+				</tr>
+
+				<tr>
+					<td>연락처</td>
+					<td th:text="${recruit.phonenumber}"></td>
+				</tr>
+
+				<tr>
+					<td>담당자명</td>
+					<td th:text="${recruit.attn}"></td>
+				</tr>
+
+				<tr>
+					<td>공고 마감일</td>
+					<td th:text="${recruit.deadline}"></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<!-- Footer 제작 공간 -->
+	<footer
+		style="text-align: center; margin-top: 300px; border-top: 1px black solid; width: 80%;">
+		<div>Footer 입니다.</div>
+	</footer>
 </body>
 </html>
+
+<script th:inline="javascript">
+	
+</script>
+<script type="application/javascript" th:src="@{/js/RecruitDetail.js}"></script>
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">
