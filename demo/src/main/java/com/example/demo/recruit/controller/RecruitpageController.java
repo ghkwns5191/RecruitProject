@@ -1,7 +1,6 @@
 package com.example.demo.recruit.controller;
 
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.RecruitDto;
+import com.example.demo.recruit.entity.Company;
+import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
+import com.example.demo.recruit.service.CompanyService;
 import com.example.demo.recruit.service.RecruitService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,9 @@ public class RecruitpageController {
 
     @Autowired
     private final RecruitService recruitService;
+    
+    @Autowired
+    private final CompanyService companyService;
 
     @GetMapping("/list")
     public ModelAndView recruitList(Model model) {
@@ -48,6 +53,7 @@ public class RecruitpageController {
         }
     }
 
+    
     @GetMapping("/detail/{id}")
     public ModelAndView recruitDetail(Model model, @PathVariable("id") Long id, Map<String, Object> check) {
         Recruit recruit = this.recruitService.getRecruit(id);
@@ -56,7 +62,10 @@ public class RecruitpageController {
             check.put("check", true);
             location = "/view/RecruitList";
         } else if (recruit != null) {
+            Member member = recruit.getMember();
+            Company company = this.companyService.getData(member);
             model.addAttribute("recruit", recruit);
+            model.addAttribute("company", company);
             location = "/view/recruit/RecruitDetail";
         }
         return new ModelAndView(location);

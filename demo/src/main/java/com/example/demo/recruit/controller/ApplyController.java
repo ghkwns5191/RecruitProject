@@ -25,14 +25,14 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/apply")
 public class ApplyController {
 
     @Autowired
     private final ApplyService applyService;
 
     // 개인 회원의 채용공고 지원 내역을 조회하기 위해 사용
-    @GetMapping("/apply/listbymember")
+    @GetMapping("/listbymember")
     public ResponseEntity<List<Apply>> getListByMember(@RequestParam(required = false) Member member) {
         try {
             List<Apply> applyList = new ArrayList<Apply>();
@@ -44,7 +44,7 @@ public class ApplyController {
     }
 
     // 기업 회원의 채용공고에 지원한 지원 정보를 조회하기 위해 사용
-    @GetMapping("/apply/listbyrecruit")
+    @GetMapping("/listbyrecruit")
     public ResponseEntity<List<Apply>> getListByRecruit(@RequestParam(required = false) Recruit recruit) {
         try {
             List<Apply> applyList = new ArrayList<Apply>();
@@ -56,7 +56,7 @@ public class ApplyController {
     }
 
     // 지원 정보 개별 조회를 위해 사용
-    @GetMapping("/apply/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Apply> getApply(@RequestParam(required = false) Long id) {
         try {
             Apply apply = new Apply();
@@ -68,7 +68,7 @@ public class ApplyController {
     }
 
     // 개인 회원이 채용공고에 지원 시 해당 지원 정보를 저장하기 위해 사용
-    @PostMapping("/apply/input")
+    @PostMapping("/input")
     public ResponseEntity<Apply> inputData(@RequestBody ApplyDto applyDto) {
         try {
             Apply apply = applyService.inputData(applyDto);
@@ -79,7 +79,7 @@ public class ApplyController {
     }
 
     // 지원 취소를 진행하기 위해 사용
-    @DeleteMapping("/apply/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
         try {
             applyService.deleteData(id);

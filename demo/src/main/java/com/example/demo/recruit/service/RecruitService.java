@@ -1,5 +1,6 @@
 package com.example.demo.recruit.service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.recruit.dto.RecruitDto;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
+import com.example.demo.recruit.repository.MemberRepository;
 import com.example.demo.recruit.repository.RecruitRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,9 @@ public class RecruitService {
 
     @Autowired
     private final RecruitRepository recruitRepository;
+    
+    @Autowired
+    private final MemberRepository memberRepository;
 
     // 전체 채용공고를 불러오는 코드
     public List<Recruit> getRecruit() {
@@ -52,11 +57,13 @@ public class RecruitService {
     }
 
     // 입력받은 채용공고를 DB 에 저장하는 코드
-    public Recruit inputData(RecruitDto recruitDto) {
+    public Recruit inputData(RecruitDto recruitDto, Principal principal) {
+        String username = principal.getName();
+        Member member = this.memberRepository.findByUsername(username);
         Recruit recruit = this.recruitRepository.save(new Recruit(
-                recruitDto.getMember(),
+                member,
                 recruitDto.getTitle(),
-                recruitDto.getWriter(),
+                member.getName(),
                 LocalDate.now(),
                 null,
                 recruitDto.getCareer(),
@@ -74,7 +81,7 @@ public class RecruitService {
         Optional<Recruit> recruitData = this.recruitRepository.findById(id);
         Recruit recruit = recruitData.get();
         recruit.setTitle(recruitDto.getTitle());
-        recruit.setWriter(recruitDto.getWriter());
+        recruit.setWriter(recruit.getWriter());
         recruit.setModifydate(LocalDate.now());
         recruit.setCareer(recruitDto.getCareer());
         recruit.setSalary(recruitDto.getSalary());
@@ -90,4 +97,5 @@ public class RecruitService {
     public void deleteData(Long id) {
         this.recruitRepository.deleteById(id);
     }
+
 }

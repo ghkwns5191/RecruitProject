@@ -114,6 +114,44 @@
 
 			</tbody>
 		</table>
+
+		<table>
+			<thead>
+				<th colspan="2">기업정보</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>기업명</td>
+					<td th:text="${company.name}"></td>
+				</tr>
+				<tr>
+					<td>업종</td>
+					<td th:text="${company.type}"></td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td th:text="${company.phone}"></td>
+				</tr>
+				<tr>
+					<td>직원수</td>
+					<td th:text="${company.numberofstaff}"></td>
+				</tr>
+				<tr>
+					<td>최근 업데이트</td>
+					<td th:text="${company.modifydate}"></td>
+				</tr>
+			</tbody>
+
+		</table>
+		
+		<table>
+			<tbody>
+				<tr>
+					<td><button onClick="apply()">지원하기</button></td>
+					<td><button onClick="backtoList()">돌아가기</button></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 	<!-- Footer 제작 공간 -->

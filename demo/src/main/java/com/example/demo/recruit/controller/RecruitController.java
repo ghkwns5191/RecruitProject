@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,9 +80,9 @@ public class RecruitController {
     
     // 채용공고 내용을 입력받아 DB 에 저장하기 위해 사용
     @PostMapping("/input")
-    public ResponseEntity<Recruit> inputData(@RequestBody RecruitDto recruitDto) {
+    public ResponseEntity<Recruit> inputData(@RequestBody RecruitDto recruitDto, Principal principal) {
         try {
-            Recruit recruit = recruitService.inputData(recruitDto);
+            Recruit recruit = recruitService.inputData(recruitDto, principal);
             return new ResponseEntity<>(recruit, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
