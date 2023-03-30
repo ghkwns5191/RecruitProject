@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +32,10 @@ public class RecruitService {
     private final MemberRepository memberRepository;
 
     // 전체 채용공고를 불러오는 코드
-    public List<Recruit> getRecruit() {
-        List<Recruit> recruit = new ArrayList<Recruit>();
-        recruitRepository.findAll(Sort.by(Sort.Direction.DESC, "registerdate")).forEach(recruit::add);
+    public Page<Recruit> getRecruit(Pageable pageable) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1 );
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registerdate"));
+        Page<Recruit> recruit = recruitRepository.findAll(pageable);
         return recruit;
     }
 

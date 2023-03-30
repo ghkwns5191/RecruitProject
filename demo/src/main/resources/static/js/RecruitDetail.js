@@ -25,4 +25,4 @@ function apply() {
 // 돌아기기 버튼 클릭 시 작동하는 함수
 function bakctoList() {
 	
-}
+}            

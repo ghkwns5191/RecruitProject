@@ -13,6 +13,6 @@ public interface RecruitRepository extends JpaRepository<Recruit, Long> {
 
     List<Recruit> findTop5ByOrderByRegisterdateDesc();
 
-   
+    
 
 }
