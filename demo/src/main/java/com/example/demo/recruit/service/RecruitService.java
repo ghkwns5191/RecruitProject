@@ -33,7 +33,7 @@ public class RecruitService {
 
     // 전체 채용공고를 불러오는 코드
     public Page<Recruit> getRecruit(Pageable pageable) {
-        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() -1 );
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registerdate"));
         Page<Recruit> recruit = recruitRepository.findAll(pageable);
         return recruit;
