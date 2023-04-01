@@ -53,7 +53,14 @@
 		<button name="recruitList_button" id="new_recruit"
 			onClick="newRecruit()">공고 작성하기</button>
 	</div>
-	<table>
+
+	<!-- 검색 입력 버튼 -->
+	<div>
+		<input type="text" id="searchKeyword">
+	</div>
+
+	<!-- 채용공고 리스트 -->
+	<table th:if="${recruitList != null}">
 		<thead>
 			<th>번호</th>
 			<th>제목</th>
@@ -63,8 +70,7 @@
 		</thead>
 
 		<tbody>
-			<tr th:if="${recruitList != null}"
-				th:each="recruitList : ${recruitList}">
+			<tr th:each="recruitList : ${recruitList}">
 				<td th:text="${recruitListStat.index + 1}"></td>
 				<a th:href="@{/recruitpage/detail/{id}(id=${recruitList.id})}"><td
 					th:text="${recruitList.title}"></td></a>
@@ -81,31 +87,30 @@
 		<nav style="text-align: center;">
 			<ul class="pagination"
 				th:with="start=${recruitList.number/maxPage) * maxPage + 1}, end=(${(recruitList.totalPages == 0) ? 1 : (start + (maxPage - 1) < recruitList.totalPages ? start + (maxPage - 1) : recruitList.totalPages)})">
-				
+
 				<!-- 첫 페이지로 이동하는 버튼 -->
-				<li th:if="${start > }">
-					<a th:href="@{/recruitpage/list(page=0)}" th:text="'처음'"></a>
-				</li>
-				
+				<li th:if="${start > }"><a
+					th:href="@{/recruitpage/list(page=0)}" th:text="'처음'"></a></li>
+
 				<!-- 한 페이지 앞으로 이동하는 버튼 -->
-				<li th:if="${start > 1}">
-					<a th:href="@{/recruitpage/list(page=${start - maxPage})}" th:text="'이전'"></a>
-				</li>
+				<li th:if="${start > 1}"><a
+					th:href="@{/recruitpage/list(page=${start - maxPage})}"
+					th:text="'이전'"></a></li>
 
 				<!-- 1 부터 10까지 페이지 표시 -->
 				<li th:each="page: ${#numbers.sequence(start, end)}"><a
 					th:href="@{/recruitpage/list(page=${page - 1})}" th:text="${page}"></a>
 				</li>
-				
+
 				<!-- 한페이지 뒤로 이동하는 버튼 -->
-				<li th:if="${end < recruitList.totalPages}">
-					<a th:href="@{/recruitpage/list(page=${start + maxPage})}" th:text="'다음'"></a>
-				</li>
-				
+				<li th:if="${end < recruitList.totalPages}"><a
+					th:href="@{/recruitpage/list(page=${start + maxPage})}"
+					th:text="'다음'"></a></li>
+
 				<!-- 제일 마지막 페이지로 이동하는 버튼 -->
-				<li th:if="${end < recruitList.totalPages}">
-					<a th:href="@{/recruitpage/list/(page=${recruitList.totalPages - 1})}" th:text="'마지막'"></a>
-				</li>
+				<li th:if="${end < recruitList.totalPages}"><a
+					th:href="@{/recruitpage/list/(page=${recruitList.totalPages - 1})}"
+					th:text="'마지막'"></a></li>
 			</ul>
 		</nav>
 

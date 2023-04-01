@@ -37,12 +37,19 @@ public class RecruitpageController {
 
     @GetMapping("/list")
     public ModelAndView recruitList(
-            @PageableDefault(size = 20, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model) {
-        Page<Recruit> recruitList = this.recruitService.getRecruit(pageable);
+            @PageableDefault(size = 30, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
+            Model model, String searchKeyword) {
+        Page<Recruit> recruitList = null;
+        if (searchKeyword == null) {
+            recruitList = this.recruitService.getRecruit(pageable);
+        } else if (searchKeyword != null) {
+            recruitList = this.recruitService.getRecruit(pageable, searchKeyword);
+        }
+
         model.addAttribute("recruitList", recruitList);
         model.addAttribute("maxPage", 10);
         return new ModelAndView("/view/recruit/RecruitList");
+
     }
 
     @GetMapping("/new")

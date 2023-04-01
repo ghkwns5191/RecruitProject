@@ -31,11 +31,19 @@ public class RecruitService {
     @Autowired
     private final MemberRepository memberRepository;
 
-    // 전체 채용공고를 불러오는 코드
+    // 전체 채용공고를 불러오는 코드 (페이징 적용)
     public Page<Recruit> getRecruit(Pageable pageable) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registerdate"));
-        Page<Recruit> recruit = recruitRepository.findAll(pageable);
+        Page<Recruit> recruit = this.recruitRepository.findAll(pageable);
+        return recruit;
+    }
+    
+    // 전체 채용공고를 불러오는 코드 (페이징 적용) + 검색 결과
+    public Page<Recruit> getRecruit(Pageable pageable, String searchKeyword) {
+        int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registerdate"));
+        Page<Recruit> recruit = this.recruitRepository.findbyTitleContaining(searchKeyword, pageable);
         return recruit;
     }
 
