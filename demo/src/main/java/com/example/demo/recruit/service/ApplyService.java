@@ -56,4 +56,10 @@ public class ApplyService {
     public void deleteData(Long id) {
         this.applyRepository.deleteById(id);
     }
+    
+    // 회원정보 및 채용공고 사이트를 이용하여 지원내역을 찾는 코드
+    public Apply getapply(Recruit recruit, Member member) {
+        Apply apply = this.applyRepository.findByRecruitAndMember(recruit, member);
+        return apply;
+    }
 }

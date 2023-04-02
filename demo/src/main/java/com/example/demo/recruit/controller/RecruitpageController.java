@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.RecruitDto;
+import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
+import com.example.demo.recruit.service.ApplyService;
 import com.example.demo.recruit.service.CompanyService;
+import com.example.demo.recruit.service.MemberService;
 import com.example.demo.recruit.service.RecruitService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,12 @@ public class RecruitpageController {
     @Autowired
     private final CompanyService companyService;
 
+    @Autowired
+    private final ApplyService applyService;
+
+    @Autowired
+    private final MemberService memberService;
+
     @GetMapping("/list")
     public ModelAndView recruitList(
             @PageableDefault(size = 30, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
@@ -45,7 +54,8 @@ public class RecruitpageController {
         } else if (searchKeyword != null) {
             recruitList = this.recruitService.getRecruit(pageable, searchKeyword);
         }
-
+        int pageNow = recruitList.getPageable().getPageNumber();
+        model.addAttribute("pageNow", pageNow);
         model.addAttribute("recruitList", recruitList);
         model.addAttribute("maxPage", 10);
         return new ModelAndView("/view/recruit/RecruitList");
@@ -65,20 +75,40 @@ public class RecruitpageController {
         }
     }
 
+    // url 에서 id 값을 뽑아내서 parameter 로 활용 / recruit 상세 페이지로 이동
     @GetMapping("/detail/{id}")
-    public ModelAndView recruitDetail(Model model, @PathVariable("id") Long id, Map<String, Object> check) {
+    public ModelAndView recruitDetail(Model model, @PathVariable("id") Long id, Map<String, Object> check,
+            Principal principal) {
         Recruit recruit = this.recruitService.getRecruit(id);
+        // location 변수 선언 및 초기화 (if 절로 정한 각 조건마다 location 값 지정하여 페이지 이동)
         String location = "";
+        
+        // 유호하지 않은 id 값이 들어가서 recruit= null 일 경우 리스트로 강제 페이지 이동
         if (recruit == null) {
             check.put("check", true);
-            location = "/view/RecruitList";
-        } else if (recruit != null) {
+            location = "/view/recruit/RecruitList";
+            
+        // recruit != null 이고 현재 비로그인 상태일 경우
+        } else if (recruit != null && principal == null) {
             Member member = recruit.getMember();
             Company company = this.companyService.getData(member);
             model.addAttribute("recruit", recruit);
             model.addAttribute("company", company);
             location = "/view/recruit/RecruitDetail";
+            
+        // recruit != null 이고 현재 로그인 상태일 경우 (해당 회원이 해당 공고에 지원했는지 여부 체크하여 사용
+        } else if (recruit != null && principal != null) {
+            Member member = recruit.getMember();
+            Company company = this.companyService.getData(member);
+            String username = principal.getName();
+            Member user = this.memberService.getMemberinfo(username);
+            Apply apply = this.applyService.getapply(recruit, user);
+            model.addAttribute("apply", apply);
+            model.addAttribute("recruit", recruit);
+            model.addAttribute("company", company);
+            location = "/view/recruit/RecruitDetail";
         }
+        
         return new ModelAndView(location);
     }
 

@@ -14,4 +14,6 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     List<Apply> findByRecruit(Recruit Recruit);
 
+    Apply findByRecruitAndMember(Recruit recruit, Member member);
+
 }

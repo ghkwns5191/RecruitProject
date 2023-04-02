@@ -143,11 +143,14 @@
 			</tbody>
 
 		</table>
-		
-		<table>
+
+		<table id="buttons">
 			<tbody>
 				<tr>
-					<td><button onClick="apply()">지원하기</button></td>
+					<td th:if="${apply} == null"><button type="button"
+							onClick="apply()">지원하기</button></td>
+					<td th:unless="${apply} == null"><button type="button"
+							disabled>지원완료</button></td>
 					<td><button onClick="backtoList()">돌아가기</button></td>
 				</tr>
 			</tbody>

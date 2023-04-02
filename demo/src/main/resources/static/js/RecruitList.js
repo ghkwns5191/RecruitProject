@@ -38,6 +38,23 @@ function search() {
 			contentType: 'application/json',
 			success: function(data) {
 				console.log(data);
+				document.getElementById('recruitList').replaceWith(data);
+			},
+			error: function(error) {
+				console.log(error);
+			}
+
+		});
+	} if (searchKeyword == null || searchKeyword == "") {
+		searchKeyword = null;
+		$.ajax({
+			type: 'get',
+			url: '/recruitpage/list',
+			data: searchKeyword,
+			contentType: 'application/json',
+			success: function(data) {
+				console.log(data);
+				document.getElementById('recruitList').replaceWith(data);
 			},
 			error: function(error) {
 				console.log(error);
