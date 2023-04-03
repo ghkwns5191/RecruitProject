@@ -5,6 +5,7 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
 <link th:href="@{/css/common.css}" rel="stylesheet">
+<link th:href="@{/css/RecruitList.css}" rel="stylesheet">
 <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -62,7 +63,7 @@
 	</form>
 
 	<!-- 채용공고 리스트 -->
-	<div th:if="${size} != 0">
+	<div th:if="${size} != 0 and ${totalPages} > 0">
 		<table id="recruitList">
 			<label>구인공고 리스트</label>
 			<thead>
@@ -76,7 +77,9 @@
 			<tbody>
 				<tr th:each="recruitList : ${recruitList}">
 					<td th:text="${recruitListStat.index + 1}"></td>
-					<td th:text="${recruitList.title}" th:onClick="|location.href='@{/recruitpage/detail/{id}(id=${recruitList.id})}'|" style="cursor: pointer;"></td>
+					<td th:text="${recruitList.title}"
+						th:onClick="|location.href='@{/recruitpage/detail/{id}(id=${recruitList.id})}'|"
+						style="cursor: pointer;"></td>
 					<td th:text="${recruitList.writer}"></td>
 					<td th:if="${recruitList.modifydate == null}"
 						th:text="${recruitList.registerdate}"></td>
@@ -88,14 +91,29 @@
 
 		</table>
 	</div>
-	<div th:unless="${size} != 0">
+	<div th:if="${size} == 0">
 
 
 		<table id="recruitList">
 
 			<tbody>
 				<tr>
-					<td>채용공고가 업습니다.</td>
+					<td>채용공고가 없습니다.</td>
+				</tr>
+			</tbody>
+			</tbody>
+		</table>
+
+	</div>
+	
+	<div th:if="${searchKeyword} != null and ${totalPages} == 0">
+
+
+		<table id="recruitList">
+
+			<tbody>
+				<tr>
+					<td>검색결과가 없습니다.</td>
 				</tr>
 			</tbody>
 			</tbody>
@@ -104,40 +122,17 @@
 	</div>
 
 	<!-- 페이징 처리 -->
-	<!-- <nav style="text-align: center;">
-		<ul class="pagination"
-			th:with="start=${recruitList.number/maxPage) * maxPage + 1}, end=(${(recruitList.totalPages == 0) ? 1 : (start + (maxPage - 1) < recruitList.totalPages ? start + (maxPage - 1) : recruitList.totalPages)})">
-
-			
-			<li th:if="${start > }"><a
-				th:href="@{/recruitpage/list(page=0)}" th:text="'처음'"></a></li>
-
-			
-			<li th:if="${start > 1}"><a
-				th:href="@{/recruitpage/list(page=${start - maxPage})}"
-				th:text="'이전'"></a></li>
-
-			
-			<li th:each="page: ${#numbers.sequence(start, end)}"><a
-				th:href="@{/recruitpage/list(page=${page - 1})}" th:text="${page}"></a>
-			</li>
-
-			
-			<li th:if="${end < recruitList.totalPages}"><a
-				th:href="@{/recruitpage/list(page=${start + maxPage})}"
-				th:text="'다음'"></a></li>
-
-			
-			<li th:if="${end < recruitList.totalPages}"><a
-				th:href="@{/recruitpage/list/(page=${recruitList.totalPages - 1})}"
-				th:text="'마지막'"></a></li>
-		</ul>
-	</nav>
- -->
-
+	<div th:if="${totalPages} != 0" id="paging">
+		<th:block th:each="page:${#numbers.sequence(startPage, endPage)}"
+			style="align-items: center;" >
+			<a th:if="${page != nowPage}"
+				th:href="@{/recruitpage/list(page=${page})}" th:text="${page}"></a>
+			<strong th:if="${page == nowPage}" th:text="${page}"
+				style="color: red;"></strong>
+		</th:block>
+	</div>
 	<!-- Footer 제작 공간 -->
-	<footer
-		style="text-align: center; margin-top: 300px; border-top: 1px black solid; width: 80%;">
+	<footer>
 		<div>Footer 입니다.</div>
 	</footer>
 </body>

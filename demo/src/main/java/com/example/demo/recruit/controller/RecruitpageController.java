@@ -48,27 +48,40 @@ public class RecruitpageController {
 
     @GetMapping("/list")
     public ModelAndView recruitList(
-            @PageableDefault(size = 30, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(page = 0, size = 20, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
             Model model, String searchKeyword, Map<String, Object> map, Principal principal) {
         List<Recruit> list = this.recruitService.getRecruit();
         Page<Recruit> recruitList = null;
         if (searchKeyword == null) {
             recruitList = this.recruitService.getRecruit(pageable);
+
         } else if (searchKeyword != null) {
             recruitList = this.recruitService.getRecruit(pageable, searchKeyword);
         }
-        int pageNow = recruitList.getPageable().getPageNumber();
-        model.addAttribute("pageNow", pageNow);
-        model.addAttribute("recruitList", recruitList);
+        int nowPage = recruitList.getPageable().getPageNumber() + 1;
+        int startPage = Math.max(nowPage - 4, 1);
+        int endPage = Math.min(nowPage + 9, recruitList.getTotalPages());
+
+        model.addAttribute("nowPage", nowPage);
+        model.addAttribute("startPage", startPage);
+        if (recruitList.getTotalPages() == 0) {
+            endPage = 1;
+        }
+        model.addAttribute("endPage", endPage);
         model.addAttribute("size", list.size());
-        model.addAttribute("maxPage", 10);
+        model.addAttribute("recruitList", recruitList);
+        model.addAttribute("totalPages", recruitList.getTotalPages());
+        model.addAttribute("searchKeyword", searchKeyword);
+        System.out.println(searchKeyword);
+        
+        
         if (principal != null) {
             String username = principal.getName();
             Member member = this.memberService.getMemberinfo(username);
             String sort = member.getSort();
             model.addAttribute("sort", sort);
         }
-        System.out.println(searchKeyword);
+        
         return new ModelAndView("/view/recruit/RecruitList");
 
     }
@@ -78,7 +91,7 @@ public class RecruitpageController {
         try {
             String username = principal.getName();
             model.addAttribute("recruitDto", new RecruitDto());
-            model.addAttribute("username", username);          
+            model.addAttribute("username", username);
             return new ModelAndView("/view/recruit/NewRecruit");
         } catch (NullPointerException e) {
             check.put("check", true);
@@ -93,7 +106,7 @@ public class RecruitpageController {
         Recruit recruit = this.recruitService.getRecruit(id);
         // location 변수 선언 및 초기화 (if 절로 정한 각 조건마다 location 값 지정하여 페이지 이동)
         String location = "";
-
+        model.addAttribute("principal", principal);
         // 유호하지 않은 id 값이 들어가서 recruit= null 일 경우 리스트로 강제 페이지 이동
         if (recruit == null) {
             check.put("check", true);
@@ -114,9 +127,11 @@ public class RecruitpageController {
             String username = principal.getName();
             Member user = this.memberService.getMemberinfo(username);
             Apply apply = this.applyService.getapply(recruit, user);
+            model.addAttribute("sort", member.getSort());
             model.addAttribute("apply", apply);
             model.addAttribute("recruit", recruit);
             model.addAttribute("company", company);
+
             location = "/view/recruit/RecruitDetail";
         }
 
@@ -156,7 +171,5 @@ public class RecruitpageController {
             return new ModelAndView("/view/Login");
         }
     }
-
-   
 
 }

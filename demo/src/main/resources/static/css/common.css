@@ -9,7 +9,7 @@
 
 #navbarhead {
 	background-color: grey;
-	width: 80%;
+	width: 65%;
 	font-size: 1.25rem;
 	border-radius: 20px;
 }
@@ -21,3 +21,11 @@
 	margin: auto;
 	display: block;
 }
+
+footer {
+	text-align: center; 
+	margin-top: 300px; 
+	border-top: 1px black solid; 
+	width: 65%;
+}
+

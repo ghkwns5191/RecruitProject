@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<td>작성 / 수정일</td>
-					
+
 					<td th:if="${recruit.modifydate} == null"
 						th:text="${recruit.registerdate}"></td>
 					<td th:if="${recruit.modifydate} != null"
@@ -146,12 +146,20 @@
 
 		<table id="buttons">
 			<tbody>
-				<tr>
+				<tr th:if="(${principal} != null) and (${sort} == 'individual')">
 					<td th:if="${apply} == null"><button type="button"
 							onClick="apply()">지원하기</button></td>
 					<td th:unless="${apply} == null"><button type="button"
 							disabled>지원완료</button></td>
-					<td><button onClick="bakctoList()">돌아가기</button></td>
+
+
+				</tr>
+
+				<tr>
+
+					<td><button type="button" onClick="bakctoList()">돌아가기</button></td>
+
+
 				</tr>
 			</tbody>
 		</table>

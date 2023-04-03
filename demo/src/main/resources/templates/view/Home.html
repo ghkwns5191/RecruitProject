@@ -59,14 +59,15 @@
 
 			<tbody>
 				<tr>
-					<td id="tablebody">
-						<div class="card" id="card">
+					<td th:each="recruitList:${recruitList}" id="tablebody">
+						<div class="card" id="card" th:onClick="|location.href='@{/recruitpage/detail/{id}(id=${recruitList.id})}'|">
 							<div class="card-body">
-								<h5 class="card-title" onClick="location.href='/'"
-									id="cardtitle">Card title</h5>
-								<p class="card-text" onClick="location.href='/'" id="cardbody">Some
-									quick example text to build on the card title and make up the
-									bulk of the card's content.</p>
+								<h5 class="card-title" 
+									id="cardtitle" th:text="${recruitList.title}"></h5>
+								<p class="card-text" id="cardbody">
+									경력 <label th:text="${recruitList.career}"></label> </br>
+									마감 <label th:text="${recruitList.deadline}"></label>
+								</p>
 							</div>
 						</div>
 					</td>
@@ -91,8 +92,7 @@
 	</div>
 
 	<!-- Footer 제작 공간 -->
-	<footer
-		style="text-align: center; margin-top: 300px; border-top: 1px black solid; width: 80%;">
+	<footer>
 		<div>Footer 입니다.</div>
 	</footer>
 </body>

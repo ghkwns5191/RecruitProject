@@ -1,6 +1,7 @@
 package com.example.demo.recruit.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.recruit.dto.MemberDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.service.CompanyService;
 import com.example.demo.recruit.service.MemberService;
+import com.example.demo.recruit.service.RecruitService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,11 +32,17 @@ public class MainController {
     
     @Autowired
     private final CompanyService companyService;
+    
+    @Autowired
+    private final RecruitService recruitService;
 
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping(value= {"", "/"})
     public String main(Principal principal, Model model) {
+        
+        List<Recruit> recruitList = this.recruitService.getRecruit5();
+        model.addAttribute("recruitList", recruitList);
         if (principal == null) {
             model.addAttribute("username", null);
             return "view/Home";
