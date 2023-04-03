@@ -27,7 +27,7 @@ public class RecruitService {
 
     @Autowired
     private final RecruitRepository recruitRepository;
-    
+
     @Autowired
     private final MemberRepository memberRepository;
 
@@ -38,12 +38,17 @@ public class RecruitService {
         Page<Recruit> recruit = this.recruitRepository.findAll(pageable);
         return recruit;
     }
-    
+
+    public List<Recruit> getRecruit() {
+        List<Recruit> recruitList = this.recruitRepository.findAll();
+        return recruitList;
+    }
+
     // 전체 채용공고를 불러오는 코드 (페이징 적용) + 검색 결과
     public Page<Recruit> getRecruit(Pageable pageable, String searchKeyword) {
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
         pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "registerdate"));
-        Page<Recruit> recruit = this.recruitRepository.findbyTitleContaining(searchKeyword, pageable);
+        Page<Recruit> recruit = this.recruitRepository.findByTitleContaining(searchKeyword, pageable);
         return recruit;
     }
 
@@ -72,20 +77,25 @@ public class RecruitService {
     public Recruit inputData(RecruitDto recruitDto, Principal principal) {
         String username = principal.getName();
         Member member = this.memberRepository.findByUsername(username);
-        Recruit recruit = this.recruitRepository.save(new Recruit(
-                member,
-                recruitDto.getTitle(),
-                member.getName(),
-                LocalDate.now(),
-                null,
-                recruitDto.getCareer(),
-                recruitDto.getSalary(),
-                recruitDto.getWorkingdays(),
-                recruitDto.getDetail(),
-                recruitDto.getPhonenumber(),
-                recruitDto.getAttn(),
-                recruitDto.getDeadline()));
-        return recruit;
+        if (member.getSort().equals("company")) {
+            Recruit recruit = this.recruitRepository.save(new Recruit(
+                    member,
+                    recruitDto.getTitle(),
+                    member.getName(),
+                    LocalDate.now(),
+                    null,
+                    recruitDto.getCareer(),
+                    recruitDto.getSalary(),
+                    recruitDto.getWorkingdays(),
+                    recruitDto.getDetail(),
+                    recruitDto.getPhonenumber(),
+                    recruitDto.getAttn(),
+                    recruitDto.getDeadline()));
+            return recruit;
+        } else {
+            return null;
+        }
+
     }
 
     // DB 에 저장된 채용공고를 수정하는 코드

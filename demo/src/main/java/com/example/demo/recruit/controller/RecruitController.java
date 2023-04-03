@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -34,27 +38,18 @@ public class RecruitController {
 
     // 채용공고 리스트를 조회하기 위해 사용
     @GetMapping("/list")
-    public ResponseEntity<List<Recruit>> getList() {
+    public ResponseEntity<Page<Recruit>> getList(
+            @PageableDefault(size = 30, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
+            String searchKeyword) {
         try {
-            List<Recruit> recruit = new ArrayList<Recruit>();
-            recruit = recruitService.getRecruit();
-            return new ResponseEntity<>(recruit, HttpStatus.OK);
+
+            Page<Recruit> recruitList = recruitService.getRecruit(pageable, searchKeyword);
+            return new ResponseEntity<>(recruitList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/list/represent")
-    public ResponseEntity<List<Recruit>> get5() {
-        try {
-            List<Recruit> recruit = new ArrayList<Recruit>();      
-            recruit = recruitService.getRecruit();
-            return new ResponseEntity<>(recruit, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    
+
     // 기업 회원이 작성한 채용공고만 조회하기 위해 사용
     @GetMapping("/listbymember")
     public ResponseEntity<List<Recruit>> getList(@RequestParam(required = false) Member member) {
@@ -66,7 +61,7 @@ public class RecruitController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 채용공고 단수 조회를 위해 사용
     @GetMapping("/detail")
     public ResponseEntity<Recruit> getData(@RequestParam(required = false) Long id) {
@@ -77,7 +72,7 @@ public class RecruitController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 채용공고 내용을 입력받아 DB 에 저장하기 위해 사용
     @PostMapping("/input")
     public ResponseEntity<Recruit> inputData(@RequestBody RecruitDto recruitDto, Principal principal) {
@@ -88,7 +83,7 @@ public class RecruitController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 채용공고를 수정하기 위해 사용
     @PutMapping("/revise/{id}")
     public ResponseEntity<Recruit> reviseData(@PathVariable("id") Long id, @RequestBody RecruitDto recruitDto) {
@@ -99,7 +94,7 @@ public class RecruitController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
     // 채용공고를 삭제하기 위해 사용
     @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id") Long id) {
@@ -109,6 +104,6 @@ public class RecruitController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
 }

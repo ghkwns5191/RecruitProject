@@ -1,6 +1,7 @@
 package com.example.demo.recruit.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,7 +49,8 @@ public class RecruitpageController {
     @GetMapping("/list")
     public ModelAndView recruitList(
             @PageableDefault(size = 30, sort = "registerdate", direction = Sort.Direction.DESC) Pageable pageable,
-            Model model, String searchKeyword) {
+            Model model, String searchKeyword, Map<String, Object> map, Principal principal) {
+        List<Recruit> list = this.recruitService.getRecruit();
         Page<Recruit> recruitList = null;
         if (searchKeyword == null) {
             recruitList = this.recruitService.getRecruit(pageable);
@@ -57,7 +60,15 @@ public class RecruitpageController {
         int pageNow = recruitList.getPageable().getPageNumber();
         model.addAttribute("pageNow", pageNow);
         model.addAttribute("recruitList", recruitList);
+        model.addAttribute("size", list.size());
         model.addAttribute("maxPage", 10);
+        if (principal != null) {
+            String username = principal.getName();
+            Member member = this.memberService.getMemberinfo(username);
+            String sort = member.getSort();
+            model.addAttribute("sort", sort);
+        }
+        System.out.println(searchKeyword);
         return new ModelAndView("/view/recruit/RecruitList");
 
     }
@@ -67,7 +78,7 @@ public class RecruitpageController {
         try {
             String username = principal.getName();
             model.addAttribute("recruitDto", new RecruitDto());
-            model.addAttribute("username", username);
+            model.addAttribute("username", username);          
             return new ModelAndView("/view/recruit/NewRecruit");
         } catch (NullPointerException e) {
             check.put("check", true);
@@ -82,21 +93,21 @@ public class RecruitpageController {
         Recruit recruit = this.recruitService.getRecruit(id);
         // location 변수 선언 및 초기화 (if 절로 정한 각 조건마다 location 값 지정하여 페이지 이동)
         String location = "";
-        
+
         // 유호하지 않은 id 값이 들어가서 recruit= null 일 경우 리스트로 강제 페이지 이동
         if (recruit == null) {
             check.put("check", true);
             location = "/view/recruit/RecruitList";
-            
-        // recruit != null 이고 현재 비로그인 상태일 경우
+
+            // recruit != null 이고 현재 비로그인 상태일 경우
         } else if (recruit != null && principal == null) {
             Member member = recruit.getMember();
             Company company = this.companyService.getData(member);
             model.addAttribute("recruit", recruit);
             model.addAttribute("company", company);
             location = "/view/recruit/RecruitDetail";
-            
-        // recruit != null 이고 현재 로그인 상태일 경우 (해당 회원이 해당 공고에 지원했는지 여부 체크하여 사용
+
+            // recruit != null 이고 현재 로그인 상태일 경우 (해당 회원이 해당 공고에 지원했는지 여부 체크하여 사용
         } else if (recruit != null && principal != null) {
             Member member = recruit.getMember();
             Company company = this.companyService.getData(member);
@@ -108,7 +119,7 @@ public class RecruitpageController {
             model.addAttribute("company", company);
             location = "/view/recruit/RecruitDetail";
         }
-        
+
         return new ModelAndView(location);
     }
 
@@ -145,5 +156,7 @@ public class RecruitpageController {
             return new ModelAndView("/view/Login");
         }
     }
+
+   
 
 }

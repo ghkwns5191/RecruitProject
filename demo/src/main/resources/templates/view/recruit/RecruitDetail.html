@@ -57,15 +57,15 @@
 			<tbody>
 				<tr>
 					<td>작성자</td>
-					<td th:text="recruit.writer"></td>
+					<td th:text="${recruit.writer}"></td>
 				</tr>
 				<tr>
 					<td>작성 / 수정일</td>
-					<td th:text="recruit.writer"></td>
+					
 					<td th:if="${recruit.modifydate} == null"
-						th:text="recruit.registerdate"></td>
+						th:text="${recruit.registerdate}"></td>
 					<td th:if="${recruit.modifydate} != null"
-						th:text="recruit.modifydate"></td>
+						th:text="${recruit.modifydate}"></td>
 				</tr>
 
 				<tr>
@@ -151,7 +151,7 @@
 							onClick="apply()">지원하기</button></td>
 					<td th:unless="${apply} == null"><button type="button"
 							disabled>지원완료</button></td>
-					<td><button onClick="backtoList()">돌아가기</button></td>
+					<td><button onClick="bakctoList()">돌아가기</button></td>
 				</tr>
 			</tbody>
 		</table>
