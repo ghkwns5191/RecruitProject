@@ -47,13 +47,16 @@ public class Member {
     public String name; // 회원 성명
 
     @Column(length = 100, name = "phone")
+    @NotNull
     public String phone; // 회원 연락처
 
     @Column(length = 100, name = "email")
+    @NotNull
     public String email; // 회원 이메일
 
     @Column(name = "birthday")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
     public LocalDate birthday; // 회원 생년월일
 
     @Column(length = 500, name = "address")

@@ -1,6 +1,7 @@
 package com.example.demo.recruit.controller;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,6 +73,7 @@ public class RecruitpageController {
         model.addAttribute("totalPages", recruitList.getTotalPages());
         model.addAttribute("searchKeyword", searchKeyword);
         System.out.println(searchKeyword);
+        model.addAttribute("todaydate", LocalDate.now());
         
         
         if (principal != null) {

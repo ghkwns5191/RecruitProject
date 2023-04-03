@@ -49,24 +49,28 @@
 	</header>
 
 	<!-- 구인공고 리스트 -->
-	<div th:if="${sort} == 'company'">
-		<button name="recruitList_button" id="new_recruit"
-			onClick="newRecruit()">공고 작성하기</button>
-	</div>
 
-	<!-- 검색 입력 버튼 -->
-	<form action="/recruitpage/list" method="get">
-		<div>
-			<input type="text" id="searchKeyword" name="searchKeyword">
-			<button type="submit">검색</button>
-		</div>
-	</form>
+
+	
+
 
 	<!-- 채용공고 리스트 -->
 	<div th:if="${size} != 0 and ${totalPages} > 0">
-		<table id="recruitList">
-			<label>구인공고 리스트</label>
+		<table id="recruitList_top">
 			<thead>
+				<th>구인공고 리스트</th>
+				<th>
+					<div th:if="${sort} == 'company'">
+						<button name="recruitList_button" id="new_recruit"
+							onClick="newRecruit()">공고 작성하기</button>
+					</div>
+				</th>
+			</thead>
+		</table>
+		<table id="recruitList_content">
+
+			<thead>
+
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
@@ -85,7 +89,10 @@
 						th:text="${recruitList.registerdate}"></td>
 					<td th:unless="${recruitList.modifydate == null}"
 						th:text="${recruitList.modifydate}"></td>
-					<td th:text="${recruitList.deadline}"></td>
+					<td th:if="${recruitList.deadline < todaydate}"
+						th:text="${recruitList.deadline} + '  (마감되었습니다.)'"></td>
+					<td th:unless="${recruitList.deadline < todaydate}"
+						th:text="${recruitList.deadline} + '  아직 마감 아님'"></td>
 				</tr>
 			</tbody>
 
@@ -105,7 +112,7 @@
 		</table>
 
 	</div>
-	
+
 	<div th:if="${searchKeyword} != null and ${totalPages} == 0">
 
 
@@ -120,11 +127,27 @@
 		</table>
 
 	</div>
+	
+	<!-- 검색 입력 버튼 -->
+	<table id="search_table">
+		<tbody>
+			<tr>
+				<td>
+					<form action="/recruitpage/list" method="get">
+						<div>
+							<input type="text" id="searchKeyword" name="searchKeyword">
+							<button type="submit">검색</button>
+						</div>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
 	<!-- 페이징 처리 -->
 	<div th:if="${totalPages} != 0" id="paging">
 		<th:block th:each="page:${#numbers.sequence(startPage, endPage)}"
-			style="align-items: center;" >
+			style="align-items: center;">
 			<a th:if="${page != nowPage}"
 				th:href="@{/recruitpage/list(page=${page})}" th:text="${page}"></a>
 			<strong th:if="${page == nowPage}" th:text="${page}"
