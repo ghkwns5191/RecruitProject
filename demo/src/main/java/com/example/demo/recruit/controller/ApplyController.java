@@ -21,15 +21,33 @@ import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Activity;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Career;
+import com.example.demo.recruit.entity.Certificate;
+import com.example.demo.recruit.entity.Education;
+import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.entity.Overseasexperience;
+import com.example.demo.recruit.entity.Portfolio;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.AcademicApplyService;
 import com.example.demo.recruit.service.AcademicService;
+import com.example.demo.recruit.service.ActivityApplyService;
 import com.example.demo.recruit.service.ActivityService;
 import com.example.demo.recruit.service.ApplyService;
+import com.example.demo.recruit.service.CareerApplyService;
 import com.example.demo.recruit.service.CareerService;
+import com.example.demo.recruit.service.CertificateApplyService;
+import com.example.demo.recruit.service.CertificateService;
+import com.example.demo.recruit.service.EducationApplyService;
+import com.example.demo.recruit.service.EducationService;
+import com.example.demo.recruit.service.ImgfileApplyService;
+import com.example.demo.recruit.service.LanguagesApplyService;
+import com.example.demo.recruit.service.LanguagesService;
 import com.example.demo.recruit.service.MemberService;
+import com.example.demo.recruit.service.OverseasexperienceApplyService;
+import com.example.demo.recruit.service.OverseasexperienceService;
+import com.example.demo.recruit.service.PortfolioApplyService;
+import com.example.demo.recruit.service.PortfolioService;
 import com.example.demo.recruit.service.RecruitService;
 import com.example.demo.recruit.service.ResumeService;
 
@@ -42,28 +60,67 @@ public class ApplyController {
 
     @Autowired
     private final ApplyService applyService;
-    
+
     @Autowired
     private final RecruitService recruitService;
-    
+
     @Autowired
     private final AcademicApplyService academicApplyService;
 
     @Autowired
+    private final ActivityApplyService activityApplyService;
+
+    @Autowired
+    private final CareerApplyService careerApplyService;
+
+    @Autowired
+    private final CertificateApplyService certificateApplyService;
+
+    @Autowired
+    private final EducationApplyService educationApplyService;
+
+    @Autowired
+    private final ImgfileApplyService imgfileApplyService;
+
+    @Autowired
+    private final LanguagesApplyService languagesApplyService;
+
+    @Autowired
+    private final OverseasexperienceApplyService overseasexperienceApplyService;
+
+    @Autowired
+    private final PortfolioApplyService portfolioApplyService;
+
+    @Autowired
     private final ResumeService resumeService;
-    
+
     @Autowired
     private final MemberService memberService;
-    
+
     @Autowired
     private final AcademicService academicService;
-    
+
     @Autowired
     private final ActivityService activityService;
-    
+
     @Autowired
     private final CareerService careerService;
-    
+
+    @Autowired
+    private final CertificateService certificateService;
+
+    @Autowired
+    private final EducationService educationService;
+
+    @Autowired
+    private final LanguagesService languagesService;
+
+    @Autowired
+    private final OverseasexperienceService overseasexperienceService;
+
+    @Autowired
+    private final PortfolioService portfolioService;
+
     // 개인 회원의 채용공고 지원 내역을 조회하기 위해 사용
     @GetMapping("/listbymember")
     public ResponseEntity<List<Apply>> getListByMember(@RequestParam(required = false) Member member) {
@@ -108,18 +165,41 @@ public class ApplyController {
             Apply apply = this.applyService.inputData(applyDto, principal, recruit);
             Member member = this.memberService.getMemberinfo(principal.getName());
             Resume resume = this.resumeService.getResume(member);
-            
+
             // Academic 을 AcademicApply 에 저장
             List<Academic> academicList = this.academicService.getacademic(resume);
             this.academicApplyService.inputData(academicList, apply);
-            
+
             // Activity 를 ActivityApply 에 저장
             List<Activity> activityList = this.activityService.getactivity(resume);
-            
-            
+            this.activityApplyService.inputData(activityList, apply);
+
             // Career 를 CareerApply 에 저장
             List<Career> careerList = this.careerService.getcareer(resume);
-            
+            this.careerApplyService.inputData(careerList, apply);
+
+            // Certificate 를 CertificateApply 에 저장
+            List<Certificate> certificateList = this.certificateService.getcertificate(resume);
+            this.certificateApplyService.inputData(certificateList, apply);
+
+            // Education 을 EducationApply 에 저장
+            List<Education> educationList = this.educationService.geteducation(resume);
+            this.educationApplyService.inputData(educationList, apply);
+
+            // 이미지 파일 주소 이전
+
+            // Languages 를 LanguagesApply 에 저장
+            List<Languages> languagesList = this.languagesService.getlanguages(resume);
+            this.languagesApplyService.inputData(languagesList, apply);
+
+            // Overseasexperience 를 OverseasexperienceApply 에 저장
+            List<Overseasexperience> oeList = this.overseasexperienceService.getoverseasexperience(resume);
+            this.overseasexperienceApplyService.inputData(oeList, apply);
+
+            // Portfolio 를 PortfolioApply 에 저장
+            List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
+            this.portfolioApplyService.inputData(portfolioList, apply);
+
             return new ResponseEntity<>(apply, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
