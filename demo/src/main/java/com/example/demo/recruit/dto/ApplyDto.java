@@ -2,14 +2,6 @@ package com.example.demo.recruit.dto;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
 
@@ -22,6 +14,8 @@ public class ApplyDto {
 
     
     public Member member; // 회원 고유값(Foreign key)
+    
+    public Recruit recruit;
 
     public String name; // 지원자 성명
 
@@ -41,10 +35,11 @@ public class ApplyDto {
     public ApplyDto() {
 
     }
-    public ApplyDto(Member member, String name, String phone, String email, LocalDate birthday, String address,
+    public ApplyDto(Member member, Recruit recruit, String name, String phone, String email, LocalDate birthday, String address,
             String title, String cv, LocalDate applydate) {
         
         this.member = member;
+        this.recruit = recruit;
         this.name = name;
         this.phone = phone;
         this.email = email;

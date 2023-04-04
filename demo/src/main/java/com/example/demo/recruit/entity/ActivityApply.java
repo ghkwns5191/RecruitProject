@@ -18,9 +18,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "activity_apply")
+@Table(name = "activityapply")
 @Entity
-public class Activity_apply {
+public class ActivityApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,11 +51,11 @@ public class Activity_apply {
     @Column(length = 2000, name = "detail")
     public String detail; // 대외활동 상세활동내역
 
-    public Activity_apply() {
+    public ActivityApply() {
 
     }
 
-    public Activity_apply(@NotNull Apply apply, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String title,
+    public ActivityApply(@NotNull Apply apply, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String title,
             @NotNull String holdby, String detail) {
 
         this.apply = apply;

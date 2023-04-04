@@ -18,9 +18,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "career_apply")
+@Table(name = "careerapply")
 @Entity
-public class Career_apply {
+public class CareerApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,11 +63,11 @@ public class Career_apply {
     @Column(length = 2000, name = "detail")
     public String detail;// 경력 상세내용
     
-    public Career_apply() {
+    public CareerApply() {
         // TODO Auto-generated constructor stub
     }
 
-    public Career_apply(@NotNull Apply apply, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String working,
+    public CareerApply(@NotNull Apply apply, @NotNull LocalDate start, @NotNull LocalDate end, @NotNull String working,
             @NotNull String companyname, @NotNull String ranks, @NotNull String salary, @NotNull String jobduty,
             String detail) {
        

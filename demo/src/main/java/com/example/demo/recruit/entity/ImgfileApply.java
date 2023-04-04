@@ -14,10 +14,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "imgfile_apply")
+@Table(name = "imgfileapply")
 @Setter
 @Getter
-public class Imgfile_apply {
+public class ImgfileApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,11 +37,11 @@ public class Imgfile_apply {
     @JoinColumn(name = "apply")
     private Apply apply;
 
-    public Imgfile_apply() {
+    public ImgfileApply() {
         // TODO Auto-generated constructor stub
     }
 
-    public Imgfile_apply(String imgname, String oriname, String imgurl, Apply apply) {
+    public ImgfileApply(String imgname, String oriname, String imgurl, Apply apply) {
         super();
         this.imgname = imgname;
         this.oriname = oriname;
@@ -49,7 +49,7 @@ public class Imgfile_apply {
         this.apply = apply;
     }
 
-    public Imgfile_apply(String imgname, String oriname, String imgurl) {
+    public ImgfileApply(String imgname, String oriname, String imgurl) {
         super();
         this.imgname = imgname;
         this.oriname = oriname;

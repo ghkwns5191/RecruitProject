@@ -18,9 +18,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "certificate_apply")
+@Table(name = "certificateapply")
 @Entity
-public class Certificate_apply {
+public class CertificateApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,11 +51,11 @@ public class Certificate_apply {
     @NotNull
     public String certificatenumber; // 자격증 번호
     
-    public Certificate_apply() {
+    public CertificateApply() {
         // TODO Auto-generated constructor stub
     }
 
-    public Certificate_apply(@NotNull Apply apply, @NotNull LocalDate achievedate, @NotNull String name, String grade,
+    public CertificateApply(@NotNull Apply apply, @NotNull LocalDate achievedate, @NotNull String name, String grade,
             @NotNull String achievefrom, @NotNull String certificatenumber) {
         
         this.apply = apply;

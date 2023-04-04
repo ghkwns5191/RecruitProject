@@ -33,6 +33,11 @@ public class Apply {
     @JoinColumn(name = "member")
     @NotNull
     public Member member; // 회원 고유값(Foreign key)
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recruit")
+    @NotNull
+    public Recruit recruit; // 회원 고유값(Foreign key)
 
     @NotNull
     @Column(name = "name")
@@ -69,9 +74,10 @@ public class Apply {
         
     }
 
-    public Apply(@NotNull Member member, @NotNull String name, @NotNull String phone, @NotNull String email,
+    public Apply(@NotNull Member member, @NotNull Recruit recruit, @NotNull String name, @NotNull String phone, @NotNull String email,
             @NotNull LocalDate birthday, String address, @NotNull String title, String cv, LocalDate applydate) {
         this.member = member;
+        this.recruit = recruit;
         this.name = name;
         this.phone = phone;
         this.email = email;

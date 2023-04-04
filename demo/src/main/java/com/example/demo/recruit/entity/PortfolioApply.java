@@ -16,9 +16,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "portfolio_apply")
+@Table(name = "portfolioapply")
 @Entity
-public class Portfolio_apply {
+public class PortfolioApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,11 +40,11 @@ public class Portfolio_apply {
     @Column(length = 200, name = "url2")
     public String url2; // 포트폴리오 링크2
     
-    public Portfolio_apply() {
+    public PortfolioApply() {
         // TODO Auto-generated constructor stub
     }
 
-    public Portfolio_apply(@NotNull Apply apply, @NotNull String title, String url1, String url2) {
+    public PortfolioApply(@NotNull Apply apply, @NotNull String title, String url1, String url2) {
         
         this.apply = apply;
         this.title = title;

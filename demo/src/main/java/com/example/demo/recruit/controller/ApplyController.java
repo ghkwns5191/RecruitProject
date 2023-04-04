@@ -1,5 +1,6 @@
 package com.example.demo.recruit.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +17,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.ApplyDto;
+import com.example.demo.recruit.entity.Academic;
+import com.example.demo.recruit.entity.Activity;
 import com.example.demo.recruit.entity.Apply;
+import com.example.demo.recruit.entity.Career;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
+import com.example.demo.recruit.entity.Resume;
+import com.example.demo.recruit.service.AcademicApplyService;
+import com.example.demo.recruit.service.AcademicService;
+import com.example.demo.recruit.service.ActivityService;
 import com.example.demo.recruit.service.ApplyService;
+import com.example.demo.recruit.service.CareerService;
+import com.example.demo.recruit.service.MemberService;
+import com.example.demo.recruit.service.RecruitService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,7 +42,28 @@ public class ApplyController {
 
     @Autowired
     private final ApplyService applyService;
+    
+    @Autowired
+    private final RecruitService recruitService;
+    
+    @Autowired
+    private final AcademicApplyService academicApplyService;
 
+    @Autowired
+    private final ResumeService resumeService;
+    
+    @Autowired
+    private final MemberService memberService;
+    
+    @Autowired
+    private final AcademicService academicService;
+    
+    @Autowired
+    private final ActivityService activityService;
+    
+    @Autowired
+    private final CareerService careerService;
+    
     // 개인 회원의 채용공고 지원 내역을 조회하기 위해 사용
     @GetMapping("/listbymember")
     public ResponseEntity<List<Apply>> getListByMember(@RequestParam(required = false) Member member) {
@@ -69,9 +102,24 @@ public class ApplyController {
 
     // 개인 회원이 채용공고에 지원 시 해당 지원 정보를 저장하기 위해 사용
     @PostMapping("/input")
-    public ResponseEntity<Apply> inputData(@RequestBody ApplyDto applyDto) {
+    public ResponseEntity<Apply> inputData(@RequestBody ApplyDto applyDto, Principal principal, @RequestBody Long id) {
         try {
-            Apply apply = applyService.inputData(applyDto);
+            Recruit recruit = this.recruitService.getRecruit(id);
+            Apply apply = this.applyService.inputData(applyDto, principal, recruit);
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            Resume resume = this.resumeService.getResume(member);
+            
+            // Academic 을 AcademicApply 에 저장
+            List<Academic> academicList = this.academicService.getacademic(resume);
+            this.academicApplyService.inputData(academicList, apply);
+            
+            // Activity 를 ActivityApply 에 저장
+            List<Activity> activityList = this.activityService.getactivity(resume);
+            
+            
+            // Career 를 CareerApply 에 저장
+            List<Career> careerList = this.careerService.getcareer(resume);
+            
             return new ResponseEntity<>(apply, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Academic_applyDto {
+public class AcademicApplyDto {
 
     public Apply apply; // 이력서 고유값(Foreign key)
 
@@ -31,11 +31,11 @@ public class Academic_applyDto {
 
     public String detail;// 학력 상세내용
     
-    public Academic_applyDto() {
+    public AcademicApplyDto() {
         // TODO Auto-generated constructor stub
     }
 
-    public Academic_applyDto(Apply apply, LocalDate start, LocalDate end, String studying, String type, String name,
+    public AcademicApplyDto(Apply apply, LocalDate start, LocalDate end, String studying, String type, String name,
             String major, String grade, String gradefull, String detail) {
        
         this.apply = apply;

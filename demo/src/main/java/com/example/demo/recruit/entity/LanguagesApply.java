@@ -18,9 +18,9 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "languages_apply")
+@Table(name = "languagesapply")
 @Entity
-public class Languages_apply {
+public class LanguagesApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,11 +56,11 @@ public class Languages_apply {
     @Column(length = 100, name = "certificatenumber")
     public String certificatenumber; // 어학 시험성적표 번호
     
-    public Languages_apply() {
+    public LanguagesApply() {
         // TODO Auto-generated constructor stub
     }
 
-    public Languages_apply(@NotNull Apply apply, @NotNull String languages, @NotNull String leveltalking,
+    public LanguagesApply(@NotNull Apply apply, @NotNull String languages, @NotNull String leveltalking,
             @NotNull String levelwriting, String test, String score, LocalDate achievedate, String certificatenumber) {
         
         this.apply = apply;

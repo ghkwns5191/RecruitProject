@@ -18,14 +18,14 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Table(name = "overseasexperience_apply")
+@Table(name = "educationapply")
 @Entity
-public class Overseasexperience_apply {
+public class EducationApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    public Long id; // 해외경험 고유값
+    public Long id; // 교육내용 고유값
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "apply")
@@ -34,38 +34,37 @@ public class Overseasexperience_apply {
 
     @Column(name = "start")
     @NotNull
-    public LocalDate start; // 해외경험 시작일
+    public LocalDate start; // 교육 시작일
 
     @Column(name = "end")
     @NotNull
-    public LocalDate end; // 해외경험 종료일
+    public LocalDate end; // 교육 종료일
 
-    @Column(length = 100, name = "staying")
+    @Column(length = 100, name = "title")
     @NotNull
-    public String staying; // 해외경험 체류중 여부
+    public String title; // 수료 교육명
 
-    @Column(length = 100, name = "country")
+    @Column(length = 100, name = "holdby")
     @NotNull
-    public String country; // 해외경험 국가명
+    public String holdby; // 교육기관명
 
     @Column(length = 2000, name = "detail")
-    public String detail; // 해외경험 상세내용
-    
-    public Overseasexperience_apply() {
+    public String detail; // 상세 교육내용
+
+    public EducationApply() {
         // TODO Auto-generated constructor stub
     }
 
-    public Overseasexperience_apply(@NotNull Apply apply, @NotNull LocalDate start, @NotNull LocalDate end,
-            @NotNull String staying, @NotNull String country, String detail) {
+    public EducationApply(@NotNull Apply apply, @NotNull LocalDate start, @NotNull LocalDate end,
+            @NotNull String title, @NotNull String holdby, String detail) {
         
         this.apply = apply;
         this.start = start;
         this.end = end;
-        this.staying = staying;
-        this.country = country;
+        this.title = title;
+        this.holdby = holdby;
         this.detail = detail;
     }
-    
     
     
 }
