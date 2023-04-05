@@ -11,13 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.MemberDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.entity.Notice;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.service.CompanyService;
 import com.example.demo.recruit.service.MemberService;
+import com.example.demo.recruit.service.NoticeService;
 import com.example.demo.recruit.service.RecruitService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,9 @@ public class MainController {
     
     @Autowired
     private final RecruitService recruitService;
+    
+    @Autowired
+    private final NoticeService noticeService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -88,6 +94,14 @@ public class MainController {
     public String loginError(Model model) {
         model.addAttribute("loginError", "아이디 혹은 비밀번호를 재확인 해주세요");
         return "/view/Login";
+    }
+    
+    @GetMapping("/notice/list")
+    public ModelAndView noticeList(Model model) {
+        List<Notice> noticeList = this.noticeService.getNotice();
+        model.addAttribute("noticeList", noticeList);
+        
+        return new ModelAndView("/view/noticeList");
     }
 
 }
