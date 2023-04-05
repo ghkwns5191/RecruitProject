@@ -12,15 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.recruit.dto.CompanyDto;
 import com.example.demo.recruit.dto.ResumeDto;
 import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Activity;
+import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Career;
 import com.example.demo.recruit.entity.Certificate;
 import com.example.demo.recruit.entity.Education;
@@ -29,10 +28,12 @@ import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Overseasexperience;
 import com.example.demo.recruit.entity.Portfolio;
+import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.ImgfileRepository;
 import com.example.demo.recruit.service.AcademicService;
 import com.example.demo.recruit.service.ActivityService;
+import com.example.demo.recruit.service.ApplyService;
 import com.example.demo.recruit.service.CareerService;
 import com.example.demo.recruit.service.CertificateService;
 import com.example.demo.recruit.service.EducationService;
@@ -41,6 +42,7 @@ import com.example.demo.recruit.service.LanguagesService;
 import com.example.demo.recruit.service.MemberService;
 import com.example.demo.recruit.service.OverseasexperienceService;
 import com.example.demo.recruit.service.PortfolioService;
+import com.example.demo.recruit.service.RecruitService;
 import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
@@ -85,6 +87,12 @@ public class MypageController {
 
     @Autowired
     private final PortfolioService portfolioService;
+
+    @Autowired
+    private final ApplyService applyService;
+
+    @Autowired
+    private final RecruitService recruitService;
 
     @GetMapping(value = { "", "/" })
     public String mypagehome() {
@@ -228,6 +236,34 @@ public class MypageController {
             String sort = member.getSort();
             model.addAttribute("sort", sort);
             return new ModelAndView("/view/mypage/NewCompany");
+        } catch (NullPointerException e) {
+            check.put("check", true);
+            return new ModelAndView("view/Login");
+        }
+    }
+
+    // 사용자 지원 현황 리스트
+    @GetMapping("/user/applyinfo")
+    public ModelAndView userApplyinfo(Principal principal, Model model, Map<String, Object> check) {
+        try {
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            List<Apply> applyList = this.applyService.getapply(member);
+            model.addAttribute("applyList", applyList);
+            return new ModelAndView("/view/mypage/");
+        } catch (NullPointerException e) {
+            check.put("check", true);
+            return new ModelAndView("view/Login");
+        }
+    }
+
+    // 기업회원 작성 채용공고 리스트
+    @GetMapping("/company/recruitList")
+    public ModelAndView recruitApplyinfo(Principal principal, Model model, Map<String, Object> check) {
+        try {
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            List<Recruit> recruitList = this.recruitService.getRecruit(member);
+            model.addAttribute("recruitList", recruitList);
+            return new ModelAndView("/view/mypage/");
         } catch (NullPointerException e) {
             check.put("check", true);
             return new ModelAndView("view/Login");

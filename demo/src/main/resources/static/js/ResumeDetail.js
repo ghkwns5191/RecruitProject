@@ -3,5 +3,5 @@
  */
  
  function back() {
-	location.href = "/mypage/resume";
+	history.go(-1);1
 }

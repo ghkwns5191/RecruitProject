@@ -19,6 +19,7 @@ public class ActivityApplyService {
     @Autowired
     private final ActivityApplyRepository activityApplyRepository;
 
+    
     public void inputData(List<Activity> activityList, Apply apply) {
         for (int i = 0; i < activityList.size(); i++) {
             this.activityApplyRepository.save(new ActivityApply(
@@ -29,5 +30,14 @@ public class ActivityApplyService {
                     activityList.get(i).getHoldby(),
                     activityList.get(i).getDetail()));
         }
+    }
+    
+    public List<ActivityApply> getList(Apply apply) {
+        List<ActivityApply> activityApplyList = this.activityApplyRepository.findAllByApply(apply);
+        return activityApplyList;
+    }
+    
+    public void deleteList(Apply apply) {
+        this.activityApplyRepository.deleteAllByApply(apply);
     }
 }

@@ -19,6 +19,7 @@ public class CareerApplyService {
     @Autowired
     private final CareerApplyRepository careerApplyRepository;
 
+    
     public void inputData(List<Career> careerList, Apply apply) {
         for (int i = 0; i < careerList.size(); i++) {
             this.careerApplyRepository.save(new CareerApply(
@@ -32,5 +33,15 @@ public class CareerApplyService {
                     careerList.get(i).getJobduty(),
                     careerList.get(i).getDetail()));
         }
+    }
+    
+    public List<CareerApply> getList(Apply apply) {
+        List<CareerApply> careerApplyList = this.careerApplyRepository.findAllByApply(apply);
+        
+        return careerApplyList;
+    }
+    
+    public void deleteList(Apply apply) {
+        this.careerApplyRepository.deleteAllByApply(apply);
     }
 }

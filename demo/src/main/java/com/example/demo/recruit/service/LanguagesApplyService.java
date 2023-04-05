@@ -17,11 +17,11 @@ import lombok.RequiredArgsConstructor;
 public class LanguagesApplyService {
 
     @Autowired
-    private final LanguagesApplyRepository langugagesApplyRepository;
+    private final LanguagesApplyRepository languagesApplyRepository;
 
     public void inputData(List<Languages> languagesList, Apply apply) {
         for (int i = 0; i < languagesList.size(); i++) {
-            this.langugagesApplyRepository.save(new LanguagesApply(
+            this.languagesApplyRepository.save(new LanguagesApply(
                     apply,
                     languagesList.get(i).getLanguages(),
                     languagesList.get(i).getLeveltalking(),
@@ -31,5 +31,14 @@ public class LanguagesApplyService {
                     languagesList.get(i).getAchievedate(),
                     languagesList.get(i).getCertificatenumber()));
         }
+    }
+    
+    public List<LanguagesApply> getList(Apply apply) {
+        List<LanguagesApply> languagesApplyList = this.languagesApplyRepository.findAllByApply(apply);
+        return languagesApplyList;
+    }
+    
+    public void deleteList(Apply apply) {
+        this.languagesApplyRepository.deleteAllByApply(apply);
     }
 }

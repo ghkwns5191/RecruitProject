@@ -30,4 +30,13 @@ public class EducationApplyService {
                     educationList.get(i).getDetail()));
         }
     }
+
+    public List<EducationApply> getList(Apply apply) {
+        List<EducationApply> educationApplyList = this.educationApplyRepository.findAllByApply(apply);
+        return educationApplyList;
+    }
+
+    public void deleteList(Apply apply) {
+        this.educationApplyRepository.deleteAllByApply(apply);
+    }
 }

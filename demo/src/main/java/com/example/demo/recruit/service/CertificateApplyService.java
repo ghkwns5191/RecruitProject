@@ -30,4 +30,13 @@ public class CertificateApplyService {
                     certificateList.get(i).getCertificatenumber()));
         }
     }
+
+    public List<CertificateApply> getList(Apply apply) {
+        List<CertificateApply> certificateApplyList = this.certificateApplyRepository.findAllByApply(apply);
+        return certificateApplyList;
+    }
+    
+    public void deleteList(Apply apply) {
+        this.certificateApplyRepository.deleteAllByApply(apply);
+    }
 }

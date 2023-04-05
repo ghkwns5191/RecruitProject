@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +21,7 @@ import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Career;
 import com.example.demo.recruit.entity.Certificate;
 import com.example.demo.recruit.entity.Education;
+import com.example.demo.recruit.entity.Imgfile;
 import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Overseasexperience;
@@ -40,6 +40,7 @@ import com.example.demo.recruit.service.CertificateService;
 import com.example.demo.recruit.service.EducationApplyService;
 import com.example.demo.recruit.service.EducationService;
 import com.example.demo.recruit.service.ImgfileApplyService;
+import com.example.demo.recruit.service.ImgfileService;
 import com.example.demo.recruit.service.LanguagesApplyService;
 import com.example.demo.recruit.service.LanguagesService;
 import com.example.demo.recruit.service.MemberService;
@@ -119,6 +120,9 @@ public class ApplyController {
 
     @Autowired
     private final PortfolioService portfolioService;
+    
+    @Autowired
+    private final ImgfileService imgfileService;
 
     // 개인 회원의 채용공고 지원 내역을 조회하기 위해 사용
     @GetMapping("/listbymember")
@@ -186,7 +190,9 @@ public class ApplyController {
             this.educationApplyService.inputData(educationList, apply);
 
             // 이미지 파일 주소 이전
-
+            Imgfile imgfile = this.imgfileService.getimgfile(resume);
+            this.imgfileApplyService.inputData(imgfile, apply);
+                    
             // Languages 를 LanguagesApply 에 저장
             List<Languages> languagesList = this.languagesService.getlanguages(resume);
             this.languagesApplyService.inputData(languagesList, apply);

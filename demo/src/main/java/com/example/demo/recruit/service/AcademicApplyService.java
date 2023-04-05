@@ -36,4 +36,13 @@ public class AcademicApplyService {
                     academicList.get(i).getDetail()));
         }
     }
+
+    public List<AcademicApply> getList(Apply apply) {
+        List<AcademicApply> academicApplyList = this.academicApplyRepository.findAllByApply(apply);
+        return academicApplyList;
+    }
+
+    public void deleteList(Apply apply) {
+        this.academicApplyRepository.deleteAllByApply(apply);
+    }
 }

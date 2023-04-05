@@ -74,15 +74,14 @@ public class RecruitpageController {
         model.addAttribute("searchKeyword", searchKeyword);
         System.out.println(searchKeyword);
         model.addAttribute("todaydate", LocalDate.now());
-        
-        
+
         if (principal != null) {
             String username = principal.getName();
             Member member = this.memberService.getMemberinfo(username);
             String sort = member.getSort();
             model.addAttribute("sort", sort);
         }
-        
+
         return new ModelAndView("/view/recruit/RecruitList");
 
     }
@@ -128,7 +127,8 @@ public class RecruitpageController {
             String username = principal.getName();
             Member user = this.memberService.getMemberinfo(username);
             Apply apply = this.applyService.getapply(recruit, user);
-            model.addAttribute("sort", member.getSort());
+
+            model.addAttribute("sort", user.getSort());
             model.addAttribute("apply", apply);
             model.addAttribute("recruit", recruit);
             model.addAttribute("company", company);

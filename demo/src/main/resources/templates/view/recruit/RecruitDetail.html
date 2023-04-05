@@ -146,7 +146,7 @@
 
 		<table id="buttons">
 			<tbody>
-				<tr th:if="${principal} != null ">
+				<tr th:if="${principal} != null and ${sort} == 'individual' ">
 					<td th:if="${apply} == null"><button type="button"
 							th:recruitId="${recruit.id}"
 							th:onclick="applyto(this.getAttribute('recruitId'))">지원하기</button></td>

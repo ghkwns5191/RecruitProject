@@ -31,4 +31,13 @@ public class OverseasexperienceApplyService {
 
         }
     }
+    
+    public List<OverseasexperienceApply> getList(Apply apply) {
+        List<OverseasexperienceApply> oeApplyList = this.overseasexperienceApplyRepository.findAllByApply(apply);
+        return oeApplyList;
+    }
+    
+    public void deleteList(Apply apply) {
+        this.overseasexperienceApplyRepository.deleteAllByApply(apply);
+    }
 }

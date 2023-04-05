@@ -28,4 +28,13 @@ public class PortfolioApplyService {
                     portfolioList.get(i).getUrl2()));
         }
     }
+    
+    public List<PortfolioApply> getList(Apply apply) {
+        List<PortfolioApply> portfolioApplyList = this.portfolioApplyRepository.findAllByApply(apply);
+        return portfolioApplyList;
+    }
+    
+    public void deleteList(Apply apply) {
+        this.portfolioApplyRepository.deleteAllByApply(apply);
+    }
 }
