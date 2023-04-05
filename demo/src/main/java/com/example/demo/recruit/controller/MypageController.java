@@ -3,6 +3,7 @@ package com.example.demo.recruit.controller;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -113,7 +114,7 @@ public class MypageController {
 
     }
 
-    @GetMapping("/resume")
+    @GetMapping("/user/resume")
     public ModelAndView resumeList(Model model, Principal principal, Map<String, Object> check) {
         try {
 
@@ -138,7 +139,7 @@ public class MypageController {
         }
     }
 
-    @GetMapping("/resume/detail/{id}")
+    @GetMapping("//user/resume/detail/{id}")
     public ModelAndView resumeList(@PathVariable Long id, Model model, Principal principal, Map<String, Object> check) {
         try {
 
@@ -208,7 +209,7 @@ public class MypageController {
         }
     }
 
-    @GetMapping("/resume/new")
+    @GetMapping("/user/resume/new")
     public ModelAndView newResume(Model model, Principal principal, Map<String, Object> check) {
         try {
             String username = principal.getName();
@@ -222,13 +223,13 @@ public class MypageController {
         }
     }
 
-    @PostMapping("/resume/new")
+    @PostMapping("/usern/resume/new")
     public String newResume(ResumeDto resumeDto, MultipartFile imgfile, Principal principal) {
         System.out.println("반응함?");
         return "redirect:/view/mypage/Resume";
     }
 
-    @GetMapping("/companyinput")
+    @GetMapping("/company/input")
     public ModelAndView newCompany(Map<String, Object> check, Principal principal, Model model) {
         try {
             String username = principal.getName();
@@ -256,8 +257,32 @@ public class MypageController {
         }
     }
 
+    @GetMapping("/user/applydetail/{id}")
+    public ModelAndView userApplyDetail(@PathVariable("id") Long id, Principal principal, Map<String, Object> check,
+            Model model) {
+        String url = "";
+        if (principal != null) {
+            Apply apply = this.applyService.getapply(id);
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            if (member.getUsername().equals(apply.getMember().getUsername())) {
+                Recruit recruit = apply.getRecruit();
+                model.addAttribute("apply", apply);
+                model.addAttribute("recruit", recruit);
+                url = "/view/mypage/"; // 해당 지원 상세페이지로 이동 필요
+            } else {
+                check.put("check", true);
+                url = ""; // 사용자 지원 현황 리스트 페이지로 전환 필요 경고문과 함께
+            }
+
+        } else {
+            check.put("check", true);
+            url = "view/Login";
+        }
+        return new ModelAndView(url);
+    }
+
     // 기업회원 작성 채용공고 리스트
-    @GetMapping("/company/recruitList")
+    @GetMapping("/company/recruit/list")
     public ModelAndView recruitApplyinfo(Principal principal, Model model, Map<String, Object> check) {
         try {
             Member member = this.memberService.getMemberinfo(principal.getName());
@@ -268,6 +293,52 @@ public class MypageController {
             check.put("check", true);
             return new ModelAndView("view/Login");
         }
+    }
+
+    @GetMapping("/company/recruit/detail/{id}")
+    public ModelAndView recruitdetailandapplylist(Principal principal, Model model, Map<String, Object> check,
+            @PathVariable("id") Long id) {
+        String url = "";
+        if (principal != null) {
+            Recruit recruit = this.recruitService.getRecruit(id);
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            if (member.getUsername().equals(recruit.getMember().getUsername())) {
+                List<Apply> applyList = this.applyService.getapply(recruit);
+                model.addAttribute("recruit", recruit);
+                model.addAttribute("applyList", applyList);
+                url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
+            } else {
+                check.put("check", true);
+                url = ""; // 사용자 작성 채용공고 리스트로 이동.
+            }
+        } else {
+            check.put("check", true);
+            url = "view/Login";
+        }
+
+        return new ModelAndView(url);
+    }
+
+    @GetMapping("/company/recruitDetail/applyinfo/{id}")
+    public ModelAndView applyinfotorecruit(Principal principal, Model model, Map<String, Object> check,
+            @PathVariable("id") Long id) {
+        String url = "";
+        if (principal != null) {
+            Apply apply = this.applyService.getapply(id);
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            if (member.getUsername().equals(apply.getMember().getUsername())) {
+                model.addAttribute("apply", apply);
+                url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
+            } else {
+                check.put("check", true);
+                url = ""; // 사용자 작성 채용공고 리스트로 이동.
+            }
+        } else {
+            check.put("check", true);
+            url = "view/Login";
+        }
+
+        return new ModelAndView(url);
     }
 
 }
