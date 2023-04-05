@@ -52,7 +52,7 @@ public class ApplyService {
     }
 
     // 지원 정보를 입력받아 DB 에 저장하는 코드
-    public Apply inputData(ApplyDto applyDto, Principal principal, Recruit recruit) {
+    public Apply inputData(Principal principal, Recruit recruit) {
         Member member = this.memberService.getMemberinfo(principal.getName());
 
         Apply apply = this.applyRepository.save(new Apply(

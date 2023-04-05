@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.recruit.dto.ApplyDto;
 import com.example.demo.recruit.entity.Academic;
 import com.example.demo.recruit.entity.Activity;
 import com.example.demo.recruit.entity.Apply;
@@ -158,11 +157,11 @@ public class ApplyController {
     }
 
     // 개인 회원이 채용공고에 지원 시 해당 지원 정보를 저장하기 위해 사용
-    @PostMapping("/input")
-    public ResponseEntity<Apply> inputData(@RequestBody ApplyDto applyDto, Principal principal, @RequestBody Long id) {
+    @PostMapping("/input/{id}")
+    public ResponseEntity<Apply> inputData(Principal principal, @PathVariable("id") Long id) {
         try {
             Recruit recruit = this.recruitService.getRecruit(id);
-            Apply apply = this.applyService.inputData(applyDto, principal, recruit);
+            Apply apply = this.applyService.inputData(principal, recruit);
             Member member = this.memberService.getMemberinfo(principal.getName());
             Resume resume = this.resumeService.getResume(member);
 

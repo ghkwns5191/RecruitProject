@@ -4,6 +4,11 @@ import java.time.LocalDate;
 
 import com.example.demo.recruit.entity.Apply;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ActivityApplyDto {
 
     public Apply apply; // 이력서 고유값(Foreign key)

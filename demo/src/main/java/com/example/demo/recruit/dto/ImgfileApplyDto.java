@@ -1,5 +1,6 @@
 package com.example.demo.recruit.dto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,11 @@ import org.modelmapper.ModelMapper;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Imgfile;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ImgfileApplyDto {
 
     private Long id;

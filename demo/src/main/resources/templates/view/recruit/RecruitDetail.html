@@ -146,9 +146,10 @@
 
 		<table id="buttons">
 			<tbody>
-				<tr th:if="(${principal} != null) and (${sort} == 'individual')">
+				<tr th:if="${principal} != null ">
 					<td th:if="${apply} == null"><button type="button"
-							onClick="apply()">지원하기</button></td>
+							th:recruitId="${recruit.id}"
+							th:onclick="applyto(this.getAttribute('recruitId'))">지원하기</button></td>
 					<td th:unless="${apply} == null"><button type="button"
 							disabled>지원완료</button></td>
 
@@ -157,7 +158,7 @@
 
 				<tr>
 
-					<td><button type="button" onClick="bakctoList()">돌아가기</button></td>
+					<td><button type="button" th:onclick="bakctoList()">돌아가기</button></td>
 
 
 				</tr>

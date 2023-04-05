@@ -51,7 +51,7 @@
 	<!-- 구인공고 리스트 -->
 
 
-	
+
 
 
 	<!-- 채용공고 리스트 -->
@@ -102,7 +102,15 @@
 
 
 		<table id="recruitList">
-
+			<thead>
+				<th>구인공고 리스트</th>
+				<th>
+					<div th:if="${sort} == 'company'">
+						<button name="recruitList_button" id="new_recruit"
+							onClick="newRecruit()">공고 작성하기</button>
+					</div>
+				</th>
+			</thead>
 			<tbody>
 				<tr>
 					<td>채용공고가 없습니다.</td>
@@ -127,7 +135,7 @@
 		</table>
 
 	</div>
-	
+
 	<!-- 검색 입력 버튼 -->
 	<table id="search_table">
 		<tbody>
