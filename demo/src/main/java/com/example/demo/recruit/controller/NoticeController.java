@@ -23,7 +23,7 @@ import com.example.demo.recruit.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/notice")
 @RequiredArgsConstructor
 public class NoticeController {
 
@@ -31,7 +31,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     // 모든 공지사항 리스트를 확인하기 위해 사용
-    @GetMapping("/notice/list")
+    @GetMapping("/load")
     public ResponseEntity<List<Notice>> getList() {
         try {
             List<Notice> notice = new ArrayList<Notice>();
@@ -43,7 +43,7 @@ public class NoticeController {
     }
 
     // 해당 공지사항의 상세내용을 확인하기 위해 사용
-    @GetMapping("/notice/detail")
+    @GetMapping("/detail")
     public ResponseEntity<Notice> getNotice(@RequestParam(required = false) Long id) {
         try {
             Notice notice = new Notice();
@@ -55,7 +55,7 @@ public class NoticeController {
     }
     
     // 공지사항 작성내용을 입력받아 DB 에 저장하기 위해 사용
-    @PostMapping("/notice/input")
+    @PostMapping("/input")
     public ResponseEntity<Notice> inputData(@RequestBody NoticeDto noticeDto) {
         try {
             Notice notice = noticeService.inputData(noticeDto);
@@ -66,7 +66,7 @@ public class NoticeController {
     }
     
     // 공지사항을 수정하기 위해 사용
-    @PutMapping("/notice/revise")
+    @PutMapping("/revise")
     public ResponseEntity<Notice> reviseData(@PathVariable("id") Long id, @RequestBody NoticeDto noticeDto) {
         try {
             Notice notice = noticeService.inputData(id, noticeDto);
@@ -77,7 +77,7 @@ public class NoticeController {
     }
     
     // 공지사항을 삭제하기 위해 사용
-    @DeleteMapping("/notice/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<HttpStatus> deleteData(@PathVariable("id_notice") Long id_notice) {
         try {
             noticeService.deleteData(id_notice);

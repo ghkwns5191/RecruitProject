@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,21 +33,21 @@ public class MainController {
 
     @Autowired
     private final MemberService memberService;
-    
+
     @Autowired
     private final CompanyService companyService;
-    
+
     @Autowired
     private final RecruitService recruitService;
-    
+
     @Autowired
     private final NoticeService noticeService;
 
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping(value= {"", "/"})
+    @GetMapping(value = { "", "/" })
     public String main(Principal principal, Model model) {
-        
+
         List<Recruit> recruitList = this.recruitService.getRecruit5();
         model.addAttribute("recruitList", recruitList);
         if (principal == null) {
@@ -56,7 +57,8 @@ public class MainController {
             String username = principal.getName();
             Member member = memberService.getMember(username);
             String sort = member.getSort();
-            if(companyService.getData(member) != null) {
+
+            if (companyService.getData(member) != null) {
                 Company company = this.companyService.getData(member);
                 model.addAttribute("company", company);
             }
@@ -95,13 +97,21 @@ public class MainController {
         model.addAttribute("loginError", "아이디 혹은 비밀번호를 재확인 해주세요");
         return "/view/Login";
     }
-    
+
     @GetMapping("/notice/list")
     public ModelAndView noticeList(Model model) {
         List<Notice> noticeList = this.noticeService.getNotice();
         model.addAttribute("noticeList", noticeList);
-        
-        return new ModelAndView("/view/noticeList");
+
+        return new ModelAndView("/view/NoticeList");
+    }
+    
+    @GetMapping("/notice/detail/{id}")
+    public ModelAndView noticeList(Model model, @PathVariable("id") Long id) {
+        Notice notice = this.noticeService.getNotice(id);
+        model.addAttribute("notice", notice);
+
+        return new ModelAndView("/view/NoticeDetail");
     }
 
 }

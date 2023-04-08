@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.MemberDto;
+import com.example.demo.recruit.entity.ERole;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Notice;
 import com.example.demo.recruit.service.MemberService;
@@ -47,21 +48,21 @@ public class AdminController {
     }
 
     @GetMapping("/notice/list")
-	public ModelAndView noticeList(Principal principal, Model model, Map<String, Object> authority) {
+    public ModelAndView noticeList(Principal principal, Model model, Map<String, Object> authority) {
         String url = "";
-	    if (principal != null) {
-	        Member member = this.memberService.getMemberinfo(principal.getName());
-	        if (member.getRole().equals("ADMIN")) {
-	            List<Notice> noticeList = this.noticeService.getNotice();
-	            model.addAttribute("noticeList", noticeList);
-	            url = "/view/admin/noticeList";
-	        } else {
-	            url = ""; // 사용자의 공지사항 리스트 페이졸 이동.
-	        }
-	    } else {
-	        authority.put("authority", false);
-	        url = "/view/Login";
-	    }
-	    return new ModelAndView(url);
-	}
+        if (principal != null) {
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            if (member.getRole().equals(ERole.ADMIN)) {
+                List<Notice> noticeList = this.noticeService.getNotice();
+                model.addAttribute("noticeList", noticeList);
+                url = "/view/admin/NoticeList";
+            } else {
+                url = ""; // 사용자의 공지사항 리스트 페이졸 이동.
+            }
+        } else {
+            authority.put("authority", false);
+            url = "/view/Login";
+        }
+        return new ModelAndView(url);
+    }
 }
