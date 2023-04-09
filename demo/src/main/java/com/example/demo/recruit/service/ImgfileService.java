@@ -1,5 +1,6 @@
 package com.example.demo.recruit.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +22,10 @@ public class ImgfileService {
     @Value("${ImgfileLocation2}")
     private String ImgfileLocation2;
 
+    @Autowired
     private final ImgfileRepository imgfileRepository;
 
+    @Autowired
     private final FileService fileService;
 
     public Imgfile saveImgfile(Imgfile imgfile, MultipartFile imgfileFile) throws Exception {

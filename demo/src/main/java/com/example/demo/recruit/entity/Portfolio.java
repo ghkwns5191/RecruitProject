@@ -39,6 +39,7 @@ public class Portfolio {
 
     @Column(length = 200, name = "url2")
     public String url2; // 포트폴리오 링크2
+    
 
     public Portfolio() {
 

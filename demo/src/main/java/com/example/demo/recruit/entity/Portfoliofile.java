@@ -24,14 +24,14 @@ public class Portfoliofile {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "imgname")
-    private String imgname;
+    @Column(name = "filename")
+    private String filename;
 
     @Column(name = "oriname")
     private String oriname;
 
-    @Column(name = "imgurl")
-    private String imgurl;
+    @Column(name = "fileurl")
+    private String fileurl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio")
@@ -41,12 +41,18 @@ public class Portfoliofile {
 
     }
 
-    public Portfoliofile(String imgname, String oriname, String imgurl, Portfolio portfolio) {
+    public Portfoliofile(String filename, String oriname, String fileurl, Portfolio portfolio) {
         super();
-        this.imgname = imgname;
+        this.filename = filename;
         this.oriname = oriname;
-        this.imgurl = imgurl;
+        this.fileurl = fileurl;
         this.portfolio = portfolio;
+    }
+    
+    public void updatefile(String oriname, String filename, String fileurl) {
+        this.filename = filename;
+        this.oriname = oriname;
+        this.fileurl = fileurl;
     }
 
 }

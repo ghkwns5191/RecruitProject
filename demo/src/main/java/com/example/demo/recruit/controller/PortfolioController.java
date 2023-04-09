@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.recruit.dto.PortfolioDto;
 import com.example.demo.recruit.entity.Portfolio;
@@ -59,10 +60,15 @@ public class PortfolioController {
 
     // 포트폴리오 내용을 입력받아 DB 에 저장하기 위해 사용
     @PostMapping("/portfolio/input")
-    public ResponseEntity<List<Portfolio>> inputData(@RequestBody List<PortfolioDto> portfolioDtoList,
+    public ResponseEntity<List<Portfolio>> inputData(
+            @RequestParam("portfoliofile") List<MultipartFile> portfoliofileList,
+            @RequestParam("title") List<String> titleList,
+            @RequestParam("url1") List<String> url1List,
+            @RequestParam("url2") List<String> url2List,
             Principal principal) {
         try {
-            List<Portfolio> portfolioList = portfolioService.inputData(portfolioDtoList, principal);
+            List<Portfolio> portfolioList = portfolioService.inputData(titleList, url1List, url2List, portfoliofileList,
+                    principal);
             return new ResponseEntity<>(portfolioList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

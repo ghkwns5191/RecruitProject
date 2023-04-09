@@ -7,10 +7,12 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.recruit.dto.PortfolioDto;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Portfolio;
+import com.example.demo.recruit.entity.Portfoliofile;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.MemberRepository;
 import com.example.demo.recruit.repository.PortfolioRepository;
@@ -31,6 +33,9 @@ public class PortfolioService {
     @Autowired
     private final MemberRepository memberRepository;
 
+    @Autowired
+    private final PortfoliofileService portfoliofileService;
+
     // 해당 이력서의 포트폴리오 정보를 불러오는 코드
     public List<Portfolio> getPortfolio(Resume resume) {
         List<Portfolio> portfolio = new ArrayList<Portfolio>();
@@ -46,19 +51,28 @@ public class PortfolioService {
     }
 
     // 입력받은 포트폴리오 정보를 DB 에 저장하는 코드
-    public List<Portfolio> inputData(List<PortfolioDto> portfolioDtoList, Principal principal) {
+    public List<Portfolio> inputData(List<String> titleList, List<String> url1List, List<String> url2List,
+            List<MultipartFile> portfoliofileList,
+            Principal principal) throws Exception {
         String username = principal.getName();
         Member member = this.memberRepository.findByUsername(username);
         Resume resume = this.resumeRepository.findByMember(member);
         List<Portfolio> portfolioList = new ArrayList<>();
-        for (int i = 0; i < portfolioDtoList.size(); i++) {
-            PortfolioDto portfolioDto = portfolioDtoList.get(i);
+        for (int i = 0; i < titleList.size(); i++) {
+            String title = titleList.get(i);
+            String url1 = url1List.get(i);
+            String url2 = url2List.get(i);
             Portfolio portfolio = this.portfolioRepository.save(new Portfolio(
                     resume,
-                    portfolioDto.getTitle(),
-                    portfolioDto.getUrl1(),
-                    portfolioDto.getUrl2()));
+                    title,
+                    url1,
+                    url2));
             portfolioList.add(portfolio);
+
+            Portfoliofile portfoliofile = new Portfoliofile();
+            portfoliofile.setPortfolio(portfolio);
+            portfoliofileService.savefile(portfoliofile, portfoliofileList.get(i));
+
         }
         return portfolioList;
     }

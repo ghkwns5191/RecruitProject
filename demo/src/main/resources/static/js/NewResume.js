@@ -388,44 +388,45 @@ function submit() {
 	}
 
 	// portfolio 입력정보
-	var portfolioList = [];
+
+
+	var portfolioData = new FormData();
+
 	for (let i = 0; i < portfolioLength; i++) {
 		var portfolio_title = document.getElementsByClassName('portfolio_title')[i].value;
 		var portfolio_url1 = document.getElementsByClassName('portfolio_url1')[i].value;
 		var portfolio_url2 = document.getElementsByClassName('portfolio_url2')[i].value;
 
-		var portfolioDto = {
-			title: portfolio_title,
-			url1: portfolio_url1,
-			url2: portfolio_url2
-		};
-		portfolioList.push(portfolioDto);
+		portfolioData.append("portfoliofile", $(".portfoliofiles")[i].files[0]);
+		portfolioData.append("title", portfolio_title);
+		portfolioData.append("url1", portfolio_url1);
+		portfolioData.append("url2", portfolio_url2);
 	}
 
 	// resume 저장하는 ajax
 	$.ajax({
 		type: "post",
 		url: "/resume/input",
-		async : false,
+		async: false,
 		data: {
 			title: resume_title,
 			cv: resume_cv,
 			openforheadhunter: resume_openforheadhunter,
 		},
 		success: function(data) {
-			
+
 			console.log(data);
 			console.log("ajax 동작");
 			// imgfile 저장하는 ajax
 			$.ajax({
 				type: "post",
 				url: "/imgfile/new",
-				async : false,
+				async: false,
 				data: formData,
 				contentType: false,
 				processData: false,
 				success: function(data) {
-					
+
 					console.log(data);
 					console.log("imgfile 입력");
 
@@ -440,7 +441,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/academic/input",
-				async : false,
+				async: false,
 				contentType: "application/json",
 				data: JSON.stringify(academicList),
 				success: function(data) {
@@ -458,7 +459,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/activity/input",
-				async : false,
+				async: false,
 				contentType: "application/json",
 				data: JSON.stringify(activityList),
 				success: function(data) {
@@ -476,7 +477,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/career/input",
-				async : false,
+				async: false,
 				contentType: "application/json",
 				data: JSON.stringify(careerList),
 				success: function(data) {
@@ -494,7 +495,7 @@ function submit() {
 			$.ajax({
 				type: "post",
 				url: "/certificate/input",
-				async : false,
+				async: false,
 				contentType: "application/json",
 				data: JSON.stringify(certificateList),
 				success: function(data) {
@@ -511,7 +512,7 @@ function submit() {
 			// education 저장하는 ajax
 			$.ajax({
 				type: "post",
-				async : false,
+				async: false,
 				url: "/education/input",
 				contentType: "application/json",
 				data: JSON.stringify(educationList),
@@ -529,7 +530,7 @@ function submit() {
 			//langauges 저장하는 ajax
 			$.ajax({
 				type: "post",
-				async : false,
+				async: false,
 				url: "/languages/input",
 				contentType: "application/json",
 				data: JSON.stringify(languagesList),
@@ -547,7 +548,7 @@ function submit() {
 			//oe 저장하는 ajax
 			$.ajax({
 				type: "post",
-				async : false,
+				async: false,
 				url: "/overseas/input",
 				contentType: "application/json",
 				data: JSON.stringify(oeList),
@@ -565,10 +566,11 @@ function submit() {
 			// portfolio 저장하는 ajax
 			$.ajax({
 				type: "post",
-				async : false,
+				async: false,
 				url: "/portfolio/input",
-				contentType: "application/json",
-				data: JSON.stringify(portfolioList),
+				contentType: false,
+				processData: false,
+				data: portfolioData,
 				success: function(data) {
 
 					console.log(data);
@@ -588,7 +590,7 @@ function submit() {
 			console.log("ajax 동작")
 		}
 	});
-	
+
 	// 5초 이후 이력서 목록으로 이동.
 	setTimeout(() => location.href = '/mypage/resume', 0000);
 }
