@@ -21,6 +21,7 @@ import com.example.demo.recruit.dto.CertificateDto;
 import com.example.demo.recruit.entity.Certificate;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.CertificateService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,9 @@ public class CertificateController {
 
     @Autowired
     private final CertificateService certificateService;
+    
+    @Autowired
+    private final ResumeService resumeService;
 
     // 이력서 조회 시 자격증 정보를 함께 조회하기 위해 사용
     @GetMapping("/list")
@@ -70,11 +74,12 @@ public class CertificateController {
     }
 
     // 이력서상 자격증 내역을 수정하기 위해 사용
-    @PutMapping("/revise")
-    public ResponseEntity<Certificate> reviseData(@PathVariable("id") Long id, CertificateDto certificateDto) {
+    @PutMapping("/revise/{id}")
+    public ResponseEntity<List<Certificate>> reviseData(@PathVariable("id") Long id, List<CertificateDto> certificateDtoList) {
         try {
-            Certificate certificate = certificateService.inputData(id, certificateDto);
-            return new ResponseEntity<>(certificate, HttpStatus.OK);
+            Resume resume = this.resumeService.getResume(id);
+            List<Certificate> certificateList = certificateService.inputData(resume, certificateDtoList);
+            return new ResponseEntity<>(certificateList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

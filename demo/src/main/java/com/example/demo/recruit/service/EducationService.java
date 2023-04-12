@@ -66,16 +66,58 @@ public class EducationService {
     }
 
     // DB 에 저장된 교육내용을 수정하는 코드
-    public Education inputData(Long id, EducationDto educationDto) {
-        Optional<Education> educationData = this.educationRepository.findById(id);
-        Education education = educationData.get();
-        education.setStart(educationDto.getStart());
-        education.setEnd(educationDto.getEnd());
-        education.setTitle(educationDto.getTitle());
-        education.setHoldby(educationDto.getHoldby());
-        education.setDetail(educationDto.getDetail());
-        this.educationRepository.save(education);
-        return education;
+    public List<Education> inputData(Resume resume, List<EducationDto> educationDtoList) {
+        List<Education> educationList = this.educationRepository.findAllByResume(resume);
+        List<Education> educationResult = new ArrayList<>();
+
+        if (educationDtoList.size() == educationList.size()) {
+            for (int i = 0; i < educationDtoList.size(); i++) {
+                educationList.get(i).setStart(educationDtoList.get(i).getStart());
+                educationList.get(i).setEnd(educationDtoList.get(i).getEnd());
+                educationList.get(i).setTitle(educationDtoList.get(i).getTitle());
+                educationList.get(i).setHoldby(educationDtoList.get(i).getHoldby());
+                educationList.get(i).setDetail(educationDtoList.get(i).getDetail());
+                educationResult.add(educationList.get(i));
+                this.educationRepository.save(educationList.get(i));
+            }
+
+        } else if (educationDtoList.size() > educationList.size()) {
+            for (int i = 0; i < educationList.size(); i++) {
+                educationList.get(i).setStart(educationDtoList.get(i).getStart());
+                educationList.get(i).setEnd(educationDtoList.get(i).getEnd());
+                educationList.get(i).setTitle(educationDtoList.get(i).getTitle());
+                educationList.get(i).setHoldby(educationDtoList.get(i).getHoldby());
+                educationList.get(i).setDetail(educationDtoList.get(i).getDetail());
+                educationResult.add(educationList.get(i));
+                this.educationRepository.save(educationList.get(i));
+            }
+
+            for (int i = educationList.size(); i < educationDtoList.size(); i++) {
+                Education education = this.educationRepository.save(new Education(
+                        resume,
+                        educationDtoList.get(i).getStart(),
+                        educationDtoList.get(i).getEnd(),
+                        educationDtoList.get(i).getTitle(),
+                        educationDtoList.get(i).getHoldby(),
+                        educationDtoList.get(i).getDetail()));
+                educationResult.add(education);
+            }
+        } else if (educationDtoList.size() < educationList.size()) {
+            for (int i = 0; i < educationDtoList.size(); i++) {
+                educationList.get(i).setStart(educationDtoList.get(i).getStart());
+                educationList.get(i).setEnd(educationDtoList.get(i).getEnd());
+                educationList.get(i).setTitle(educationDtoList.get(i).getTitle());
+                educationList.get(i).setHoldby(educationDtoList.get(i).getHoldby());
+                educationList.get(i).setDetail(educationDtoList.get(i).getDetail());
+                educationResult.add(educationList.get(i));
+                this.educationRepository.save(educationList.get(i));
+            }
+
+            for (int i = educationDtoList.size(); i < educationList.size(); i++) {
+                this.educationRepository.deleteById(educationList.get(i).getId());
+            }
+        }
+        return educationResult;
     }
 
     // DB 에 저장된 교육내용을 삭제하는 코드

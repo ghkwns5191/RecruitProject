@@ -68,17 +68,67 @@ public class LanguagesService {
     }
 
     // DB 에 저장된 어학사항을 수정하는 코드
-    public Languages inputData(Long id, LanguagesDto languagesDto) {
-        Optional<Languages> languagesData = this.languagesRepository.findById(id);
-        Languages languages = languagesData.get();
-        languages.setLeveltalking(languagesDto.getLeveltalking());
-        languages.setLevelwriting(languagesDto.getLevelwriting());
-        languages.setTest(languagesDto.getTest());
-        languages.setScore(languagesDto.getScore());
-        languages.setAchievedate(languagesDto.getAchievedate());
-        languages.setCertificatenumber(languagesDto.getCertificatenumber());
-        this.languagesRepository.save(languages);
-        return languages;
+    public List<Languages> inputData(Resume resume, List<LanguagesDto> languagesDtoList) {
+        List<Languages> languagesList = this.languagesRepository.findAllByResume(resume);
+        List<Languages> languagesResult = new ArrayList<>();
+        
+        if (languagesDtoList.size() == languagesList.size()) {
+            for (int i = 0; i < languagesDtoList.size(); i++) {
+                languagesList.get(i).setLanguages(languagesDtoList.get(i).getLanguages());
+                languagesList.get(i).setLeveltalking(languagesDtoList.get(i).getLeveltalking());
+                languagesList.get(i).setLevelwriting(languagesDtoList.get(i).getLevelwriting());
+                languagesList.get(i).setTest(languagesDtoList.get(i).getTest());
+                languagesList.get(i).setScore(languagesDtoList.get(i).getScore());
+                languagesList.get(i).setAchievedate(languagesDtoList.get(i).getAchievedate());
+                languagesList.get(i).setCertificatenumber(languagesDtoList.get(i).getCertificatenumber());
+                languagesResult.add(languagesList.get(i));
+                this.languagesRepository.save(languagesList.get(i));
+            }
+        } else if (languagesDtoList.size() > languagesList.size()) {
+            for (int i = 0; i < languagesList.size(); i++) {
+                languagesList.get(i).setLanguages(languagesDtoList.get(i).getLanguages());
+                languagesList.get(i).setLeveltalking(languagesDtoList.get(i).getLeveltalking());
+                languagesList.get(i).setLevelwriting(languagesDtoList.get(i).getLevelwriting());
+                languagesList.get(i).setTest(languagesDtoList.get(i).getTest());
+                languagesList.get(i).setScore(languagesDtoList.get(i).getScore());
+                languagesList.get(i).setAchievedate(languagesDtoList.get(i).getAchievedate());
+                languagesList.get(i).setCertificatenumber(languagesDtoList.get(i).getCertificatenumber());
+                languagesResult.add(languagesList.get(i));
+                this.languagesRepository.save(languagesList.get(i));
+            }
+            
+            for (int i = languagesList.size(); i < languagesDtoList.size(); i++) {
+                Languages languages = this.languagesRepository.save(new Languages(
+                        resume,
+                        languagesDtoList.get(i).getLanguages(),
+                        languagesDtoList.get(i).getLeveltalking(),
+                        languagesDtoList.get(i).getLevelwriting(),
+                        languagesDtoList.get(i).getTest(),
+                        languagesDtoList.get(i).getScore(),
+                        languagesDtoList.get(i).getAchievedate(),
+                        languagesDtoList.get(i).getCertificatenumber()
+                        ));
+                languagesResult.add(languages);
+            }
+        } else if (languagesDtoList.size() < languagesList.size()) {
+            for (int i = 0; i < languagesDtoList.size(); i++) {
+                languagesList.get(i).setLanguages(languagesDtoList.get(i).getLanguages());
+                languagesList.get(i).setLeveltalking(languagesDtoList.get(i).getLeveltalking());
+                languagesList.get(i).setLevelwriting(languagesDtoList.get(i).getLevelwriting());
+                languagesList.get(i).setTest(languagesDtoList.get(i).getTest());
+                languagesList.get(i).setScore(languagesDtoList.get(i).getScore());
+                languagesList.get(i).setAchievedate(languagesDtoList.get(i).getAchievedate());
+                languagesList.get(i).setCertificatenumber(languagesDtoList.get(i).getCertificatenumber());
+                languagesResult.add(languagesList.get(i));
+                this.languagesRepository.save(languagesList.get(i));
+            }
+            
+            for (int i = languagesDtoList.size(); i < languagesList.size(); i++) {
+                this.languagesRepository.deleteById(languagesList.get(i).getId());
+            }
+        }
+        
+        return languagesResult;
     }
 
     // DB 에 저장된 어학사항을 삭제하는 코드

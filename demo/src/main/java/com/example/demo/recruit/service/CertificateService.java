@@ -66,16 +66,60 @@ public class CertificateService {
     }
 
     // 자격증 내역을 수정하는 코드
-    public Certificate inputData(Long id, CertificateDto certificateDto) {
-        Optional<Certificate> certificateData = this.certificateRepository.findById(id);
-        Certificate certificate = certificateData.get();
-        certificate.setAchievedate(certificateDto.getAchievedate());
-        certificate.setName(certificateDto.getName());
-        certificate.setGrade(certificateDto.getGrade());
-        certificate.setAchievefrom(certificateDto.getAchievefrom());
-        certificate.setCertificatenumber(certificateDto.getCertificatenumber());
-        this.certificateRepository.save(certificate);
-        return certificate;
+    public List<Certificate> inputData(Resume resume, List<CertificateDto> certificateDtoList) {
+        List<Certificate> certificateList = this.certificateRepository.findAllByResume(resume);
+        List<Certificate> certificateResult = new ArrayList<>();
+        
+        if (certificateDtoList.size() == certificateList.size()) {
+            for (int i = 0; i < certificateDtoList.size(); i++) {
+                certificateList.get(i).setAchievedate(certificateDtoList.get(i).getAchievedate());
+                certificateList.get(i).setName(certificateDtoList.get(i).getName());
+                certificateList.get(i).setGrade(certificateDtoList.get(i).getGrade());
+                certificateList.get(i).setAchievefrom(certificateDtoList.get(i).getAchievefrom());
+                certificateList.get(i).setCertificatenumber(certificateDtoList.get(i).getCertificatenumber());
+                certificateResult.add(certificateList.get(i));
+                this.certificateRepository.save(certificateList.get(i));
+            }
+            
+        } else if (certificateDtoList.size() > certificateList.size()) {
+            for (int i = 0; i < certificateList.size(); i++) {
+                certificateList.get(i).setAchievedate(certificateDtoList.get(i).getAchievedate());
+                certificateList.get(i).setName(certificateDtoList.get(i).getName());
+                certificateList.get(i).setGrade(certificateDtoList.get(i).getGrade());
+                certificateList.get(i).setAchievefrom(certificateDtoList.get(i).getAchievefrom());
+                certificateList.get(i).setCertificatenumber(certificateDtoList.get(i).getCertificatenumber());
+                certificateResult.add(certificateList.get(i));
+                this.certificateRepository.save(certificateList.get(i));
+            }
+            
+            for (int i = certificateList.size(); i < certificateDtoList.size(); i++) {
+                Certificate certificate = this.certificateRepository.save(new Certificate(
+                        resume,
+                        certificateDtoList.get(i).getAchievedate(),
+                        certificateDtoList.get(i).getName(),
+                        certificateDtoList.get(i).getGrade(),
+                        certificateDtoList.get(i).getAchievefrom(),
+                        certificateDtoList.get(i).getCertificatenumber()
+                        ));
+                certificateResult.add(certificate);
+            }
+        } else if (certificateDtoList.size() < certificateList.size()) {
+            for (int i = 0; i < certificateDtoList.size(); i++) {
+                certificateList.get(i).setAchievedate(certificateDtoList.get(i).getAchievedate());
+                certificateList.get(i).setName(certificateDtoList.get(i).getName());
+                certificateList.get(i).setGrade(certificateDtoList.get(i).getGrade());
+                certificateList.get(i).setAchievefrom(certificateDtoList.get(i).getAchievefrom());
+                certificateList.get(i).setCertificatenumber(certificateDtoList.get(i).getCertificatenumber());
+                certificateResult.add(certificateList.get(i));
+                this.certificateRepository.save(certificateList.get(i));
+            }
+            
+            for (int i = certificateDtoList.size(); i < certificateList.size(); i++) {
+                this.certificateRepository.deleteById(certificateList.get(i).getId());
+            }
+        }
+        
+        return certificateResult;
     }
 
     // 자격증 내역을 삭제하는 코드

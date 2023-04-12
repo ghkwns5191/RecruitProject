@@ -21,6 +21,7 @@ import com.example.demo.recruit.dto.LanguagesDto;
 import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.LanguagesService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,9 @@ public class LanguagesController {
 
     @Autowired
     private final LanguagesService languagesService;
+    
+    @Autowired
+    private final ResumeService resumeService;
     
     // 해당 이력서 조회 시 어학사항 함께 조회하기 위해 사용
     @GetMapping("/list")
@@ -68,11 +72,12 @@ public class LanguagesController {
     }
     
     // 어학사항을 수정하기 위해 사용
-    @PutMapping("/revise")
-    public ResponseEntity<Languages> reviseData(@PathVariable("id") Long id, @RequestBody LanguagesDto languagesDto) {
+    @PutMapping("/revise/{id}")
+    public ResponseEntity<List<Languages>> reviseData(@PathVariable("id") Long id, @RequestBody List<LanguagesDto> languagesDtoList) {
         try {
-            Languages languages = languagesService.inputData(id, languagesDto);
-            return new ResponseEntity<>(languages, HttpStatus.OK);
+            Resume resume = this.resumeService.getResume(id);
+            List<Languages> languagesList = languagesService.inputData(resume, languagesDtoList);
+            return new ResponseEntity<>(languagesList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

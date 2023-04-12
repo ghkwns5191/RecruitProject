@@ -11,4 +11,6 @@ public interface LanguagesRepository extends JpaRepository<Languages, Long> {
 
     List<Languages> findByResume(Resume resume);
 
+    List<Languages> findAllByResume(Resume resume);
+
 }

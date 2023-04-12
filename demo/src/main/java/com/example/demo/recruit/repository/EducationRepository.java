@@ -11,4 +11,6 @@ public interface EducationRepository extends JpaRepository<Education, Long> {
 
     List<Education> findByResume(Resume resume);
 
+    List<Education> findAllByResume(Resume resume);
+
 }

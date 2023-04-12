@@ -11,4 +11,6 @@ public interface ActivityRepository extends JpaRepository<Activity, Long>{
 
     List<Activity> findByResume(Resume id_resume);
 
+    List<Activity> findAllByResume(Resume resume);
+
 }

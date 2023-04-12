@@ -27,10 +27,12 @@ public class FileService {
         return savedfileName;
     }
 
-    public void deleteFile(String filePath) throws Exception {
-        File deleteFile = new File(filePath);
-        if (deleteFile.exists()) {
-            deleteFile.delete();
+    public void deleteFile(String filePath1, String filePath2) throws Exception {
+        File deleteFile1 = new File(filePath1);
+        File deleteFile2 = new File(filePath2);
+        if (deleteFile1.exists() && deleteFile2.exists()) {
+            deleteFile1.delete();
+            deleteFile2.delete();
             log.info("파일을 삭제하였습니다.");
         } else {
             log.info("파일이 존재하지 않습니다.");

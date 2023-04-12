@@ -16,13 +16,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.MemberDto;
 import com.example.demo.recruit.entity.Company;
+import com.example.demo.recruit.entity.Imgfile;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Notice;
 import com.example.demo.recruit.entity.Recruit;
+import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.CompanyService;
+import com.example.demo.recruit.service.ImgfileService;
 import com.example.demo.recruit.service.MemberService;
 import com.example.demo.recruit.service.NoticeService;
 import com.example.demo.recruit.service.RecruitService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +46,12 @@ public class MainController {
 
     @Autowired
     private final NoticeService noticeService;
+    
+    @Autowired
+    private final ResumeService resumeService;
+    
+    @Autowired
+    private final ImgfileService imgfileService;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -57,7 +67,13 @@ public class MainController {
             String username = principal.getName();
             Member member = memberService.getMember(username);
             String sort = member.getSort();
-
+            if (this.resumeService.getResume(member) != null) {
+                Resume resume = this.resumeService.getResume(member);
+                Imgfile imgfile = this.imgfileService.getimgfile(resume);
+                String url = imgfile.getImgurl();
+                model.addAttribute("url", url);
+                model.addAttribute("originalname", imgfile.getOriname());
+            }
             if (companyService.getData(member) != null) {
                 Company company = this.companyService.getData(member);
                 model.addAttribute("company", company);

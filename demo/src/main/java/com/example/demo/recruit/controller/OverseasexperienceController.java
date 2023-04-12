@@ -21,6 +21,7 @@ import com.example.demo.recruit.dto.OverseasexperienceDto;
 import com.example.demo.recruit.entity.Overseasexperience;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.OverseasexperienceService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,9 @@ public class OverseasexperienceController {
 
     @Autowired
     private final OverseasexperienceService overseasexperienceService;
+    
+    @Autowired
+    private final ResumeService resumeService;
 
     // 해당 이력성 조회 시 해외경험도 함께 조회하기 위해 사용
     @GetMapping("/list")
@@ -70,12 +74,13 @@ public class OverseasexperienceController {
     }
 
     // 해외경험을 수정하기 위해 사용
-    @PutMapping("/revise")
-    public ResponseEntity<Overseasexperience> reviseData(@PathVariable("id") Long id,
-            @RequestBody OverseasexperienceDto overseasexperienceDto) {
+    @PutMapping("/revise/{id}")
+    public ResponseEntity<List<Overseasexperience>> reviseData(@PathVariable("id") Long id,
+            @RequestBody List<OverseasexperienceDto> overseasexperienceDtoList) {
         try {
-            Overseasexperience overseasexperience = overseasexperienceService.inputData(id, overseasexperienceDto);
-            return new ResponseEntity<>(overseasexperience, HttpStatus.OK);
+            Resume resume = this.resumeService.getResume(id);
+            List<Overseasexperience> overseasexperienceList = overseasexperienceService.inputData(resume, overseasexperienceDtoList);
+            return new ResponseEntity<>(overseasexperienceList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

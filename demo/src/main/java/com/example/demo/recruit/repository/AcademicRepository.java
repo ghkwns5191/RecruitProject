@@ -11,6 +11,8 @@ public interface AcademicRepository extends JpaRepository<Academic, Long> {
 
     List<Academic> findByResume(Resume resume);
 
+    List<Academic> findAllByResume(Resume resume);
+
     
 
 }

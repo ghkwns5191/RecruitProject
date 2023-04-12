@@ -3,5 +3,9 @@
  */
  
  function back() {
-	history.go(-1);1
+	history.go(-1);
+}
+
+function toRevise(resumeid) {
+	location.href="/mypage/resume/revise/" + resumeid;
 }

@@ -21,6 +21,7 @@ import com.example.demo.recruit.dto.EducationDto;
 import com.example.demo.recruit.entity.Education;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.EducationService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,9 @@ public class EducationController {
 
     @Autowired
     private final EducationService educationService;
+    
+    @Autowired
+    private final ResumeService resumeService;
 
     // 이력서 조회 시 교육내용을 함께 조회하기 위해 사용
     @GetMapping("/list")
@@ -69,11 +73,12 @@ public class EducationController {
     }
     
     //이력서상 교육정보를 수정하기 위해 사용
-    @PutMapping("/revise")
-    public ResponseEntity<Education> reviseData(@PathVariable("id") Long id, EducationDto educationDto) {
+    @PutMapping("/revise/{id}")
+    public ResponseEntity<List<Education>> reviseData(@PathVariable("id") Long id, List<EducationDto> educationDtoList) {
         try {
-            Education education = educationService.inputData(id, educationDto);
-            return new ResponseEntity<>(education, HttpStatus.OK);
+            Resume resume = this.resumeService.getResume(id);
+            List<Education> educationList = educationService.inputData(resume, educationDtoList);
+            return new ResponseEntity<>(educationList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

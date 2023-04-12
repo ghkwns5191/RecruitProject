@@ -21,6 +21,7 @@ import com.example.demo.recruit.dto.ActivityDto;
 import com.example.demo.recruit.entity.Activity;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.ActivityService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,9 @@ public class ActivityController {
 
     @Autowired
     private final ActivityService activityService;
+    
+    @Autowired
+    private final ResumeService resumeService;
 
     // 이력서 조회 시 활동내용을 함께 조회하기 위해 사용
     @GetMapping("/list")
@@ -70,11 +74,12 @@ public class ActivityController {
     }
 
     // 이력서상 활동내용을 수정하기 위해 사용
-    @PutMapping("/revise")
-    public ResponseEntity<Activity> reviseData(@PathVariable("id") Long id, @RequestBody ActivityDto activityDto) {
+    @PutMapping("/revise/{id}")
+    public ResponseEntity<List<Activity>> reviseData(@PathVariable("id") Long id, @RequestBody List<ActivityDto> activityDtoList) {
         try {
-            Activity activity = activityService.inputData(id, activityDto);
-            return new ResponseEntity<>(activity, HttpStatus.OK);
+            Resume resume = this.resumeService.getResume(id);
+            List<Activity> activityList = activityService.inputData(resume, activityDtoList);
+            return new ResponseEntity<>(activityList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

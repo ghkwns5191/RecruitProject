@@ -52,10 +52,9 @@ public class AcademicService {
         Member member = this.memberRepository.findByUsername(username);
         Resume resume = this.resumeRepository.findByMember(member);
         List<Academic> academicList = new ArrayList<>();
-        for(int i = 0; i < academicDtoList.size(); i++) {
+        for (int i = 0; i < academicDtoList.size(); i++) {
             AcademicDto academicDto = academicDtoList.get(i);
-            Academic academic = 
-                    this.academicRepository.save(new Academic(
+            Academic academic = this.academicRepository.save(new Academic(
                     resume,
                     academicDto.getStart(),
                     academicDto.getEnd(),
@@ -66,27 +65,85 @@ public class AcademicService {
                     academicDto.getGrade(),
                     academicDto.getGradefull(),
                     academicDto.getDetail()));
-            
+
             academicList.add(academic);
         }
         return academicList;
     }
 
     // DB 학력정보를 불러와서 수정 후 DB 에 다시 저장하는 코드
-    public Academic inputData(Long id, AcademicDto academicDto) {
-        Optional<Academic> academicData = this.academicRepository.findById(id);
-        Academic academic = academicData.get();
-        academic.setStart(academicDto.getStart());
-        academic.setEnd(academicDto.getEnd());
-        academic.setStudying(academicDto.getStudying());
-        academic.setType(academicDto.getType());
-        academic.setName(academicDto.getName());
-        academic.setMajor(academicDto.getMajor());
-        academic.setGrade(academicDto.getGrade());
-        academic.setGradefull(academicDto.getGradefull());
-        academic.setDetail(academicDto.getDetail());
-        this.academicRepository.save(academic);
-        return academic;
+    public List<Academic> inputData(Resume resume, List<AcademicDto> academicDtoList) {
+        List<Academic> academicList = this.academicRepository.findAllByResume(resume);
+        List<Academic> academicResult = new ArrayList<>();
+
+        // 수정 입력하는 학력정보의 갯수가 기존 저장 갯수보다 많을 경우
+        if (academicDtoList.size() > academicList.size()) {
+
+            for (int i = 0; i < academicList.size(); i++) {
+                academicList.get(i).setStart(academicDtoList.get(i).getStart());
+                academicList.get(i).setEnd(academicDtoList.get(i).getEnd());
+                academicList.get(i).setStudying(academicDtoList.get(i).getStudying());
+                academicList.get(i).setType(academicDtoList.get(i).getType());
+                academicList.get(i).setName(academicDtoList.get(i).getName());
+                academicList.get(i).setMajor(academicDtoList.get(i).getMajor());
+                academicList.get(i).setGrade(academicDtoList.get(i).getGrade());
+                academicList.get(i).setGradefull(academicDtoList.get(i).getGradefull());
+                academicList.get(i).setDetail(academicDtoList.get(i).getDetail());
+                this.academicRepository.save(academicList.get(i));
+                academicResult.add(academicList.get(i));
+            }
+
+            for (int i = academicList.size(); i < academicDtoList.size(); i++) {
+                Academic academic = this.academicRepository.save(new Academic(
+                        resume,
+                        academicDtoList.get(i).getStart(),
+                        academicDtoList.get(i).getEnd(),
+                        academicDtoList.get(i).getStudying(),
+                        academicDtoList.get(i).getType(),
+                        academicDtoList.get(i).getName(),
+                        academicDtoList.get(i).getMajor(),
+                        academicDtoList.get(i).getGrade(),
+                        academicDtoList.get(i).getGradefull(),
+                        academicDtoList.get(i).getDetail()));
+                academicResult.add(academic);
+            }
+            // 수정 입력하는 학력정보의 갯수가 기존 저장 갯수와 같을 경우
+        } else if (academicList.size() == academicDtoList.size()) {
+            for (int i = 0; i < academicList.size(); i++) {
+                academicList.get(i).setStart(academicDtoList.get(i).getStart());
+                academicList.get(i).setEnd(academicDtoList.get(i).getEnd());
+                academicList.get(i).setStudying(academicDtoList.get(i).getStudying());
+                academicList.get(i).setType(academicDtoList.get(i).getType());
+                academicList.get(i).setName(academicDtoList.get(i).getName());
+                academicList.get(i).setMajor(academicDtoList.get(i).getMajor());
+                academicList.get(i).setGrade(academicDtoList.get(i).getGrade());
+                academicList.get(i).setGradefull(academicDtoList.get(i).getGradefull());
+                academicList.get(i).setDetail(academicDtoList.get(i).getDetail());
+                this.academicRepository.save(academicList.get(i));
+                academicResult.add(academicList.get(i));
+            }
+            // 수정 입력하는 갯수가 기존 저장 갯수보다 적을 경우
+        } else if (academicDtoList.size() < academicList.size()) {
+            for (int i = 0; i < academicDtoList.size(); i++) {
+                academicList.get(i).setStart(academicDtoList.get(i).getStart());
+                academicList.get(i).setEnd(academicDtoList.get(i).getEnd());
+                academicList.get(i).setStudying(academicDtoList.get(i).getStudying());
+                academicList.get(i).setType(academicDtoList.get(i).getType());
+                academicList.get(i).setName(academicDtoList.get(i).getName());
+                academicList.get(i).setMajor(academicDtoList.get(i).getMajor());
+                academicList.get(i).setGrade(academicDtoList.get(i).getGrade());
+                academicList.get(i).setGradefull(academicDtoList.get(i).getGradefull());
+                academicList.get(i).setDetail(academicDtoList.get(i).getDetail());
+                this.academicRepository.save(academicList.get(i));
+                academicResult.add(academicList.get(i));
+            }
+            // 필요없는 목록은 삭제
+            for (int i = academicDtoList.size(); i < academicList.size(); i++) {
+                this.academicRepository.deleteById(academicList.get(i).getId());
+            }
+        }
+
+        return academicResult;
 
     }
 

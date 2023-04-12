@@ -17,7 +17,8 @@ function addportfolio() {
 	newarea.innerHTML = "<label>제목</label><input type='text' name='title' placeholder='제목을 입력하세요' class='portfolio_title'><br>"
 		+ "<label>제목</label><input type='text' name='url1' placeholder='url 을 입력하세요' class='portfolio_url1'><br>"
 		+ "<label>제목</label><input type='text' name='url2' placeholder='url 을 입력하세요' class='portfolio_url2'><br>"
-		+ "<input type='button' value='삭제' onClick='deleteportfolio(this)'>";
+		+ "<input type='button' value='삭제' onClick='deleteportfolio(this)'>"
+		+ "<input type='file' class='portfoliofiles' value='삭제' onClick='deleteportfolio(this)'>";
 	div.appendChild(newarea);
 	portfolioLength++;
 }
@@ -607,6 +608,15 @@ function bindDomEvent() {
 
 		$(this).siblings("#imgfile").html(fileName);
 	})
+}
+
+function previewimage(event) {
+	  var reader = new FileReader();
+  reader.onload = function(){
+    var output = document.getElementById('preview');
+    output.src = reader.result;
+  };
+  reader.readAsDataURL(event.target.files[0]);
 }
 
 

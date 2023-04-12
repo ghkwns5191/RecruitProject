@@ -11,4 +11,6 @@ public interface CertificateRepository extends JpaRepository<Certificate, Long> 
 
     List<Certificate> findByResume(Resume resume);
 
+    List<Certificate> findAllByResume(Resume resume);
+
 }

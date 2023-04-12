@@ -21,6 +21,7 @@ import com.example.demo.recruit.dto.CareerDto;
 import com.example.demo.recruit.entity.Career;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.service.CareerService;
+import com.example.demo.recruit.service.ResumeService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,9 @@ public class CareerController {
 
     @Autowired
     private final CareerService careerService;
+    
+    @Autowired
+    private final ResumeService resumeService;
 
     // 이력서 조회 시 경력사항을 조회하기 위해 사용
     @GetMapping("/list")
@@ -69,10 +73,11 @@ public class CareerController {
     }
 
     // 이력서상 경력사항을 수정하기 위해 사용
-    @PutMapping("/revise")
-    public ResponseEntity<Career> reviseData(@PathVariable("id") Long id, @RequestBody CareerDto careerDto) {
+    @PutMapping("/revise/{id}")
+    public ResponseEntity<List<Career>> reviseData(@PathVariable("id") Long id, @RequestBody List<CareerDto> careerDtoList) {
         try {
-            Career career = careerService.inputData(id, careerDto);
+            Resume resume = this.resumeService.getResume(id);
+            List<Career> career = careerService.inputData(resume, careerDtoList);
             return new ResponseEntity<>(career, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

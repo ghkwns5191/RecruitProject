@@ -69,19 +69,72 @@ public class CareerService {
     }
 
     // 경력사항을 수정하여 DB 에 저장하는 코드
-    public Career inputData(Long id, CareerDto careerDto) {
-        Optional<Career> careerData = this.careerRepository.findById(id);
-        Career career = careerData.get();
-        career.setStart(careerDto.getStart());
-        career.setEnd(careerDto.getEnd());
-        career.setWorking(careerDto.getWorking());
-        career.setCompanyname(careerDto.getCompanyname());
-        career.setRanks(careerDto.getRanks());
-        career.setSalary(careerDto.getSalary());
-        career.setJobduty(careerDto.getJobduty());
-        career.setDetail(careerDto.getDetail());
-        this.careerRepository.save(career);
-        return career;
+    public List<Career> inputData(Resume resume, List<CareerDto> careerDtoList) {
+        List<Career> careerList = this.careerRepository.findAllByResume(resume);
+        List<Career> careerResult = new ArrayList<>();
+        
+        if (careerDtoList.size() == careerList.size()) {
+            for (int i = 0; i < careerDtoList.size(); i++) {
+                careerList.get(i).setStart(careerDtoList.get(i).getStart());
+                careerList.get(i).setEnd(careerDtoList.get(i).getEnd());
+                careerList.get(i).setWorking(careerDtoList.get(i).getWorking());
+                careerList.get(i).setCompanyname(careerDtoList.get(i).getCompanyname());
+                careerList.get(i).setRanks(careerDtoList.get(i).getRanks());
+                careerList.get(i).setSalary(careerDtoList.get(i).getSalary());
+                careerList.get(i).setJobduty(careerDtoList.get(i).getJobduty());
+                careerList.get(i).setDetail(careerDtoList.get(i).getDetail());
+                careerResult.add(careerList.get(i));
+                this.careerRepository.save(careerList.get(i));
+            }
+            
+        } else if (careerDtoList.size() > careerList.size()) {
+            for (int i = 0; i < careerList.size(); i++) {
+                careerList.get(i).setStart(careerDtoList.get(i).getStart());
+                careerList.get(i).setEnd(careerDtoList.get(i).getEnd());
+                careerList.get(i).setWorking(careerDtoList.get(i).getWorking());
+                careerList.get(i).setCompanyname(careerDtoList.get(i).getCompanyname());
+                careerList.get(i).setRanks(careerDtoList.get(i).getRanks());
+                careerList.get(i).setSalary(careerDtoList.get(i).getSalary());
+                careerList.get(i).setJobduty(careerDtoList.get(i).getJobduty());
+                careerList.get(i).setDetail(careerDtoList.get(i).getDetail());
+                careerResult.add(careerList.get(i));
+                this.careerRepository.save(careerList.get(i));
+            }
+            
+            for (int i = careerList.size(); i < careerDtoList.size(); i++) {
+                Career career = this.careerRepository.save(new Career(
+                        resume,
+                        careerDtoList.get(i).getStart(),
+                        careerDtoList.get(i).getEnd(),
+                        careerDtoList.get(i).getWorking(),
+                        careerDtoList.get(i).getCompanyname(),
+                        careerDtoList.get(i).getRanks(),
+                        careerDtoList.get(i).getSalary(),
+                        careerDtoList.get(i).getJobduty(),
+                        careerDtoList.get(i).getDetail()
+                        ));
+                careerResult.add(career);
+            }
+        } else if (careerDtoList.size() < careerList.size()) {
+            for (int i = 0; i < careerDtoList.size(); i++) {
+                careerList.get(i).setStart(careerDtoList.get(i).getStart());
+                careerList.get(i).setEnd(careerDtoList.get(i).getEnd());
+                careerList.get(i).setWorking(careerDtoList.get(i).getWorking());
+                careerList.get(i).setCompanyname(careerDtoList.get(i).getCompanyname());
+                careerList.get(i).setRanks(careerDtoList.get(i).getRanks());
+                careerList.get(i).setSalary(careerDtoList.get(i).getSalary());
+                careerList.get(i).setJobduty(careerDtoList.get(i).getJobduty());
+                careerList.get(i).setDetail(careerDtoList.get(i).getDetail());
+                careerResult.add(careerList.get(i));
+                this.careerRepository.save(careerList.get(i));
+            }
+            
+            for (int i = careerDtoList.size(); i < careerList.size(); i++) {
+                this.careerRepository.deleteById(careerList.get(i).getId());
+            }
+        }
+        
+        return careerResult;
     }
 
     // 경력사항 삭제하는 코드

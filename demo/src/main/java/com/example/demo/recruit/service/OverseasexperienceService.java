@@ -67,21 +67,57 @@ public class OverseasexperienceService {
     }
 
     // DB 에 저장된 해외경험을 수정하는 코드
-    public Overseasexperience inputData(Long id, OverseasexperienceDto overseasexperienceDto) {
-        Optional<Overseasexperience> overseasexperienceData = this.overseasexperienceRepository.findById(id);
-        Overseasexperience overseasexperience = overseasexperienceData.get();
-        overseasexperience.setStart(
-                overseasexperienceDto.getStart());
-        overseasexperience.setEnd(
-                overseasexperienceDto.getEnd());
-        overseasexperience.setStaying(
-                overseasexperienceDto.getStaying());
-        overseasexperience.setCountry(
-                overseasexperienceDto.getCountry());
-        overseasexperience.setDetail(
-                overseasexperienceDto.getDetail());
-        this.overseasexperienceRepository.save(overseasexperience);
-        return overseasexperience;
+    public List<Overseasexperience> inputData(Resume resume, List<OverseasexperienceDto> oeDtoList) {
+        List<Overseasexperience> oeList = this.overseasexperienceRepository.findAllByResume(resume);
+        List<Overseasexperience> oeResult = new ArrayList<>();
+        if (oeDtoList.size() == oeList.size()) {
+            for (int i = 0; i < oeDtoList.size(); i++) {
+                oeList.get(i).setStart(oeDtoList.get(i).getStart());
+                oeList.get(i).setEnd(oeDtoList.get(i).getEnd());
+                oeList.get(i).setStaying(oeDtoList.get(i).getStaying());
+                oeList.get(i).setCountry(oeDtoList.get(i).getCountry());
+                oeList.get(i).setDetail(oeDtoList.get(i).getDetail());
+                oeResult.add(oeList.get(i));
+                this.overseasexperienceRepository.save(oeList.get(i));
+            }
+        } else if (oeDtoList.size() > oeList.size()) {
+            for (int i = 0; i < oeList.size(); i++) {
+                oeList.get(i).setStart(oeDtoList.get(i).getStart());
+                oeList.get(i).setEnd(oeDtoList.get(i).getEnd());
+                oeList.get(i).setStaying(oeDtoList.get(i).getStaying());
+                oeList.get(i).setCountry(oeDtoList.get(i).getCountry());
+                oeList.get(i).setDetail(oeDtoList.get(i).getDetail());
+                oeResult.add(oeList.get(i));
+                this.overseasexperienceRepository.save(oeList.get(i));
+            }
+            
+            for (int i = oeList.size(); i < oeDtoList.size(); i++) {
+                Overseasexperience oe = this.overseasexperienceRepository.save(new Overseasexperience(
+                        resume,
+                        oeDtoList.get(i).getStart(),
+                        oeDtoList.get(i).getEnd(),
+                        oeDtoList.get(i).getStaying(),
+                        oeDtoList.get(i).getCountry(),
+                        oeDtoList.get(i).getDetail()
+                        ));
+                oeResult.add(oe);
+            }
+        } else if (oeDtoList.size() < oeList.size()) {
+            for (int i = 0; i < oeDtoList.size(); i++) {
+                oeList.get(i).setStart(oeDtoList.get(i).getStart());
+                oeList.get(i).setEnd(oeDtoList.get(i).getEnd());
+                oeList.get(i).setStaying(oeDtoList.get(i).getStaying());
+                oeList.get(i).setCountry(oeDtoList.get(i).getCountry());
+                oeList.get(i).setDetail(oeDtoList.get(i).getDetail());
+                oeResult.add(oeList.get(i));
+                this.overseasexperienceRepository.save(oeList.get(i));
+            }
+            
+            for (int i = oeDtoList.size(); i < oeList.size(); i++) {
+                this.overseasexperienceRepository.deleteById(oeList.get(i).getId());
+            }
+        }
+        return oeResult;
     }
 
     // DB 에 저당된 해외경험을 삭제하는 코드

@@ -11,4 +11,6 @@ public interface CareerRepository extends JpaRepository<Career, Long> {
 
     List<Career> findByResume(Resume resume);
 
+    List<Career> findAllByResume(Resume resume);
+
 }

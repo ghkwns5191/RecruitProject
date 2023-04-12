@@ -343,8 +343,7 @@
 
 				<tr>
 					<td>작문 / 독해 가능수준</td>
-					<td th:if="${languagesList.levelwriting == 'novice'}">기초
-						작문/독해</td>
+					<td th:if="${languagesList.levelwriting == 'novice'}">기초 작문/독해</td>
 					<td th:if="${languagesList.levelwriting == 'intermediate'}">비즈니스
 						작문/독해</td>
 					<td th:if="${languagesList.levelwriting == 'native'}">원어민 수준</td>
@@ -433,6 +432,12 @@
 					<td th:text="${portfolioList.url2}"></td>
 				</tr>
 
+				<!--  누르면 파일 다운로드 설정 예정 -->
+				<tr>
+					<td>포트폴리오 파일</td>
+					<td th:text="${portfolioList.url2}"></td>
+				</tr>
+
 			</tbody>
 
 			<tbody th:unless="${portfolioList != null}">
@@ -446,9 +451,12 @@
 			<tbody>
 				<tr>
 					<td>
-						<button class="back_button" onClick="back()">돌아가기</button>
+						<button id="revise_button" th:resumeId="${resume.id}"
+							th:onclick="toRevise(this.getAttribute('resumeId'))">수정하기</button>
 					</td>
-					<td></td>
+					<td>
+						<button id="back_button" onClick="back()">돌아가기</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>

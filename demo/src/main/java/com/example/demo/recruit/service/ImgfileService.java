@@ -50,5 +50,13 @@ public class ImgfileService {
         Imgfile imgfile = imgfileRepository.findByResume(resume);
         return imgfile;
     }
+    
+    public void deleteImg(Imgfile imgfile) throws Exception {
+        String filePath1 = ImgfileLocation1.concat(imgfile.getImgurl());
+        String filePath2 = ImgfileLocation2.concat(imgfile.getImgurl());
+        this.fileService.deleteFile(filePath1, filePath2);
+        this.imgfileRepository.deleteById(imgfile.getId());
+       
+    }
 
 }

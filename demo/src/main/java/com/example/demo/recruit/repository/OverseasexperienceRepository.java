@@ -11,4 +11,6 @@ public interface OverseasexperienceRepository extends JpaRepository <Overseasexp
 
     List<Overseasexperience> findByResume(Resume resume);
 
+    List<Overseasexperience> findAllByResume(Resume resume);
+
 }

@@ -1,9 +1,9 @@
 package com.example.demo.recruit.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.ResumeDto;
@@ -29,9 +27,9 @@ import com.example.demo.recruit.entity.Languages;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Overseasexperience;
 import com.example.demo.recruit.entity.Portfolio;
+import com.example.demo.recruit.entity.Portfoliofile;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.entity.Resume;
-import com.example.demo.recruit.repository.ImgfileRepository;
 import com.example.demo.recruit.service.AcademicService;
 import com.example.demo.recruit.service.ActivityService;
 import com.example.demo.recruit.service.ApplyService;
@@ -43,6 +41,7 @@ import com.example.demo.recruit.service.LanguagesService;
 import com.example.demo.recruit.service.MemberService;
 import com.example.demo.recruit.service.OverseasexperienceService;
 import com.example.demo.recruit.service.PortfolioService;
+import com.example.demo.recruit.service.PortfoliofileService;
 import com.example.demo.recruit.service.RecruitService;
 import com.example.demo.recruit.service.ResumeService;
 
@@ -58,9 +57,6 @@ public class MypageController {
 
     @Autowired
     private final ResumeService resumeService;
-
-    @Autowired
-    private final ImgfileRepository imgfileRepository;
 
     @Autowired
     private final ImgfileService imgfileService;
@@ -94,6 +90,9 @@ public class MypageController {
 
     @Autowired
     private final RecruitService recruitService;
+
+    @Autowired
+    private final PortfoliofileService portfoliofileService;
 
     @GetMapping(value = { "", "/" })
     public String mypagehome() {
@@ -139,7 +138,7 @@ public class MypageController {
         }
     }
 
-    @GetMapping("//user/resume/detail/{id}")
+    @GetMapping("/user/resume/detail/{id}")
     public ModelAndView resumeList(@PathVariable Long id, Model model, Principal principal, Map<String, Object> check) {
         try {
 
@@ -183,8 +182,22 @@ public class MypageController {
                     model.addAttribute("languagesList", languagesList);
                 if (oeList != null)
                     model.addAttribute("oeList", oeList);
-                if (portfolioList != null)
+                if (portfolioList != null) {
+                    List<String> urlList = new ArrayList<>();
+                    for (int i = 0; i < portfolioList.size(); i++) {
+                        String url = "";
+                        if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
+                            Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
+                            url = portfoliofile.getFileurl();
+                        } else {
+                            url = "";
+                        }
+
+                        urlList.add(url);
+                    }
+                    model.addAttribute("urlList", urlList);
                     model.addAttribute("portfolioList", portfolioList);
+                }
             }
 
             return new ModelAndView("/view/mypage/ResumeDetail");
@@ -223,10 +236,71 @@ public class MypageController {
         }
     }
 
-    @PostMapping("/usern/resume/new")
-    public String newResume(ResumeDto resumeDto, MultipartFile imgfile, Principal principal) {
-        System.out.println("반응함?");
-        return "redirect:/view/mypage/Resume";
+    @GetMapping("/user/resumeupdate/{id}")
+    public ModelAndView forupdateResume(@PathVariable("id") Long id, Model model, Principal principal,
+            Map<String, Object> check) {
+        if (principal != null) {
+            Member member = this.memberService.getMemberinfo(principal.getName());
+            Resume resume = this.resumeService.getResume(id);
+            model.addAttribute("resume", resume);
+            List<Academic> academicList = this.academicService.getacademic(resume);
+            List<Activity> activityList = this.activityService.getactivity(resume);
+            List<Career> careerList = this.careerService.getcareer(resume);
+            List<Certificate> certificateList = this.certificateService.getcertificate(resume);
+            List<Education> educationList = this.educationService.geteducation(resume);
+            List<Languages> languagesList = this.LanguageService.getlanguages(resume);
+            List<Overseasexperience> oeList = this.oeService.getoverseasexperience(resume);
+            List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
+
+            if (imgfileService.getimgfile(resume) != null) {
+                Imgfile imgfile = imgfileService.getimgfile(resume);
+                String imgurl = imgfile.getImgurl();
+                model.addAttribute("imgurl", imgurl);
+                System.out.println(imgfile.getImgurl());
+
+            }
+
+            if (resume.getMember() == member && resume != null) {
+                model.addAttribute("member", member);
+                model.addAttribute("resume", resume);
+                if (academicList != null)
+                    model.addAttribute("academicList", academicList);
+                if (activityList != null)
+                    model.addAttribute("activityList", activityList);
+                if (careerList != null)
+                    model.addAttribute("careerList", careerList);
+                if (certificateList != null)
+                    model.addAttribute("certificateList", certificateList);
+                if (educationList != null)
+                    model.addAttribute("educationList", educationList);
+                if (languagesList != null)
+                    model.addAttribute("languagesList", languagesList);
+                if (oeList != null)
+                    model.addAttribute("oeList", oeList);
+                if (portfolioList != null) {
+                    List<String> urlList = new ArrayList<>();
+                    for (int i = 0; i < portfolioList.size(); i++) {
+                        String url = "";
+                        if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
+                            Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
+                            url = portfoliofile.getFileurl();
+                        } else {
+                            url = "";
+                        }
+
+                        urlList.add(url);
+                    }
+                    model.addAttribute("urlList", urlList);
+                    model.addAttribute("portfolioList", portfolioList);
+                }
+
+            }
+
+            return new ModelAndView("/view/mypage/ReviseResume");
+        } else {
+            check.put("check", true);
+            return new ModelAndView("/view/Login");
+        }
     }
 
     @GetMapping("/company/input")
