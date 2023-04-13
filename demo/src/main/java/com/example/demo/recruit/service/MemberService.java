@@ -161,5 +161,25 @@ public class MemberService implements UserDetailsService {
             return false;
         }
     }
+    
+    public Member reviseMember(Member member, MemberDto memberDto) {
+        member.setName(memberDto.getName());
+        member.setPhone(memberDto.getPhone());
+        member.setEmail(memberDto.getEmail());
+        member.setBirthday(memberDto.getBirthday());
+        member.setAddress(memberDto.getAddress());               
+        return member;
+    }
+    
+    // 회원 강제탈퇴 시킬 때 사용 예정
+    public void deleteMember(Long id) {
+        this.memberRepository.deleteById(id);
+    }
+    
+    // 회원 자진 탈퇴에 사용 예정
+    public void deleteMember(String username) {
+        this.memberRepository.deleteByUsername(username);
+        
+    }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.recruit.dto.CompanyreviewDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Companyreview;
+import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.repository.CompanyRepository;
 import com.example.demo.recruit.repository.CompanyreviewRepository;
 
@@ -29,6 +30,13 @@ public class CompanyreviewService {
     public List<Companyreview> getcompanyreview(Company company) {
         List<Companyreview> companyreview = new ArrayList<Companyreview>();
         this.companyreviewRepository.findByCompany(company).forEach(companyreview::add);
+        return companyreview;
+    }
+    
+ // 해당 기업에 대한 기업리뷰를 조회하는 코드
+    public List<Companyreview> getcompanyreview(Member member) {
+        List<Companyreview> companyreview = new ArrayList<Companyreview>();
+        this.companyreviewRepository.findAllByMember(member);
         return companyreview;
     }
 

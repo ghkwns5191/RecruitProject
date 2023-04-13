@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import com.example.demo.recruit.entity.Imgfile;
 import com.example.demo.recruit.entity.Portfolio;
 import com.example.demo.recruit.entity.Portfoliofile;
 import com.example.demo.recruit.repository.PortfoliofileRepository;
@@ -52,5 +53,18 @@ public class PortfoliofileService {
         Portfoliofile portfoliofile = this.portfoliofileRepository.findByPortfolio(portfolio);
 
         return portfoliofile;
+    }
+    
+    public String getOriginalname(MultipartFile multipartfile) {
+        String originalname = multipartfile.getOriginalFilename();
+        return originalname;
+    }
+    
+    public void deleteFile(Portfoliofile portfoliofile) throws Exception {
+        String filePath1 = PortfoliofileLocation1.concat(portfoliofile.getFileurl());
+        String filePath2 = PortfoliofileLocation2.concat(portfoliofile.getFileurl());
+        this.fileService.deleteFile(filePath1, filePath2);
+        this.portfoliofileRepository.deleteById(portfoliofile.getId());
+       
     }
 }

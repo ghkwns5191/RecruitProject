@@ -11,4 +11,6 @@ public interface PortfolioRepository extends JpaRepository<Portfolio, Long> {
 
     List<Portfolio> findByResume(Resume resume);
 
+    List<Portfolio> findAllByResume(Resume resume);
+
 }
