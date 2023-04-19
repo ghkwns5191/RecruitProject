@@ -15,9 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.recruit.dto.MemberDto;
+import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.ERole;
 import com.example.demo.recruit.entity.Member;
-import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -180,6 +180,16 @@ public class MemberService implements UserDetailsService {
     public void deleteMember(String username) {
         this.memberRepository.deleteByUsername(username);
         
+    }
+    
+    public List<Member> getMemberList(List<Apply> applyList) {
+        List<Member> memberList = new ArrayList<>();
+        for (int i = 0; i < applyList.size(); i++) {
+            Member member = applyList.get(i).getMember();
+            memberList.add(member);
+        }
+        
+        return memberList;
     }
 
 }

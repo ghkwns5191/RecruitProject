@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+table {
+	width: 1000px;
+	margin-top: 80px;
+	padding-left: 100px;
+	padding-right: 100px;
+	background-color: lightgrey;
+}

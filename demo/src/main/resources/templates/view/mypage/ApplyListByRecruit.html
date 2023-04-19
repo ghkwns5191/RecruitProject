@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http:www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+<link th:href="@{/css/common.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>지원 현황</title>
 </head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <body>
+	<table th:if="${applyList} != null" >
+		<thead>
+			<th>번호</th>
+			<th>지원자 이름</th>
+			<th>지원 이력서 제목</th>
+			<th>자격증</th>
+			<th>근무 경력</th>
+			<th>언어</th>
+			<th>지원일</th>
+		</thead>
 
+		<tbody th:each="applyList : ${applyList}">
+			<tr>
+				<td th:text="${applyListStat.index} + 1"></td>
+				<td th:text="${applyList.name}"></td>
+				<td th:text="${applyList.title}"></td>
+				<td
+					th:text="${certificatenumber[__${applyListStat.index}__]} + ' 건'"></td>
+				<td th:text="${careernumber[__${applyListStat.index}__]} + ' 건'"></td>
+				<td th:text="${languagesnumber[__${applyListStat.index}__]} + ' 건'"></td>
+				<td th:text="${applyList.applydate}"></td>
+			</tr>
+		</tbody>
+		
+		<tbody>
+			<tr>
+				<td><button onclick="back()">돌아가기</button></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<table th:unless="${applyList} != null">
+		<thead>
+			<th>아직 지원자가 없습니다.</th>
+		</thead>
+	</table>
 </body>
 </html>
+
+<script th:inline="javascript">
+	
+	</script>
+<script type="application/javascript" th:src="@{/js/ApplyListByRecruit.js}"></script>
+
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">

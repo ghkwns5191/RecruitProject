@@ -19,6 +19,7 @@ import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Resume;
 import com.example.demo.recruit.repository.MemberRepository;
 import com.example.demo.recruit.repository.ResumeRepository;
+import com.example.demo.recruit.service.ImgfileApplyService;
 import com.example.demo.recruit.service.ImgfileService;
 import com.example.demo.recruit.service.ResumeService;
 
@@ -40,6 +41,9 @@ public class ImgfileController {
 
     @Autowired
     private final ResumeService resumeService;
+    
+    @Autowired
+    private final ImgfileApplyService imgfileApplyService;
 
     @PostMapping("/new")
     public ResponseEntity<Imgfile> inputImg(@RequestParam("imgfile") MultipartFile imgfile, Principal principal) {

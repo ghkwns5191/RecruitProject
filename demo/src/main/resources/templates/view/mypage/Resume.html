@@ -52,7 +52,7 @@
 	<div th:fragment="content">
 		<div id="resume" th:if="${resume} != null">
 			<label th:for="title">이력서 제목</label> <a
-				th:href="@{/mypage/resume/detail/{id}(id=${resume.id})}"><p
+				th:href="@{/mypage/user/resume/detail/{id}(id=${resume.id})}"><p
 					id="resumetitle" th:field="*{title}" th:text="${resume.title}"></p></a>
 			<label th:for="cv">이력서 내용</label>
 			<p id="resumecv" th:field="*{cv}" th:text="${resume.cv}"></p>

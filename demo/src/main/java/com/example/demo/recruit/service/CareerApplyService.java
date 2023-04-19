@@ -1,5 +1,6 @@
 package com.example.demo.recruit.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,14 @@ public class CareerApplyService {
     
     public void deleteList(Apply apply) {
         this.careerApplyRepository.deleteAllByApply(apply);
+    }
+    
+    public List<Integer> getnumber(List<Apply> applyList) {
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < applyList.size(); i++) {
+            List<CareerApply> careerApplyList = getList(applyList.get(i));
+            numbers.add(careerApplyList.size());
+        }
+        return numbers;
     }
 }

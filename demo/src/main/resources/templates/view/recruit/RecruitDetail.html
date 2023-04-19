@@ -6,6 +6,7 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
 <link th:href="@{/css/common.css}" rel="stylesheet">
+<link th:href="@{/css/RecruitDetail.css}" rel="stylesheet">
 <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 <meta charset="UTF-8">
 <title>메인페이지</title>
@@ -14,6 +15,7 @@
 
 	<!--  헤더 및 Navigation Bar -->
 	<header>
+
 		<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
 
 		<nav class="navbar navbar-expand-lg" id="navbarhead">
@@ -28,7 +30,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="#">채용공고</a></li>
+							aria-current="page" href="/recruitpage/list">채용공고</a></li>
 						<li class="nav-item"><a class="nav-link" href="#">기업리뷰</a></li>
 						<li class="nav-item"><a class="nav-link disabled">Disabled</a>
 						</li>
@@ -94,7 +96,7 @@
 
 				<tr>
 					<td>상세정보</td>
-					<td th:text="${recruit.detail}"></td>
+					<td><pre th:text="${recruit.detail}"></pre></td>
 				</tr>
 
 				<tr>
@@ -166,9 +168,8 @@
 		</table>
 	</div>
 
-	<!-- Footer 제작 공간 -->
-	<footer
-		style="text-align: center; margin-top: 300px; border-top: 1px black solid; width: 80%;">
+		<!-- Footer 제작 공간 -->
+	<footer>
 		<div>Footer 입니다.</div>
 	</footer>
 </body>

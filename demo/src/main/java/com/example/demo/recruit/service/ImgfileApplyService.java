@@ -25,7 +25,7 @@ public class ImgfileApplyService {
                 apply));
     }
     
-    public ImgfileApply getData(Apply apply ) {
+    public ImgfileApply getData(Apply apply) {
         ImgfileApply imgfileApply = this.imgfileApplyRepository.findByApply(apply);
         return imgfileApply;
     }

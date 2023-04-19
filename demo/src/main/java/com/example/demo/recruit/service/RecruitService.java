@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.recruit.dto.RecruitDto;
+import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.repository.MemberRepository;
@@ -118,6 +119,16 @@ public class RecruitService {
     // DB 에 저장된 채용공고를 삭제하는 코드
     public void deleteData(Long id) {
         this.recruitRepository.deleteById(id);
+    }
+    
+    public List<Recruit> getList(List<Apply> applyList) {
+        List<Recruit> recruitList = new ArrayList<>();
+        for (int i = 0; i < applyList.size(); i++) {
+            Recruit recruit = applyList.get(i).getRecruit();
+            recruitList.add(recruit);
+        }
+        
+        return recruitList;
     }
 
 }

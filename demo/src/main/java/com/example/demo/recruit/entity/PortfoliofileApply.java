@@ -13,11 +13,11 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Getter
 @Setter
-@Table(name = "portfoliofile")
-public class Portfoliofile {
+@Getter
+@Table(name = "portfoliofileapply")
+@Entity
+public class PortfoliofileApply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,24 +35,19 @@ public class Portfoliofile {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio")
-    private Portfolio portfolio;
-
-    public Portfoliofile() {
-
+    private PortfolioApply portfolioApply;
+    
+    public PortfoliofileApply() {
+        // TODO Auto-generated constructor stub
     }
 
-    public Portfoliofile(String filename, String oriname, String fileurl, Portfolio portfolio) {
+    public PortfoliofileApply(String filename, String oriname, String fileurl, PortfolioApply portfolioApply) {
         super();
         this.filename = filename;
         this.oriname = oriname;
         this.fileurl = fileurl;
-        this.portfolio = portfolio;
+        this.portfolioApply = portfolioApply;
     }
     
-    public void updatefile(String oriname, String filename, String fileurl) {
-        this.filename = filename;
-        this.oriname = oriname;
-        this.fileurl = fileurl;
-    }
-
+    
 }

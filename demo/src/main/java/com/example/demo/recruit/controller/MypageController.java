@@ -17,29 +17,47 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.recruit.dto.ResumeDto;
 import com.example.demo.recruit.entity.Academic;
+import com.example.demo.recruit.entity.AcademicApply;
 import com.example.demo.recruit.entity.Activity;
+import com.example.demo.recruit.entity.ActivityApply;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Career;
+import com.example.demo.recruit.entity.CareerApply;
 import com.example.demo.recruit.entity.Certificate;
+import com.example.demo.recruit.entity.CertificateApply;
 import com.example.demo.recruit.entity.Education;
+import com.example.demo.recruit.entity.EducationApply;
 import com.example.demo.recruit.entity.Imgfile;
+import com.example.demo.recruit.entity.ImgfileApply;
 import com.example.demo.recruit.entity.Languages;
+import com.example.demo.recruit.entity.LanguagesApply;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Overseasexperience;
+import com.example.demo.recruit.entity.OverseasexperienceApply;
 import com.example.demo.recruit.entity.Portfolio;
+import com.example.demo.recruit.entity.PortfolioApply;
 import com.example.demo.recruit.entity.Portfoliofile;
 import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.entity.Resume;
+import com.example.demo.recruit.service.AcademicApplyService;
 import com.example.demo.recruit.service.AcademicService;
+import com.example.demo.recruit.service.ActivityApplyService;
 import com.example.demo.recruit.service.ActivityService;
 import com.example.demo.recruit.service.ApplyService;
+import com.example.demo.recruit.service.CareerApplyService;
 import com.example.demo.recruit.service.CareerService;
+import com.example.demo.recruit.service.CertificateApplyService;
 import com.example.demo.recruit.service.CertificateService;
+import com.example.demo.recruit.service.EducationApplyService;
 import com.example.demo.recruit.service.EducationService;
+import com.example.demo.recruit.service.ImgfileApplyService;
 import com.example.demo.recruit.service.ImgfileService;
+import com.example.demo.recruit.service.LanguagesApplyService;
 import com.example.demo.recruit.service.LanguagesService;
 import com.example.demo.recruit.service.MemberService;
+import com.example.demo.recruit.service.OverseasexperienceApplyService;
 import com.example.demo.recruit.service.OverseasexperienceService;
+import com.example.demo.recruit.service.PortfolioApplyService;
 import com.example.demo.recruit.service.PortfolioService;
 import com.example.demo.recruit.service.PortfoliofileService;
 import com.example.demo.recruit.service.RecruitService;
@@ -93,6 +111,36 @@ public class MypageController {
 
     @Autowired
     private final PortfoliofileService portfoliofileService;
+    
+    @Autowired
+    private final AcademicApplyService academicApplyService;
+
+    @Autowired
+    private final ActivityApplyService activityApplyService;
+
+    @Autowired
+    private final CareerApplyService careerApplyService;
+
+    @Autowired
+    private final CertificateApplyService certificateApplyService;
+
+    @Autowired
+    private final EducationApplyService educationApplyService;
+
+    @Autowired
+    private final ImgfileApplyService imgfileApplyService;
+
+    @Autowired
+    private final LanguagesApplyService languagesApplyService;
+
+    @Autowired
+    private final OverseasexperienceApplyService overseasexperienceApplyService;
+
+    @Autowired
+    private final PortfolioApplyService portfolioApplyService;
+
+    
+    
 
     @GetMapping(value = { "", "/" })
     public String mypagehome() {
@@ -236,7 +284,7 @@ public class MypageController {
         }
     }
 
-    @GetMapping("/user/resumeupdate/{id}")
+    @GetMapping("/user/resume/revise/{id}")
     public ModelAndView forupdateResume(@PathVariable("id") Long id, Model model, Principal principal,
             Map<String, Object> check) {
         if (principal != null) {
@@ -320,15 +368,21 @@ public class MypageController {
     // 사용자 지원 현황 리스트
     @GetMapping("/user/applyinfo")
     public ModelAndView userApplyinfo(Principal principal, Model model, Map<String, Object> check) {
-        try {
+        String url = "";
+        if (principal != null) {
             Member member = this.memberService.getMemberinfo(principal.getName());
             List<Apply> applyList = this.applyService.getapply(member);
+            List<Recruit> recruitList = this.recruitService.getList(applyList);
             model.addAttribute("applyList", applyList);
-            return new ModelAndView("/view/mypage/");
-        } catch (NullPointerException e) {
+            model.addAttribute("recruitList", recruitList);
+            url = "/view/mypage/ApplyListBymember";
+        } else {
             check.put("check", true);
-            return new ModelAndView("view/Login");
+            url = "/view/Login";
+            
         }
+        
+        return new ModelAndView(url);
     }
 
     @GetMapping("/user/applydetail/{id}")
@@ -340,6 +394,15 @@ public class MypageController {
             Member member = this.memberService.getMemberinfo(principal.getName());
             if (member.getUsername().equals(apply.getMember().getUsername())) {
                 Recruit recruit = apply.getRecruit();
+                List<AcademicApply> academicApplyList = this.academicApplyService.getList(apply);
+                List<ActivityApply> activityApplyList = this.activityApplyService.getList(apply);
+                List<CareerApply> careerApplyList = this.careerApplyService.getList(apply);
+                List<CertificateApply> certificateApplyList = this.certificateApplyService.getList(apply);
+                List<EducationApply> educationApplyList = this.educationApplyService.getList(apply);
+                ImgfileApply imgfileApply = this.imgfileApplyService.getData(apply);
+                List<LanguagesApply> languagesApplyList = this.languagesApplyService.getList(apply);
+                List<OverseasexperienceApply> oeApplyList = this.overseasexperienceApplyService.getList(apply);
+                List<PortfolioApply> portfolioApplyList = this.portfolioApplyService.getList(apply);
                 model.addAttribute("apply", apply);
                 model.addAttribute("recruit", recruit);
                 url = "/view/mypage/"; // 해당 지원 상세페이지로 이동 필요
@@ -378,8 +441,16 @@ public class MypageController {
             Member member = this.memberService.getMemberinfo(principal.getName());
             if (member.getUsername().equals(recruit.getMember().getUsername())) {
                 List<Apply> applyList = this.applyService.getapply(recruit);
+                List<Integer> certificatenumber = this.certificateApplyService.getnumber(applyList);
+                List<Integer> careernumber = this.careerApplyService.getnumber(applyList);
+                List<Integer> languagesnumber = this.languagesApplyService.getnumber(applyList);
+               
                 model.addAttribute("recruit", recruit);
                 model.addAttribute("applyList", applyList);
+                model.addAttribute("certificatenumber", certificatenumber);
+                model.addAttribute("careernumber", careernumber);
+                model.addAttribute("languagesnumber", languagesnumber);
+                
                 url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
             } else {
                 check.put("check", true);
@@ -392,8 +463,10 @@ public class MypageController {
 
         return new ModelAndView(url);
     }
+    
+    
 
-    @GetMapping("/company/recruitDetail/applyinfo/{id}")
+    @GetMapping("/company/recruit/detail/applyinfo/{id}")
     public ModelAndView applyinfotorecruit(Principal principal, Model model, Map<String, Object> check,
             @PathVariable("id") Long id) {
         String url = "";
@@ -402,7 +475,7 @@ public class MypageController {
             Member member = this.memberService.getMemberinfo(principal.getName());
             if (member.getUsername().equals(apply.getMember().getUsername())) {
                 model.addAttribute("apply", apply);
-                url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
+                url = "/view/mypage"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
             } else {
                 check.put("check", true);
                 url = ""; // 사용자 작성 채용공고 리스트로 이동.

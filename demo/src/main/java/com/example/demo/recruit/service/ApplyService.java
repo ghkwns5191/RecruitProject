@@ -29,6 +29,33 @@ public class ApplyService {
 
     @Autowired
     private final ResumeService resumeService;
+    
+    @Autowired
+    private final AcademicApplyService academicApplyService;
+
+    @Autowired
+    private final ActivityApplyService activityApplyService;
+
+    @Autowired
+    private final CareerApplyService careerApplyService;
+
+    @Autowired
+    private final CertificateApplyService certificateApplyService;
+
+    @Autowired
+    private final EducationApplyService educationApplyService;
+
+    @Autowired
+    private final ImgfileApplyService imgfileApplyService;
+
+    @Autowired
+    private final LanguagesApplyService languagesApplyService;
+
+    @Autowired
+    private final OverseasexperienceApplyService overseasexperienceApplyService;
+
+    @Autowired
+    private final PortfolioApplyService portfolioApplyService;
 
     // 해당 회원이 지원한 지원 정보를 불러오는 코드
     public List<Apply> getapply(Member member) {
@@ -71,6 +98,17 @@ public class ApplyService {
 
     // 지원 정보를 삭제하는 코드
     public void deleteData(Long id) {
+        Optional<Apply> applyData = this.applyRepository.findById(id);
+        Apply apply = applyData.get();
+        this.academicApplyService.deleteList(apply);
+        this.activityApplyService.deleteList(apply);
+        this.careerApplyService.deleteList(apply);
+        this.certificateApplyService.deleteList(apply);
+        this.educationApplyService.deleteList(apply);
+        this.languagesApplyService.deleteList(apply);
+        this.overseasexperienceApplyService.deleteList(apply);
+        this.imgfileApplyService.deleteData(apply);           
+        this.portfolioApplyService.deleteList(apply);       
         this.applyRepository.deleteById(id);
     }
 

@@ -7,5 +7,5 @@
 }
 
 function toRevise(resumeid) {
-	location.href="/mypage/resume/revise/" + resumeid;
+	location.href="/mypage/user/resume/revise/" + resumeid;
 }
