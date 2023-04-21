@@ -80,5 +80,14 @@ public class CompanyService {
         Company company = this.companyRepository.findByMember(member);
         return company;
     }
+    
+    public List<Company> getData(List<Member> memberList) {
+        List<Company> companyList = new ArrayList<>();
+        for (int i = 0; i < memberList.size(); i++) {
+            Company company = getData(memberList.get(i));
+            companyList.add(company);
+        }
+        return companyList;
+    }
 
 }

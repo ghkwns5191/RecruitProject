@@ -18,6 +18,7 @@ import com.example.demo.recruit.dto.MemberDto;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.ERole;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -189,6 +190,15 @@ public class MemberService implements UserDetailsService {
             memberList.add(member);
         }
         
+        return memberList;
+    }
+    
+    public List<Member> getMember(List<Recruit> recruitList) {
+        List<Member> memberList = new ArrayList<>();
+        for (int i = 0; i < recruitList.size(); i++) {
+            Member member = recruitList.get(i).getMember();
+            memberList.add(member);
+        }
         return memberList;
     }
 

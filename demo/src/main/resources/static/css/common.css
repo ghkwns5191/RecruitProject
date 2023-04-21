@@ -10,9 +10,10 @@
 
 #navbarhead {
 	background-color: grey;
-	width: 1200px;
+	width: 1000px;
 	font-size: 1.25rem;
 	border-radius: 20px;
+	
 }
 
 #logoimg {
@@ -27,6 +28,6 @@ footer {
 	text-align: center; 
 	margin-top: 300px; 
 	border-top: 1px black solid; 
-	width: 1200px;
+	width: 1000px;
 }
 

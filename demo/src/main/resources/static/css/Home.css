@@ -1,11 +1,16 @@
 @charset "UTF-8";
 
+
+
 #cardtitle {
 	cursor: pointer;
+	font-size: 15px;
+	height: 5rem;
 }
 
-#cardbody {
+#cardbody {	
 	cursor: pointer;
+	font-size: 13px;
 }
 
 #tablebody {
@@ -13,5 +18,7 @@
 }
 
 #card {
-	width: 14rem;
+	width: 11rem;
+	height: 11rem;
+	cursor: pointer;
 }

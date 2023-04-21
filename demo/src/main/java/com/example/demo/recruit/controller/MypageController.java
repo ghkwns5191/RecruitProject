@@ -111,7 +111,7 @@ public class MypageController {
 
     @Autowired
     private final PortfoliofileService portfoliofileService;
-    
+
     @Autowired
     private final AcademicApplyService academicApplyService;
 
@@ -139,13 +139,29 @@ public class MypageController {
     @Autowired
     private final PortfolioApplyService portfolioApplyService;
 
-    
-    
-
     @GetMapping(value = { "", "/" })
-    public String mypagehome() {
+    public ModelAndView mypagehome(Principal principal, Map<String, Object> check, Model model) {
+        String url = "";
+        try {
+            if (principal != null) {
+                Member user = this.memberService.getMemberinfo(principal.getName());
+                List<Apply> applyList = this.applyService.getapply(user);
+                Resume resume = this.resumeService.getResume(user);
+                model.addAttribute("member", user);
+                model.addAttribute("applyList", applyList);
+                model.addAttribute("resume", resume);
+                url = "/view/mypage/MypageHome";
+            } else {
+                check.put("check", true);
+                url = "/view/Login";
+            }
+            return new ModelAndView(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            url = "/view/Home";
+            return new ModelAndView(url);
+        }
 
-        return "redirect:/mypage/accountinfo";
     }
 
     @GetMapping("/accountinfo")
@@ -156,7 +172,7 @@ public class MypageController {
             return new ModelAndView("/view/mypage/AccountInfo");
         } catch (NullPointerException e) {
             check.put("check", true);
-            return new ModelAndView("view/Login");
+            return new ModelAndView("/view/Login");
         }
 
     }
@@ -379,9 +395,9 @@ public class MypageController {
         } else {
             check.put("check", true);
             url = "/view/Login";
-            
+
         }
-        
+
         return new ModelAndView(url);
     }
 
@@ -444,13 +460,13 @@ public class MypageController {
                 List<Integer> certificatenumber = this.certificateApplyService.getnumber(applyList);
                 List<Integer> careernumber = this.careerApplyService.getnumber(applyList);
                 List<Integer> languagesnumber = this.languagesApplyService.getnumber(applyList);
-               
+
                 model.addAttribute("recruit", recruit);
                 model.addAttribute("applyList", applyList);
                 model.addAttribute("certificatenumber", certificatenumber);
                 model.addAttribute("careernumber", careernumber);
                 model.addAttribute("languagesnumber", languagesnumber);
-                
+
                 url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
             } else {
                 check.put("check", true);
@@ -463,8 +479,6 @@ public class MypageController {
 
         return new ModelAndView(url);
     }
-    
-    
 
     @GetMapping("/company/recruit/detail/applyinfo/{id}")
     public ModelAndView applyinfotorecruit(Principal principal, Model model, Map<String, Object> check,

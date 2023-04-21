@@ -53,9 +53,11 @@
 	<!-- 본문 / 최신 공고 5개 & 최신 기업리뷰 5개 -->
 	<div th:fragment="content">
 
-		<table style="margin-top: 100px;">
+		<table style="margin-top: 100px;" id="recruit_table">
 			<thead>
-				<th>최신 공고</th>
+				<tr>
+					<th>최신 공고</th>
+				</tr>
 			</thead>
 
 			<tbody>
@@ -67,13 +69,53 @@
 								<h5 class="card-title" id="cardtitle"
 									th:text="${recruitList.title}"></h5>
 								<p class="card-text" id="cardbody">
-									경력 <label th:text="${recruitList.career}"></label> </br> 마감 <label
-										th:text="${recruitList.deadline}"></label>
+									업체 <label
+										th:text="${companyList[__${recruitListStat.index}__].name}"></label>
+									<br> 경력 <label th:text="${recruitList.career}"></label> </br>
+									마감 <label th:text="${recruitList.deadline}"></label>
 								</p>
 							</div>
 						</div>
 					</td>
 				</tr>
+				<tr>
+					<td colspan="5" style="text-align: right; cursor: pointer;"
+						onclick="torecruitList()">더보기</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table id="notice_table">
+			<thead>
+				<tr>
+					<th>공지사항</th>
+				</tr>
+			</thead>
+
+			<tbody th:if="${noticeList} != null">
+				<tr>
+					<td>번호</td>
+					<td>제목</td>
+					<td>작성일</td>
+				</tr>
+
+				<tr th:each="noticeList : ${noticeList}">
+					<td th:text="${noticeListStat.index} + 1"></td>
+					<td th:text="${noticeList.title}">제목</td>
+					<td th:text="${noticeList.registerdate}">작성일</td>
+				</tr>
+				
+				<tr>
+					<td colspan="5" style="text-align: right; cursor: pointer;"
+						onclick="tonoticeList()">더보기</td>
+				</tr>
+			</tbody>
+
+			<tbody th:unless="${noticeList} != null">
+				<tr>
+					<td>아직 작성된 공지사항이 없습니다.</td>
+				</tr>
+
 			</tbody>
 		</table>
 
@@ -102,7 +144,7 @@
 </body>
 </html>
 
-<script type="application/javascript" th:src="@{/js/header.js}"></script>
+<script type="application/javascript" th:src="@{/js/Home.js}"></script>
 <link
 	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">

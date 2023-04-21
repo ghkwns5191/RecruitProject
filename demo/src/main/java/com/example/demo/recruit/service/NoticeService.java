@@ -23,15 +23,20 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
 
     // 공지사항의 모든 리스트를 불러오는 코드
-    @GetMapping
+    
     public List<Notice> getNotice() {
         List<Notice> notice = new ArrayList<Notice>();
         noticeRepository.findAll().forEach(notice::add);
         return notice;
     }
+    
+    public List<Notice> getNotice5() {
+        List<Notice> noticeList = this.noticeRepository.findTop5ByOrderByRegisterdateDesc();
+        return noticeList;
+    }
 
     // 해당 공지사항의 상세 내용을 불러오는 코드
-    @GetMapping
+   
     public Notice getNotice(Long id) {
         Optional<Notice> noticeData = noticeRepository.findById(id);
         Notice notice = noticeData.get();

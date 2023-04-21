@@ -46,10 +46,10 @@ public class MainController {
 
     @Autowired
     private final NoticeService noticeService;
-    
+
     @Autowired
     private final ResumeService resumeService;
-    
+
     @Autowired
     private final ImgfileService imgfileService;
 
@@ -59,7 +59,13 @@ public class MainController {
     public String main(Principal principal, Model model) {
 
         List<Recruit> recruitList = this.recruitService.getRecruit5();
+        List<Member> memberList = this.memberService.getMember(recruitList);
+        List<Company> companyList = this.companyService.getData(memberList);
         model.addAttribute("recruitList", recruitList);
+        model.addAttribute("companyList", companyList);
+        
+        List<Notice> noticeList = this.noticeService.getNotice5();
+        model.addAttribute("noticeList", noticeList);
         if (principal == null) {
             model.addAttribute("username", null);
             return "view/Home";
@@ -121,7 +127,7 @@ public class MainController {
 
         return new ModelAndView("/view/NoticeList");
     }
-    
+
     @GetMapping("/notice/detail/{id}")
     public ModelAndView noticeList(Model model, @PathVariable("id") Long id) {
         Notice notice = this.noticeService.getNotice(id);
