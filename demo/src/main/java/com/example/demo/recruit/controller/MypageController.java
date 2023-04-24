@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -145,11 +149,23 @@ public class MypageController {
         try {
             if (principal != null) {
                 Member user = this.memberService.getMemberinfo(principal.getName());
-                List<Apply> applyList = this.applyService.getapply(user);
-                Resume resume = this.resumeService.getResume(user);
                 model.addAttribute("member", user);
-                model.addAttribute("applyList", applyList);
-                model.addAttribute("resume", resume);
+                model.addAttribute("sort", user.getSort());
+                model.addAttribute("name", user.getName());
+                if (user.getSort().equals("individual")) {
+                    List<Apply> applyList = this.applyService.getapply5(user);
+                    Resume resume = this.resumeService.getResume(user);
+                    List<Recruit> recruitList = this.recruitService.getList(applyList);
+                    Imgfile imgfile = this.imgfileService.getimgfile(resume);
+                    String imgurl = imgfile.getImgurl();
+                    model.addAttribute("applyList", applyList);
+                    model.addAttribute("resume", resume);
+                    model.addAttribute("recruitList", recruitList);
+                    model.addAttribute("imgurl", imgurl);
+
+                } else if (user.getSort().equals("company")) {
+
+                }
                 url = "/view/mypage/MypageHome";
             } else {
                 check.put("check", true);
@@ -450,13 +466,14 @@ public class MypageController {
 
     @GetMapping("/company/recruit/detail/{id}")
     public ModelAndView recruitdetailandapplylist(Principal principal, Model model, Map<String, Object> check,
-            @PathVariable("id") Long id) {
+            @PathVariable("id") Long id,
+            @PageableDefault(page = 0, size = 10, sort = "applydate", direction = Sort.Direction.DESC) Pageable pageable) {
         String url = "";
         if (principal != null) {
             Recruit recruit = this.recruitService.getRecruit(id);
             Member member = this.memberService.getMemberinfo(principal.getName());
             if (member.getUsername().equals(recruit.getMember().getUsername())) {
-                List<Apply> applyList = this.applyService.getapply(recruit);
+                Page<Apply> applyList = this.applyService.getapply(recruit, pageable);
                 List<Integer> certificatenumber = this.certificateApplyService.getnumber(applyList);
                 List<Integer> careernumber = this.careerApplyService.getnumber(applyList);
                 List<Integer> languagesnumber = this.languagesApplyService.getnumber(applyList);

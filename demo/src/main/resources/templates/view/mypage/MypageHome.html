@@ -12,8 +12,60 @@
 <title>메인페이지</title>
 </head>
 <body>
-	<div id="contentdiv">
+	<div id="contentdiv" style="display: table; margin: auto;">
+	<h4 th:text="${name} + ' 님 안녕하세요!'"></h4>
+		<div th:if="${sort} == 'individual'">
+			<section>
+					<label>회원 정보 요약</label>
+					<table>
+						<thead>
+							<tr>
+								
+							</tr>
+						</thead>
+						
+						<tbody>
+							<tr>
+								<td>아이디</td>
+								<td th:text="${user.username}"></td>
+							</tr>
+						</tbody>
+					</table>
+			</section>
+			<section>
+				<label>최근 지원내역</label>
+				<table>
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>지원 공고명</th>
+							<th>지원일</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody th:if="${applyList} != null">
+						<tr th:each="applyList : ${applyList}">
+							<td th:text="${applyListStat.index} + 1"></td>
+							<td th:text="${applyList.title}"
+								th:onclick="|location.href='/recruitpage/detail/{id}(id = ${recruitList[__${applyList.id}__].id})'|"></td>
+							<td th:text="${applyList.applydate}"></td>
+							<td></td>
+						</tr>
+					</tbody>
+					
+					<tbody th:unless="${applyList} != null">
+						<tr>
+							<td>아직 지원내역이 없습니다.</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</div>
+
+		<div th:if="${sort} == 'company'">
 		
+		</div>
+
 	</div>
 </body>
 </html>

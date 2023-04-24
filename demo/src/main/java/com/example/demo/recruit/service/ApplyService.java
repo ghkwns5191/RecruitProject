@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.recruit.dto.ApplyDto;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Member;
 import com.example.demo.recruit.entity.Recruit;
@@ -29,7 +30,7 @@ public class ApplyService {
 
     @Autowired
     private final ResumeService resumeService;
-    
+
     @Autowired
     private final AcademicApplyService academicApplyService;
 
@@ -60,15 +61,25 @@ public class ApplyService {
     // 해당 회원이 지원한 지원 정보를 불러오는 코드
     public List<Apply> getapply(Member member) {
         List<Apply> apply = new ArrayList<Apply>();
-        this.applyRepository.findByMember(member).forEach(apply::add);
+        this.applyRepository.findAllByMember(member).forEach(apply::add);
         return apply;
     }
 
     // 해당 채용공고에 지원한 지원 정보를 불러오는 코드
     public List<Apply> getapply(Recruit recruit) {
         List<Apply> apply = new ArrayList<Apply>();
-        this.applyRepository.findByRecruit(recruit).forEach(apply::add);
+        this.applyRepository.findAllByRecruit(recruit).forEach(apply::add);
         return apply;
+    }
+
+    public Page<Apply> getapply(Recruit recruit, Pageable pageable) {
+        Page<Apply> apply = this.applyRepository.findAllByRecruit(recruit, pageable);
+        return apply;
+    }
+
+    public List<Apply> getapply5(Member member) {
+        List<Apply> applyList = this.applyRepository.findTop5ByMemberByOrderByApplydateDesc(member);
+        return applyList;
     }
 
     // 해당 지원 정보만 불러오는 코드
@@ -107,8 +118,8 @@ public class ApplyService {
         this.educationApplyService.deleteList(apply);
         this.languagesApplyService.deleteList(apply);
         this.overseasexperienceApplyService.deleteList(apply);
-        this.imgfileApplyService.deleteData(apply);           
-        this.portfolioApplyService.deleteList(apply);       
+        this.imgfileApplyService.deleteData(apply);
+        this.portfolioApplyService.deleteList(apply);
         this.applyRepository.deleteById(id);
     }
 

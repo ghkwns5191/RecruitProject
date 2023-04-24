@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.recruit.entity.Apply;
@@ -43,10 +44,10 @@ public class LanguagesApplyService {
         this.languagesApplyRepository.deleteAllByApply(apply);
     }
     
-    public List<Integer> getnumber(List<Apply> applyList) {
+    public List<Integer> getnumber(Page<Apply> applyList) {
         List<Integer> numbers = new ArrayList<>();
-        for (int i = 0; i < applyList.size(); i++) {
-            List<LanguagesApply> languagesApplyList = getList(applyList.get(i));
+        for (int i = 0; i < applyList.toList().size(); i++) {
+            List<LanguagesApply> languagesApplyList = getList(applyList.toList().get(i));
             numbers.add(languagesApplyList.size());
         }
         return numbers;

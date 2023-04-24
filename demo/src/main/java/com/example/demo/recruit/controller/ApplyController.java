@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.entity.Academic;
-import com.example.demo.recruit.entity.AcademicApply;
 import com.example.demo.recruit.entity.Activity;
 import com.example.demo.recruit.entity.Apply;
 import com.example.demo.recruit.entity.Career;
