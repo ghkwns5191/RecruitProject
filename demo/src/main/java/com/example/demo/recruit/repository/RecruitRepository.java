@@ -17,6 +17,8 @@ public interface RecruitRepository extends JpaRepository<Recruit, Long> {
 
     Page<Recruit> findByTitleContaining(String searchKeyword, Pageable pageable);
 
+    List<Recruit> findTop5ByMemberOrderByRegisterdateDesc(Member member);
+
     
 
 }

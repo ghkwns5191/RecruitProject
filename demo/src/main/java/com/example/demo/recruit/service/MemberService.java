@@ -201,5 +201,61 @@ public class MemberService implements UserDetailsService {
         }
         return memberList;
     }
+    
+    public String[] getaddress(Member member) {
+        int linenum = 3;
+        String[] addarr = new String[linenum];
+        String address = member.getAddress();
+        char[] chararr = address.toCharArray();
+        
+        String[] strarr = new String[chararr.length];
+        for (int i = 0; i < chararr.length; i++) {
+            strarr[i] = String.valueOf(chararr[i]);
+        }
+        
+        String add1 = " ";
+        String add2 = " ";
+        String add3 = " ";
+        int lowlength = 45;
+        
+        if (strarr.length <= lowlength) {
+            
+            for (int i = 0; i < strarr.length; i++) {
+                add1 = add1.concat(strarr[i]);
+            }
+            
+        } else if (strarr.length > lowlength && strarr.length <= 2 * lowlength) {
+            
+            for (int i = 0; i < lowlength; i++) {
+                add1 = add1.concat(strarr[i]);
+            }
+            
+            for (int i = lowlength; i < strarr.length; i++) {
+                add2 = add2.concat(strarr[i]);
+            }
+            
+        } else if (strarr.length > 2 * lowlength && strarr.length <= 3 * lowlength) {
+            
+            for (int i = 0; i < lowlength; i++) {
+                add1 = add1.concat(strarr[i]);
+            }
+            
+            for (int i = lowlength; i < 2 * lowlength; i++) {
+                add2 = add2.concat(strarr[i]);
+            }
+            
+            for (int i = 2 * lowlength; i < strarr.length; i++) {
+                add3 = add3.concat(strarr[i]);
+            }
+            
+        }
+        
+        addarr[0] = add1;
+        addarr[1] = add2;
+        addarr[2] = add3;
+        System.out.println(strarr.length);
+        return addarr;
+        
+    }
 
 }

@@ -62,10 +62,12 @@ public class MainController {
         List<Member> memberList = this.memberService.getMember(recruitList);
         List<Company> companyList = this.companyService.getData(memberList);
         model.addAttribute("recruitList", recruitList);
+        model.addAttribute("recruitLength", recruitList.size());
         model.addAttribute("companyList", companyList);
         
         List<Notice> noticeList = this.noticeService.getNotice5();
         model.addAttribute("noticeList", noticeList);
+        model.addAttribute("noticeLength", noticeList.size());
         if (principal == null) {
             model.addAttribute("username", null);
             return "view/Home";

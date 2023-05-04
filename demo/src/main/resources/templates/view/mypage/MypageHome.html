@@ -6,36 +6,111 @@
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <head>
 <link th:href="@{/css/common.css}" rel="stylesheet">
-<link th:href="@{/css/common.css}" rel="stylesheet">
+<link th:href="@{/css/MypageHome.css}" rel="stylesheet">
 <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 <meta charset="UTF-8">
 <title>메인페이지</title>
 </head>
 <body>
-	<div id="contentdiv" style="display: table; margin: auto;">
-	<h4 th:text="${name} + ' 님 안녕하세요!'"></h4>
+
+	<!--  헤더 및 Navigation Bar -->
+	<header>
+
+		<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
+
+		<nav class="navbar navbar-expand-lg" id="navbarhead">
+			<div class="container-fluid">
+
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/recruitpage/list">채용공고</a></li>
+						<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>
+
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item" sec:authorize="isAnonymous()"><a
+							class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+						<li class="nav-item" sec:authorize="isAnonymous()"><a
+							class="nav-link active" aria-current="page" href="/join">회원가입</a></li>
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
+						<li class="nav-item" sec:authorize="isAuthenticated()"><a
+							class="nav-link active" aria-current="page" href="/mypage">마이페이지</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<div id="maincontent" style="display: table; margin: auto;">
+		<h4 th:text="${name} + ' 님 안녕하세요!'"></h4>
+		<div>
+			<section>
+				<label class="label" id="accountinfo_label">회원 정보 요약</label>
+				<table style="width: 800px;">
+					<thead>
+						<tr>
+
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<td>아이디</td>
+							<td th:text="${member.username}"></td>
+						</tr>
+						<tr>
+							<td>가입일</td>
+							<td th:text="${member.registerdate}"></td>
+						</tr>
+					</tbody>
+
+					<tbody>
+						<tr>
+							<td id="moreinfo" onClick="tomemberinfo()">회원정보 더보기</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+		</div>
 		<div th:if="${sort} == 'individual'">
 			<section>
-					<label>회원 정보 요약</label>
-					<table>
-						<thead>
-							<tr>
-								
-							</tr>
-						</thead>
-						
-						<tbody>
-							<tr>
-								<td>아이디</td>
-								<td th:text="${user.username}"></td>
-							</tr>
-						</tbody>
-					</table>
-			</section>
-			<section>
-				<label>최근 지원내역</label>
+				<label class="label">등록된 이력서</label>
 				<table>
 					<thead>
+						<tr>
+
+						</tr>
+					</thead>
+					<tbody th:if="${resume} != null">
+						<tr>
+							<td style="font-weight: bold; cursor: pointer;"
+								th:text="${resume.title}" th:id="${resume.id}"
+								onclick="toresume(id)"></td>
+						</tr>
+					</tbody>
+
+					<tbody th:unless="${resume} != null">
+						<tr>
+							<td>아직 등록된 이력서가 없습니다.</td>
+							<td><button onClick="tonewresume()">이력서 등록하기</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+
+			<section>
+				<label class="label">최근 지원내역</label>
+				<table>
+					<thead th:if="${applyLength} != 0">
 						<tr>
 							<th>번호</th>
 							<th>지원 공고명</th>
@@ -43,7 +118,7 @@
 							<th></th>
 						</tr>
 					</thead>
-					<tbody th:if="${applyList} != null">
+					<tbody th:if="${applyLength} != 0">
 						<tr th:each="applyList : ${applyList}">
 							<td th:text="${applyListStat.index} + 1"></td>
 							<td th:text="${applyList.title}"
@@ -52,8 +127,8 @@
 							<td></td>
 						</tr>
 					</tbody>
-					
-					<tbody th:unless="${applyList} != null">
+
+					<tbody th:unless="${applyLength} != 0">
 						<tr>
 							<td>아직 지원내역이 없습니다.</td>
 						</tr>
@@ -62,8 +137,39 @@
 			</section>
 		</div>
 
+
 		<div th:if="${sort} == 'company'">
-		
+
+			<section>
+				<label class="label">최근 작성 공고</label>
+				<table>
+					<thead th:if="${recruitLength} != 0">
+						<tr>
+							<th>번호</th>
+							<th>공고명</th>
+							<th>지원</th>
+							<th>작성 / 수정일</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody th:if="${recruitLength} != 0">
+						<tr th:each="recruitList : ${recruitList}">
+							<td th:text="${recruitListStat.index} + 1"></td>
+							<td th:id="${recruitList.id}" th:text="${recruitList.title}" onClick="recruitapply(id)" style="cursor: pointer;"></td>
+							<td th:id="${recruitList.id}" th:text="${applynum[__${recruitList.id}__]} + ' 건'" onClick="recruitapply(id)"></td>
+							<td th:if="${recruitList.modifydate} != null" th:text="${recruitList.modifydate}"></td>
+							<td th:unless="${recruitList.modifydate} != null" th:text="${recruitList.registerdate}"></td>
+						</tr>
+					</tbody>
+
+					<tbody th:unless="${recruitLength} != 0">
+						<tr>
+							<td>아직 지원내역이 없습니다.</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			
 		</div>
 
 	</div>

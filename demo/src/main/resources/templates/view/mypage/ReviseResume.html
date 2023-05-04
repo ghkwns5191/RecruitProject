@@ -51,158 +51,163 @@
 	</header>
 
 
-	<table>
-		<tbody>
-			<tr>
-				<td>이력서 제목</td>
-				<td><input id="resumetitle" th:value="${resume.title}"></td>
-			</tr>
-		</tbody>
-	</table>
+	<div style="display: table; margin: auto">
+		<table>
+			<tbody>
+				<tr>
+					<td>이력서 제목</td>
+					<td><input id="resumetitle" th:value="${resume.title}"></td>
+				</tr>
+			</tbody>
+		</table>
 
-	<table>
-		<thead>
-			<th colspan="3" class="table_head">기본정보</th>
-		</thead>
-		<tbody>
-			<tr>
-				<td rowspan="7"><img th:src="*{imgurl}" id="resume_img" style="width: 120px; height: 180px;"></td>
-				<td>이름</td>
-				<td id="resume_name" th:text="${member.name}"></td>
-			</tr>
-			<tr>
-				<td>생년월일</td>
-				<td id="resume_birth" th:text="${member.birthday}"></td>
-			</tr>
-			<tr>
-				<td>전화번호</td>
-				<td id="resume_phone" th:text="${member.phone}"></td>
-			</tr>
-			<tr>
-				<td>이메일</td>
-				<td id="resume_email" th:text="${member.email}"></td>
-			</tr>
-			<tr>
-				<td rowspan="3">주소</td>
-				<td id="resume_address1">주소 1</td>
-			</tr>
-			<tr>
-				<td id="resume_address2">주소 2</td>
-			</tr>
-			<tr>
-				<td id="resume_address3">주소 3</td>
-			</tr>
-		</tbody>
-	</table>
+		<table>
+			<thead>
+				<th colspan="3" class="table_head">기본정보</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="7"><img th:src="*{imgurl}" id="resume_img"
+						style="width: 120px; height: 180px;"></td>
+					<td>이름</td>
+					<td id="resume_name" th:text="${member.name}"></td>
+				</tr>
+				<tr>
+					<td>생년월일</td>
+					<td id="resume_birth" th:text="${member.birthday}"></td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td id="resume_phone" th:text="${member.phone}"></td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td id="resume_email" th:text="${member.email}"></td>
+				</tr>
+				<tr>
+					<td rowspan="3">주소</td>
+					<td th:text="${add1}"></td>
+				</tr>
+				<tr>
+					<td th:text="${add2}"></td>
+				</tr>
+				<tr>
+					<td th:text="${add3}"></td>			
+				</tr>
+			</tbody>
+		</table>
 
-	<table>
-		<thead>
-			<th>학력사항</th>
-		</thead>
-		<tbody th:if="${academicList} != null"
-			th:each="academicList : ${academicList}">
-			<tr>
-				<td>학교명</td>
-				<td><input type="text" class="academic_name"
-					th:value="${academicList.name}"></td>
-			</tr>
+		<table>
+			<thead>
+				<th>학력사항</th>
+			</thead>
+			<tbody th:if="${academicList} != null"
+				th:each="academicList : ${academicList}">
+				<tr>
+					<td>학교명</td>
+					<td><input type="text" class="academic_name"
+						th:value="${academicList.name}"></td>
+				</tr>
 
-			<tr>
-				<td>구분</td>
-				<td><select th:if="${academicList.type} == 'highschool'"
-					class='academic_type'>
-						<option value='highschool' selected>고등학교</option>
-						<option value='university'>대학교</option>
-						<option value='graduateSchool'>대학원</option>
-				</select> <select th:if="${academicList.type} == 'university'"
-					class='academic_type'>
-						<option value='highschool'>고등학교</option>
-						<option value='university' selected>대학교</option>
-						<option value='graduateSchool'>대학원</option>
-				</select> <select th:if="${academicList.type} == 'graduateSchool'"
-					class='academic_type'>
-						<option value='highschool'>고등학교</option>
-						<option value='university'>대학교</option>
-						<option value='graduateSchool' selected>대학원</option>
-				</select></td>
-			</tr>
+				<tr>
+					<td>구분</td>
+					<td><select th:if="${academicList.type} == 'highschool'"
+						class='academic_type'>
+							<option value='highschool' selected>고등학교</option>
+							<option value='university'>대학교</option>
+							<option value='graduateSchool'>대학원</option>
+					</select> <select th:if="${academicList.type} == 'university'"
+						class='academic_type'>
+							<option value='highschool'>고등학교</option>
+							<option value='university' selected>대학교</option>
+							<option value='graduateSchool'>대학원</option>
+					</select> <select th:if="${academicList.type} == 'graduateSchool'"
+						class='academic_type'>
+							<option value='highschool'>고등학교</option>
+							<option value='university'>대학교</option>
+							<option value='graduateSchool' selected>대학원</option>
+					</select></td>
+				</tr>
 
-			<tr>
-				<td>시작일</td>
-				<td><input type="date" class="academic_start"
-					th:value="${academicList.start}"></td>
-			</tr>
+				<tr>
+					<td>시작일</td>
+					<td><input type="date" class="academic_start"
+						th:value="${academicList.start}"></td>
+				</tr>
 
-			<tr>
-				<td>종료일</td>
-				<td><input type="date" class="academic_end"
-					th:value="${academicList.end}"></td>
-			</tr>
+				<tr>
+					<td>종료일</td>
+					<td><input type="date" class="academic_end"
+						th:value="${academicList.end}"></td>
+				</tr>
 
-			<tr>
-				<td>졸업여부</td>
-				<td><select th:if="${academicList.studying} == 'attending'"
-					class='academic_studying'>
-						<option value='attending' selected>재학중</option>
-						<option value='off'>휴학중</option>
-						<option value='graduated'>졸업</option>
-				</select> <select th:if="${academicList.studying} == 'off'"
-					class='academic_studying'>
-						<option value='attending'>재학중</option>
-						<option value='off' selected>휴학중</option>
-						<option value='graduated'>졸업</option>
-				</select> <select th:if="${academicList.studying} == 'graduated'"
-					class='academic_studying'>
-						<option value='attending'>재학중</option>
-						<option value='off'>휴학중</option>
-						<option value='graduated' selected>졸업</option>
-				</select></td>
-			</tr>
+				<tr>
+					<td>졸업여부</td>
+					<td><select th:if="${academicList.studying} == 'attending'"
+						class='academic_studying'>
+							<option value='attending' selected>재학중</option>
+							<option value='off'>휴학중</option>
+							<option value='graduated'>졸업</option>
+					</select> <select th:if="${academicList.studying} == 'off'"
+						class='academic_studying'>
+							<option value='attending'>재학중</option>
+							<option value='off' selected>휴학중</option>
+							<option value='graduated'>졸업</option>
+					</select> <select th:if="${academicList.studying} == 'graduated'"
+						class='academic_studying'>
+							<option value='attending'>재학중</option>
+							<option value='off'>휴학중</option>
+							<option value='graduated' selected>졸업</option>
+					</select></td>
+				</tr>
 
-			<tr>
-				<td>전공</td>
-				<td><input type="text" class="academic_major"
-					th:value="${academicList.major}"></td>
-			</tr>
+				<tr>
+					<td>전공</td>
+					<td><input type="text" class="academic_major"
+						th:value="${academicList.major}"></td>
+				</tr>
 
-			<tr>
-				<td>학점</td>
-				<td><input type="text" class="academic_grade"
-					th:value="${academicList.grade}"> / <select
-					th:if="${academicList.gradefull} == '4.0'"
-					class='academic_gradefull'>
-						<option value='4.0' selected>4.0</option>
-						<option value='4.3'>4.3</option>
-						<option value='4.5'>4.5</option>
-				</select> <select th:if="${academicList.gradefull} == '4.3'"
-					class='academic_gradefull'>
-						<option value='4.0'>4.0</option>
-						<option value='4.3' selected>4.3</option>
-						<option value='4.5'>4.5</option>
-				</select> <select th:if="${academicList.gradefull} == '4.5'"
-					class='academic_gradefull'>
-						<option value='4.0'>4.0</option>
-						<option value='4.3'>4.3</option>
-						<option value='4.5' selected>4.5</option>
-				</select></td>
-			</tr>
+				<tr>
+					<td>학점</td>
+					<td><input type="text" class="academic_grade"
+						th:value="${academicList.grade}"> / <select
+						th:if="${academicList.gradefull} == '4.0'"
+						class='academic_gradefull'>
+							<option value='4.0' selected>4.0</option>
+							<option value='4.3'>4.3</option>
+							<option value='4.5'>4.5</option>
+					</select> <select th:if="${academicList.gradefull} == '4.3'"
+						class='academic_gradefull'>
+							<option value='4.0'>4.0</option>
+							<option value='4.3' selected>4.3</option>
+							<option value='4.5'>4.5</option>
+					</select> <select th:if="${academicList.gradefull} == '4.5'"
+						class='academic_gradefull'>
+							<option value='4.0'>4.0</option>
+							<option value='4.3'>4.3</option>
+							<option value='4.5' selected>4.5</option>
+					</select></td>
+				</tr>
 
-			<tr>
-				<td>상세내용</td>
-				<td><pre><textarea th:text="${academicList.detail}" rows='4'
-						cols='60' class='academic_detail'></textarea></pre></td>
-			</tr>
-		</tbody>
+				<tr>
+					<td>상세내용</td>
+					<td><pre>
+							<textarea th:text="${academicList.detail}" rows='4' cols='60'
+								class='academic_detail'></textarea>
+						</pre></td>
+				</tr>
+			</tbody>
 
-		<tbody id="addacademic"></tbody>
+			<tbody id="addacademic"></tbody>
 
-		<tbody>
-			<tr>
-				<td><input type="button" onclick="addacademic()"
-					value="학력사항 추가하기"></td>
-			</tr>
-		</tbody>
-	</table>
+			<tbody>
+				<tr>
+					<td><input type="button" onclick="addacademic()"
+						value="학력사항 추가하기"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 </html>

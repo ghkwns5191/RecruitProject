@@ -159,12 +159,17 @@ public class MypageController {
                     Imgfile imgfile = this.imgfileService.getimgfile(resume);
                     String imgurl = imgfile.getImgurl();
                     model.addAttribute("applyList", applyList);
+                    model.addAttribute("applyLength", applyList.size());
                     model.addAttribute("resume", resume);
                     model.addAttribute("recruitList", recruitList);
                     model.addAttribute("imgurl", imgurl);
 
                 } else if (user.getSort().equals("company")) {
-
+                    List<Recruit> recruitList = this.recruitService.getRecruit5(user);
+                    model.addAttribute("recruitList", recruitList);
+                    model.addAttribute("recruitLength", recruitList.size());
+                    List<Integer> applynum = this.applyService.getApplynum(recruitList);
+                    model.addAttribute("applynum", applynum);
                 }
                 url = "/view/mypage/MypageHome";
             } else {
@@ -336,12 +341,11 @@ public class MypageController {
                 Imgfile imgfile = imgfileService.getimgfile(resume);
                 String imgurl = imgfile.getImgurl();
                 model.addAttribute("imgurl", imgurl);
-                System.out.println(imgfile.getImgurl());
-
             }
 
             if (resume.getMember() == member && resume != null) {
-                model.addAttribute("member", member);
+                model.addAttribute("member", member);                
+                
                 model.addAttribute("resume", resume);
                 if (academicList != null)
                     model.addAttribute("academicList", academicList);
@@ -373,9 +377,17 @@ public class MypageController {
                     model.addAttribute("urlList", urlList);
                     model.addAttribute("portfolioList", portfolioList);
                 }
-
+                String[] addarr = this.memberService.getaddress(member);
+                model.addAttribute("add1", addarr[0]);               
+                model.addAttribute("add2", addarr[1]);
+                model.addAttribute("add3", addarr[2]);
+                System.out.println("add1 : " + addarr[0]);
+                System.out.println("add2 : " + addarr[1]);
+                System.out.println("add3 : " + addarr[2]);
+                 
             }
 
+            
             return new ModelAndView("/view/mypage/ReviseResume");
         } else {
             check.put("check", true);

@@ -66,6 +66,11 @@ public class RecruitService {
         recruitRepository.findByMember(member).forEach(recruit::add);
         return recruit;
     }
+    
+    public List<Recruit> getRecruit5(Member member) {
+        List<Recruit> recruitList = this.recruitRepository.findTop5ByMemberOrderByRegisterdateDesc(member);
+        return recruitList;
+    }
 
     // 해당 채용공고만 불러오는 코드
     public Recruit getRecruit(Long id) {

@@ -78,7 +78,7 @@ public class ApplyService {
     }
 
     public List<Apply> getapply5(Member member) {
-        List<Apply> applyList = this.applyRepository.findTop5ByMemberByOrderByApplydateDesc(member);
+        List<Apply> applyList = this.applyRepository.findTop5ByMemberOrderByApplydateDesc(member);
         return applyList;
     }
 
@@ -127,5 +127,15 @@ public class ApplyService {
     public Apply getapply(Recruit recruit, Member member) {
         Apply apply = this.applyRepository.findByRecruitAndMember(recruit, member);
         return apply;
+    }
+    
+    public List<Integer> getApplynum(List<Recruit> recruitList) {
+        List<Integer> applynumList = new ArrayList<>();
+        for (int i = 0; i < recruitList.size(); i++) {
+            List<Apply> applyList = getapply(recruitList.get(i));
+            int applynum = applyList.size();
+            applynumList.add(applynum);
+        }
+        return applynumList;
     }
 }

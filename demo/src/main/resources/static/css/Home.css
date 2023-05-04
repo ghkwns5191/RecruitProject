@@ -22,3 +22,11 @@
 	height: 11rem;
 	cursor: pointer;
 }
+
+#recruit_table {
+	width: 60rem;
+}
+
+#notice_table  {
+	width: 60rem;	
+}

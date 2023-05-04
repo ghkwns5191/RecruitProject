@@ -22,6 +22,6 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
 
     Apply findByRecruitAndMember(Recruit recruit, Member member);
 
-    List<Apply> findTop5ByMemberByOrderByApplydateDesc(Member member);
+    List<Apply> findTop5ByMemberOrderByApplydateDesc(Member member);
 
 }

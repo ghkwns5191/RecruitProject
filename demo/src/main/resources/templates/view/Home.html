@@ -31,7 +31,8 @@
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item"><a class="nav-link active"
 							aria-current="page" href="/recruitpage/list">채용공고</a></li>
-						<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>						>
+						<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>
+
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item" sec:authorize="isAnonymous()"><a
@@ -41,7 +42,7 @@
 						<li class="nav-item" sec:authorize="isAuthenticated()"><a
 							class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
 						<li class="nav-item" sec:authorize="isAuthenticated()"><a
-							class="nav-link active" aria-current="page" href="/logout">마이페이지</a></li>
+							class="nav-link active" aria-current="page" href="/mypage">마이페이지</a></li>
 					</ul>
 				</div>
 			</div>
@@ -58,7 +59,7 @@
 				</tr>
 			</thead>
 
-			<tbody>
+			<tbody th:if="${recruitLength} != 0">
 				<tr>
 					<td th:each="recruitList:${recruitList}" id="tablebody">
 						<div class="card" id="card"
@@ -81,6 +82,13 @@
 						onclick="torecruitList()">더보기</td>
 				</tr>
 			</tbody>
+
+			<tbody th:unless="${recruitLength} != 0">
+				<tr>
+					<td>아직 작성된 공고가 없습니다.</td>
+				</tr>
+
+			</tbody>
 		</table>
 
 		<table id="notice_table">
@@ -90,7 +98,7 @@
 				</tr>
 			</thead>
 
-			<tbody th:if="${noticeList} != null">
+			<tbody th:if="${noticeLength} != 0">
 				<tr>
 					<td>번호</td>
 					<td>제목</td>
@@ -102,14 +110,14 @@
 					<td th:text="${noticeList.title}">제목</td>
 					<td th:text="${noticeList.registerdate}">작성일</td>
 				</tr>
-				
+
 				<tr>
 					<td colspan="5" style="text-align: right; cursor: pointer;"
 						onclick="tonoticeList()">더보기</td>
 				</tr>
 			</tbody>
 
-			<tbody th:unless="${noticeList} != null">
+			<tbody th:if="${noticeLength} == 0">
 				<tr>
 					<td>아직 작성된 공지사항이 없습니다.</td>
 				</tr>
