@@ -108,7 +108,7 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = this.memberRepository.findByUsername(username);
+        Member member = getMemberinfo(username);
 
         if (member == null) {
             throw new UsernameNotFoundException(username);
@@ -168,8 +168,9 @@ public class MemberService implements UserDetailsService {
         member.setPhone(memberDto.getPhone());
         member.setEmail(memberDto.getEmail());
         member.setBirthday(memberDto.getBirthday());
-        member.setAddress(memberDto.getAddress());               
-        return member;
+        member.setAddress(memberDto.getAddress());
+        Member newMember = this.memberRepository.save(member);
+        return newMember;
     }
     
     // 회원 강제탈퇴 시킬 때 사용 예정
@@ -210,7 +211,7 @@ public class MemberService implements UserDetailsService {
         
         if (fulladdress.length() <= 50) {
             addarr[0] = fulladdress;
-            addarr[1] = "       ";
+            addarr[1] = ".";
         } else if (fulladdress.length() > 50) {
             int i = 0;
             int index = fulladdress.indexOf(" ");

@@ -47,7 +47,7 @@ window.onload = function () {
   });
 };
 
-function torevise() {
+function toRevise() {
   location.href = "/mypage/account/revise";
 }
 

@@ -86,6 +86,19 @@ public class Member {
         this.registerdate = registerdate;
         this.role = role;
     }
+
+    public Member(@NotNull String password, @NotNull String name, @NotNull String phone, @NotNull String email,
+            @NotNull LocalDate birthday, String address) {
+        super();
+        this.password = password;
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.birthday = birthday;
+        this.address = address;
+    }
+    
+    
     
     
 

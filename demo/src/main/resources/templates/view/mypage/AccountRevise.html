@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http:www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<link th:href="@{/css/common.css}" rel="stylesheet">
+	<link th:href="@{/css/AccountRevise.css}" rel="stylesheet">
+	<link th:href="@{/css/AccountInfo.css}" rel="stylesheet">
+	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>마이페이지 - 회원 정보 조회</title>
+</head>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<body>
+
+	<div style="display: table; margin: auto;">
+		<!--  헤더 및 Navigation Bar -->
+		<header>
+
+			<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
+
+			<nav class="navbar navbar-expand-lg" id="navbarhead">
+				<div class="container-fluid">
+
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+									href="/recruitpage/list">채용공고</a></li>
+							<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>
+
+						</ul>
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" aria-current="page"
+									href="/login">로그인</a></li>
+							<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" aria-current="page"
+									href="/join">회원가입</a></li>
+							<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+									aria-current="page" href="/logout">로그아웃</a></li>
+							<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+									aria-current="page" href="/mypage">마이페이지</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<div style="display: table; margin: auto; width: 800px;">
+			<table id="contenttable" class="table">
+				<thead>
+					<th>회원 정보</th>
+				</thead>
+
+				<tbody id="tablebody">
+					<tr>
+						<td class="col1st">아이디</td>
+						<td id="username" class="col2nd" th:text="${member.username}"></td>
+					</tr>
+
+					<tr>
+						<td class="col1st">회원구분</td>
+						<td th:if="${member.sort} == 'individual'" id="sort" class="col2nd">개인</td>
+						<td th:if="${member.sort} == 'company'" id="sort" class="col2nd">기업</td>
+					</tr>
+
+					<tr>
+						<td class="col1st">회원 이름</td>
+						<td class="col2nd"><input type="text" id="name" class="form-control form-control-sm" th:value="${member.name}"></td>
+					</tr>
+
+					<tr>
+						<td class="col1st">전화번호</td>
+						<td class="col2nd"><input type="text" id="phone" class="form-control form-control-sm" th:value="${member.phone}"></td>
+					</tr>
+
+					<tr>
+						<td class="col1st">이메일</td>
+						<td class="col2nd"><input type="text" id="email" class="form-control form-control-sm" th:value="${member.email}"></td>
+					</tr>
+
+					<tr>
+						<td class="col1st">생년월일</td>
+						<td class="col2nd"><input type="date" id="birthday" class="form-control form-control-sm" th:value="${member.birthday}"></td>
+					</tr>
+
+					<tr>
+						<td class="col1st" rowspan="2">주소</td>
+						<td class="col2nd"><input type="text" id="address1" class="form-control form-control-sm" th:value="${address1}"></td>
+					</tr>
+
+					<tr>
+						
+						<td class="col2nd"><input type="text" id="address2" class="form-control form-control-sm" th:value="${address2}"></td>
+					</tr>
+
+					<tr>
+						<td class="col1st">가입일</td>
+						<td id="registerdate" class="col2nd" th:text="${member.registerdate}"></td>
+					</tr>
+					
+					<tr>
+						<td class="col1st">비밀번호 확인</td>
+						<td class="col2nd"><input type="password" id="password" class="form-control form-control-sm" placeholder="회원정보 수정을 위해 현재 사용하시는 비밀번호를 입력하세요"></td>
+					</tr>
+				</tbody>
+			</table>
+			<p> 수정한 개인정보는 이력서 등에 자동으로 반영됩니다. 그러므로 정확한 정보를 입력해주시기 바랍니다.</p>
+			
+			<table id="buttons">
+				<tbody>
+					<tr>
+						<td class="blankcol"></td>
+						<td class="buttoncol">
+							<button id="revise_button" class="btn btn-primary"
+								th:onclick="revise()">수정하기</button>
+						</td>
+						<td class="blankcol"></td>
+						<td class="blankcol"></td>
+						<td class="buttoncol">
+							<button id="back_button" class="btn btn-outline-primary" onClick="back()">돌아가기</button>
+						</td>
+						<td class="blankcol"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+
+		<!-- Footer 제작 공간 -->
+		<footer>
+			<div>Footer 입니다.</div>
+		</footer>
+	</div>
+
+</body>
+</html>
+
+<script th:inline="javascript">
+
+</script>
+<script type="application/javascript" th:src="@{/js/AccountRevise.js}"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+	rel="stylesheet">

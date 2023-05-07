@@ -51,10 +51,10 @@ public class MemberController {
 
     @Autowired
     private final RecruitService recruitService;
-    
+
     @Autowired
     private final CompanyreviewService companyreviewService;
-    
+
     @Autowired
     private final ApplyService applyService;
 
@@ -104,11 +104,13 @@ public class MemberController {
         try {
             Member member = this.memberService.getMemberinfo(principal.getName());
             Member revised = null;
+            System.out.println(passwordEncoder.matches(memberDto.getPassword(), member.getPassword()));
             if (passwordEncoder.matches(memberDto.getPassword(), member.getPassword())) {
                 revised = this.memberService.reviseMember(member, memberDto);
+                System.out.println(revised);
                 return new ResponseEntity<>(revised, HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>(null, HttpStatus.OK);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,22 +126,20 @@ public class MemberController {
             if (member.getSort().equals("company")) {
                 Company company = this.companyService.getData(member);
                 this.companyService.deleteData(company.getId());
-                
+
                 List<Recruit> recruitList = this.recruitService.getRecruit(member);
                 for (int i = 0; i < recruitList.size(); i++) {
                     this.recruitService.deleteData(recruitList.get(i).getId());
                 }
-                
+
             } else if (member.getSort().equals("individual")) {
                 Resume resume = this.resumeService.getResume(member);
                 this.resumeService.deleteData(resume.getId());
-                
+
                 List<Companyreview> companyReviewList = this.companyreviewService.getcompanyreview(member);
                 for (int i = 0; i < companyReviewList.size(); i++) {
                     this.companyreviewService.deleteCompany(companyReviewList.get(i).getId());
                 }
-                
-                
 
             }
             this.memberService.deleteMember(id);

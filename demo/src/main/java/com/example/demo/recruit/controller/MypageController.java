@@ -186,7 +186,7 @@ public class MypageController {
     }
 
     @GetMapping("/accountinfo")
-    public ModelAndView mypage(Principal principal, Map<String, Object> check) {
+    public ModelAndView accountinfo(Principal principal, Map<String, Object> check) {
         try {
             String username = principal.getName();
             System.out.println(username);
@@ -196,6 +196,24 @@ public class MypageController {
             return new ModelAndView("/view/Login");
         }
 
+    }
+
+    @GetMapping("/account/revise")
+    public ModelAndView accountrevise(Principal principal, Map<String, Object> check, Model model) {
+        String url = "";
+        if (principal != null) {
+            Member member = this.memberService.getMemberinfo(principal.getName()); 
+            String[] address = this.memberService.getaddress(member);
+            model.addAttribute("member", member);
+            model.addAttribute("address1", address[0]);
+            model.addAttribute("address2", address[1]);
+            url = "/view/mypage/AccountRevise";
+            
+        } else {
+            check.put("check", true);
+            url = "/view/Login";    
+        }
+        return new ModelAndView(url);
     }
 
     @GetMapping("/user/resume")
@@ -253,11 +271,11 @@ public class MypageController {
             if (resume.getMember() == member && resume != null) {
                 model.addAttribute("member", member);
                 model.addAttribute("resume", resume);
-                
+
                 String[] addarr = this.memberService.getaddress(member);
                 model.addAttribute("add1", addarr[0]);
                 model.addAttribute("add2", addarr[1]);
-                
+
                 if (academicList != null)
                     model.addAttribute("academicList", academicList);
                 if (activityList != null)
@@ -349,8 +367,8 @@ public class MypageController {
             }
 
             if (resume.getMember() == member && resume != null) {
-                model.addAttribute("member", member);                
-                
+                model.addAttribute("member", member);
+
                 model.addAttribute("resume", resume);
                 if (academicList != null)
                     model.addAttribute("academicList", academicList);
@@ -383,16 +401,14 @@ public class MypageController {
                     model.addAttribute("portfolioList", portfolioList);
                 }
                 String[] addarr = this.memberService.getaddress(member);
-                model.addAttribute("add1", addarr[0]);               
+                model.addAttribute("add1", addarr[0]);
                 model.addAttribute("add2", addarr[1]);
-                
+
                 System.out.println("add1 : " + addarr[0]);
                 System.out.println("add2 : " + addarr[1]);
-                
-                 
+
             }
 
-            
             return new ModelAndView("/view/mypage/ReviseResume");
         } else {
             check.put("check", true);
