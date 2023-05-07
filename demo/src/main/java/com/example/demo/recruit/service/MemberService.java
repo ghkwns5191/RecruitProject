@@ -202,58 +202,25 @@ public class MemberService implements UserDetailsService {
         return memberList;
     }
     
+    // 입력된 전체 주소를 기준으로 index 50 바로 직전의 빈칸부터 문자열을 분리하여 배열에 담은 후 return
     public String[] getaddress(Member member) {
-        int linenum = 3;
+        int linenum = 2;
+        String fulladdress = member.getAddress();
         String[] addarr = new String[linenum];
-        String address = member.getAddress();
-        char[] chararr = address.toCharArray();
         
-        String[] strarr = new String[chararr.length];
-        for (int i = 0; i < chararr.length; i++) {
-            strarr[i] = String.valueOf(chararr[i]);
+        if (fulladdress.length() <= 50) {
+            addarr[0] = fulladdress;
+            addarr[1] = "       ";
+        } else if (fulladdress.length() > 50) {
+            int i = 0;
+            int index = fulladdress.indexOf(" ");
+            while (i <= 50) {
+                i = fulladdress.indexOf(" ", index + 1);
+            }
+            addarr[0] = fulladdress.substring(0, i);
+            addarr[1] = fulladdress.substring(i + 1, fulladdress.length());
         }
         
-        String add1 = " ";
-        String add2 = " ";
-        String add3 = " ";
-        int lowlength = 45;
-        
-        if (strarr.length <= lowlength) {
-            
-            for (int i = 0; i < strarr.length; i++) {
-                add1 = add1.concat(strarr[i]);
-            }
-            
-        } else if (strarr.length > lowlength && strarr.length <= 2 * lowlength) {
-            
-            for (int i = 0; i < lowlength; i++) {
-                add1 = add1.concat(strarr[i]);
-            }
-            
-            for (int i = lowlength; i < strarr.length; i++) {
-                add2 = add2.concat(strarr[i]);
-            }
-            
-        } else if (strarr.length > 2 * lowlength && strarr.length <= 3 * lowlength) {
-            
-            for (int i = 0; i < lowlength; i++) {
-                add1 = add1.concat(strarr[i]);
-            }
-            
-            for (int i = lowlength; i < 2 * lowlength; i++) {
-                add2 = add2.concat(strarr[i]);
-            }
-            
-            for (int i = 2 * lowlength; i < strarr.length; i++) {
-                add3 = add3.concat(strarr[i]);
-            }
-            
-        }
-        
-        addarr[0] = add1;
-        addarr[1] = add2;
-        addarr[2] = add3;
-        System.out.println(strarr.length);
         return addarr;
         
     }

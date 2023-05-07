@@ -1,0 +1,121 @@
+#title {
+    width: 800px;
+    height: 50px;
+    font-size: 20px;
+}
+
+#imgfile {
+    width: 80px;
+}
+
+/* Chrome 브라우저 */
+input#imfile::-webkit-file-upload-button {
+    background-color: #4CAF50;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Chrome 브라우저 */
+input.portfoliofiles::-webkit-file-upload-button {
+    background-color: #4CAF50;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Firefox 브라우저 */
+input[type="file"]::-moz-file-upload-button {
+    background-color: #4CAF50;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Safari 브라우저 */
+input[type="file"]::-webkit-file-upload-button {
+    background-color: #4CAF50;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+} 
+
+/* MS Edge 브라우저 */
+input[type="file"]::-ms-browse {
+    background-color: #4CAF50;
+    color: white;
+    width: 80px;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+#basic_info {
+    width: 800px;
+}
+
+
+.tablebody {
+    margin-bottom: 40px;
+    border-top: 0.25px lightgray solid;
+    
+}
+
+.column1st {
+    width: 140px;
+}
+
+.column1stshort {
+    width: 100px;
+}
+
+.borderleft {
+    color: lightgray;
+    width: 10px;
+}
+
+.contenttable {
+    font-size: 13px;
+    margin-left: 0; 
+    
+}
+
+.btn-close {
+    background-color: #06defd;
+    height: 30px;
+}
+
+.columncontent {
+    width: 1480px;
+}
+
+.blankcol {
+	width: 150px;
+}
+
+.buttoncol {
+	width: 100px;
+	height: 50px;
+}
+
+#buttons {
+    margin-top: 50px;
+}
+
+
+
+

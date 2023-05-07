@@ -16,6 +16,7 @@
 
 	<!--  헤더 및 Navigation Bar -->
 	<header>
+
 		<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
 
 		<nav class="navbar navbar-expand-lg" id="navbarhead">
@@ -29,21 +30,20 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active"
-							aria-current="page" href="#">채용공고</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">기업리뷰</a></li>
-						<li class="nav-item"><a class="nav-link disabled">Disabled</a>
-						</li>
+						<li class="nav-item"><a class="nav-link"
+							aria-current="page" href="/recruitpage/list">채용공고</a></li>
+						<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>
+
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item" sec:authorize="isAnonymous()"><a
-							class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+							class="nav-link" aria-current="page" href="/login">로그인</a></li>
 						<li class="nav-item" sec:authorize="isAnonymous()"><a
-							class="nav-link active" aria-current="page" href="/join">회원가입</a></li>
+							class="nav-link" aria-current="page" href="/join">회원가입</a></li>
 						<li class="nav-item" sec:authorize="isAuthenticated()"><a
-							class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
+							class="nav-link" aria-current="page" href="/logout">로그아웃</a></li>
 						<li class="nav-item" sec:authorize="isAuthenticated()"><a
-							class="nav-link active" aria-current="page" href="/logout">마이페이지</a></li>
+							class="nav-link" aria-current="page" href="/mypage">마이페이지</a></li>
 					</ul>
 				</div>
 			</div>
@@ -51,416 +51,479 @@
 	</header>
 
 	<!-- 본문 이력서 상세정보 -->
-	<div th:fragment="content">
+	<div style="display: table; margin: auto; width: 800px;">
+		<div th:fragment="content">
 
-		<table id="resume_title">
-			<tbody>
-				<tr>
-					<td id="label_resume_title">이력서 제목</td>
-					<td id="text_resumetitle" th:field="*{title}"
-						th:text="${resume.title}"></td>
-				</tr>
-			</tbody>
-		</table>
+			<table id="resume_title" class="table">
+				<tbody>
+					<tr>					
+						<td id="text_resumetitle" th:field="*{title}"
+							th:text="${resume.title}" colspan="2"></td>
+					</tr>
+				</tbody>
+			</table>
 
 
-		<table>
-			<thead>
-				<th colspan="3" class="table_head">기본정보</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td rowspan="7"><img th:src="*{imgurl}" id="resume_img"></td>
-					<td>이름</td>
-					<td id="resume_name" th:text="${member.name}"></td>
-				</tr>
-				<tr>
-					<td>생년월일</td>
-					<td id="resume_birth" th:text="${member.birthday}"></td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td id="resume_phone" th:text="${member.phone}"></td>
-				</tr>
-				<tr>
-					<td>이메일</td>
-					<td id="resume_email" th:text="${member.email}"></td>
-				</tr>
-				<tr>
-					<td rowspan="3">주소</td>
-					<td id="resume_address1">주소 1</td>
-				</tr>
-				<tr>
-					<td id="resume_address2">주소 2</td>
-				</tr>
-				<tr>
-					<td id="resume_address3">주소 3</td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="table contenttable">
+				<thead>
+					<th colspan="3" class="table_head">기본정보</th>
+				</thead>
+				<tbody class="tablebody">
+					<tr>
+						<td rowspan="6" id="imgfilepart"><img th:src="*{imgurl}" id="resume_img"></td>
+						<td >이름</td>
+						<td class="borderleft">| </td>
+						<td id="resume_name" th:text="${member.name}"></td>
+					</tr>
+					<tr>
+						<td >생년월일</td>
+						<td class="borderleft">| </td>
+						<td id="resume_birth" th:text="${member.birthday}"></td>
+					</tr>
+					<tr>
+						<td >전화번호</td>
+						<td class="borderleft">| </td>
+						<td id="resume_phone" th:text="${member.phone}"></td>
+					</tr>
+					<tr>
+						<td >이메일</td>
+						<td class="borderleft">| </td>
+						<td id="resume_email" th:text="${member.email}"></td>
+					</tr>
+					<tr>
+						<td rowspan="2">주소</td>
+						<td class="borderleft">| </td>
+						<td id="resume_address1" th:text="${add1}"></td>
+					</tr>
+					<tr>
+						<td class="borderleft">| </td>
+						<td id="resume_address2" th:text="${add2}" style="height: 37px;"></td>
+					</tr>
+				</tbody>
+			</table>
 
-		<table>
-			<thead>
-				<th class="table_head">학력사항</th>
-			</thead>
-			<tbody th:if="${academicList != null}"
-				th:each="academicList : ${academicList}" class="tablebody">
-				<tr>
-					<td th:text="${academicListStat.index + 1}" rowspan="6"
-						class="indexprint"></td>
-					<td>학교명</td>
-					<td th:text="${academicList.name}"></td>
-				</tr>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">학력사항</th>
+				</thead>
+				<tbody th:if="${academicList != null}"
+					th:each="academicList : ${academicList}" class="tablebody">
+					<tr>
+						<td th:text="${academicListStat.index + 1}" rowspan="7"
+							class="indexprint"></td>
+						<td class="column1st">학교명</td>
+						<td class="borderleft">| </td>
+						<td th:text="${academicList.name}"></td>
+					</tr>
 
-				<tr>
-					<td>구분</td>
-					<td th:if="${academicList.type == 'highschool'}" th:text="고등학교"></td>
-					<td th:if="${academicList.type == 'university'}" th:text="대학교"></td>
-					<td th:if="${academicList.type == 'graduateSchool'}" th:text="대학원"></td>
-				</tr>
+					<tr>
+						<td>구분</td>
+						<td class="borderleft">| </td>
+						<td th:if="${academicList.type == 'highschool'}" th:text="고등학교"></td>
+						<td th:if="${academicList.type == 'university'}" th:text="대학교"></td>
+						<td th:if="${academicList.type == 'graduateSchool'}" th:text="대학원"></td>
+					</tr>
 
-				<tr>
-					<td>재학기간</td>
-					<td th:text="${academicList.start} + ' ~ ' + ${academicList.end}"></td>
-				</tr>
+					<tr>
+						<td>재학기간</td>
+						<td class="borderleft">| </td>
+						<td th:text="${academicList.start} + ' ~ ' + ${academicList.end}"></td>
+					</tr>
+					
+					<tr>
+						<td>졸업여부</td>
+						<td class="borderleft">| </td>
+						<td th:if="${academicList.studying} == 'attending'">재학</td>
+						<td th:if="${academicList.studying} == 'off'">휴학</td>
+						<td th:if="${academicList.studying} == 'graduated'">졸업</td>
+					</tr>
 
-				<tr>
-					<td>전공 / 계열</td>
-					<td th:text="${academicList.major}"></td>
-				</tr>
+					<tr>
+						<td>전공 / 계열</td>
+						<td class="borderleft">| </td>
+						<td th:text="${academicList.major}"></td>
+					</tr>
 
-				<tr>
-					<td>학점</td>
-					<td
-						th:text="${academicList.grade} + ' / ' + ${academicList.gradefull}"
-						th:if="${academicList.grade != ''}"></td>
-					<td th:unless="${academicList.grade != ''}">해당 없음</td>
-				</tr>
+					<tr>
+						<td>학점</td>
+						<td class="borderleft">| </td>
+						<td
+							th:text="${academicList.grade} + ' / ' + ${academicList.gradefull}"
+							th:if="${academicList.grade != ''}"></td>
+						<td th:unless="${academicList.grade != ''}">해당 없음</td>
+					</tr>
 
-				<tr>
-					<td>세부 학습 내용</td>
-					<td th:text="${academicList.detail}"></td>
-				</tr>
+					<tr>
+						<td>세부 학습 내용</td>
+						<td class="borderleft">| </td>
+						<td><pre th:text="${academicList.detail}" class="details"></pre></td>
+					</tr>
 
-			</tbody>
-			<tbody th:unless="${academicList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+				</tbody>
+				<tbody th:unless="${academicList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
 
-		<table>
-			<thead>
-				<th class="table_head">활동사항</th>
-			</thead>
-			<tbody th:if="${activityList != null}"
-				th:each="activityList : ${activityList}">
-				<tr>
-					<td th:text="${activityListStat.index + 1}" rowspan="6"
-						class="indexprint"></td>
-					<td>활동명</td>
-					<td th:text="${activityList.title}"></td>
-				</tr>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">활동사항</th>
+				</thead>
+				<tbody th:if="${activityList != null}"
+					th:each="activityList : ${activityList}" class="tablebody">
+					<tr>
+						<td th:text="${activityListStat.index + 1}" rowspan="6"
+							class="indexprint"></td>
+						<td class="column1st">활동명</td>
+						<td class="borderleft">| </td>
+						<td th:text="${activityList.title}"></td>
+					</tr>
 
-				<tr>
-					<td>활동기간</td>
-					<td th:text="${activityList.start} + ' ~ ' + ${activityList.end}"></td>
-				</tr>
+					<tr>
+						<td>활동기간</td>
+						<td class="borderleft">| </td>
+						<td th:text="${activityList.start} + ' ~ ' + ${activityList.end}"></td>
+					</tr>
 
-				<tr>
-					<td>주최</td>
-					<td th:text="${activityList.holdby}"></td>
-				</tr>
+					<tr>
+						<td>주최</td>
+						<td class="borderleft">| </td>
+						<td th:text="${activityList.holdby}"></td>
+					</tr>
 
-				<tr>
-					<td>세부 활동 내용</td>
-					<td th:text="${activityList.detail}"></td>
-				</tr>
+					<tr>
+						<td>세부 활동 내용</td>
+						<td class="borderleft">| </td>
+						<td><pre th:text="${activityList.detail}" class="details"></pre></td>
+					</tr>
 
-			</tbody>
+				</tbody>
 
-			<tbody th:unless="${activityList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+				<tbody th:unless="${activityList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
 
-		<table>
-			<thead>
-				<th class="table_head">경력사항</th>
-			</thead>
-			<tbody th:if="${careerList != null}"
-				th:each="careerList : ${careerList}">
-				<tr>
-					<td th:text="${careerListStat.index + 1}" rowspan="7"
-						class="indexprint"></td>
-					<td>업체명</td>
-					<td th:text="${careerList.companyname}"></td>
-				</tr>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">경력사항</th>
+				</thead>
+				<tbody th:if="${careerList != null}"
+					th:each="careerList : ${careerList}" class="tablebody">
+					<tr>
+						<td th:text="${careerListStat.index + 1}" rowspan="7"
+							class="indexprint"></td>
+						<td class="column1st">업체명</td>
+						<td class="borderleft">| </td>
+						<td th:text="${careerList.companyname}"></td>
+					</tr>
 
-				<tr>
-					<td>재직기간</td>
-					<td th:text="${careerList.start} + ' ~ ' + ${careerList.end}"></td>
-				</tr>
+					<tr>
+						<td>재직기간</td>
+						<td class="borderleft">| </td>
+						<td th:text="${careerList.start} + ' ~ ' + ${careerList.end}"></td>
+					</tr>
 
-				<tr>
-					<td>직급</td>
-					<td th:text="${careerList.ranks}"></td>
-				</tr>
+					<tr>
+						<td>직급</td>
+						<td class="borderleft">| </td>
+						<td th:text="${careerList.ranks}"></td>
+					</tr>
 
-				<tr>
-					<td>연봉</td>
-					<td th:text="${careerList.salary}"></td>
-				</tr>
+					<tr>
+						<td>연봉</td>
+						<td class="borderleft">| </td>
+						<td th:text="${careerList.salary}"></td>
+					</tr>
 
-				<tr>
-					<td>직무 / 부서</td>
-					<td th:text="${careerList.jobduty}"></td>
-				</tr>
+					<tr>
+						<td>직무 / 부서</td>
+						<td class="borderleft">| </td>
+						<td th:text="${careerList.jobduty}"></td>
+					</tr>
 
-				<tr>
-					<td>현상태</td>
-					<td th:if="${careerList.working == 'working'}" th:text="재직중"></td>
-					<td th:if="${careerList.working == 'quit'}" th:text="퇴사"></td>
-				</tr>
+					<tr>
+						<td>현상태</td>
+						<td class="borderleft">| </td>
+						<td th:if="${careerList.working == 'working'}" th:text="재직중"></td>
+						<td th:if="${careerList.working == 'quit'}" th:text="퇴사"></td>
+					</tr>
 
-				<tr>
-					<td>세부 활동 내용</td>
-					<td th:text="${careerList.detail}"></td>
-				</tr>
+					<tr>
+						<td>세부 활동 내용</td>
+						<td class="borderleft">| </td>
+						<td><pre th:text="${careerList.detail}" class="details"></pre></td>
+					</tr>
 
-			</tbody>
+				</tbody>
 
-			<tbody th:unless="${careerList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+				<tbody th:unless="${careerList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
 
-		<table>
-			<thead>
-				<th class="table_head">자격증</th>
-			</thead>
-			<tbody th:if="${certificateList != null}"
-				th:each="certificateList : ${certificateList}">
-				<tr>
-					<td th:text="${certificateListStat.index + 1}" rowspan="7"
-						class="indexprint"></td>
-					<td>자격증명</td>
-					<td th:text="${certificateList.name}"></td>
-				</tr>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">자격증</th>
+				</thead>
+				
+				<tbody th:if="${certificateList != null}"
+					th:each="certificateList : ${certificateList}" class="tablebody">
+					<tr>
+						<td th:text="${certificateListStat.index + 1}" rowspan="7"
+							class="indexprint"></td>
+						<td class="column1st">자격증명</td>
+						<td class="borderleft">| </td>
+						<td th:text="${certificateList.name}"></td>
+					</tr>
 
-				<tr>
-					<td>발급기관</td>
-					<td th:text="${certificateList.achievefrom}"></td>
-				</tr>
+					<tr>
+						<td>발급기관</td>
+						<td class="borderleft">| </td>
+						<td th:text="${certificateList.achievefrom}"></td>
+					</tr>
 
-				<tr>
-					<td>등급 / 점수</td>
-					<td th:text="${certificateList.grade}"></td>
-				</tr>
+					<tr>
+						<td>등급 / 점수</td>
+						<td class="borderleft">| </td>
+						<td th:if="${certificateList.grade} != ''" th:text="${certificateList.grade}"></td>
+						<td th:unless="${certificateList.grade} != ''" th:text="'해당없음'"></td>
+					</tr>
 
-				<tr>
-					<td>자격증 번호</td>
-					<td th:if="${certificateList.certificatenumber != ''}"
-						th:text="${certificateList.certificatenumber}"></td>
-				</tr>
+					<tr>
+						<td>자격증 번호</td>
+						<td class="borderleft">| </td>
+						<td th:if="${certificateList.certificatenumber != ''}"
+							th:text="${certificateList.certificatenumber}"></td>
+						<td th:unless="${certificateList.certificatenumber != ''}"
+						th:text="'해당없음'"></td>
+					</tr>
 
-				<tr>
-					<td>취득일</td>
-					<td th:text="${certificateList.achievedate}"></td>
-				</tr>
+					<tr>
+						<td>취득일</td>
+						<td class="borderleft">| </td>
+						<td th:text="${certificateList.achievedate}"></td>
+					</tr>
+					
+				</tbody>
 
-			</tbody>
+				<tbody th:unless="${certificateList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			
+			</table>
 
-			<tbody th:unless="${certificateList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">기타교육사항</th>
+				</thead>
+				<tbody th:if="${educationList != null}"
+					th:each="educationList : ${educationList}" class="tablebody">
+					<tr>
+						<td th:text="${educationListStat.index + 1}" rowspan="4"
+							class="indexprint"></td>
+						<td class="column1st">교육명</td>
+						<td class="borderleft">| </td>
+						<td th:text="${educationList.title}"></td>
+					</tr>
 
-		<table>
-			<thead>
-				<th class="table_head">기타교육사항</th>
-			</thead>
-			<tbody th:if="${educationList != null}"
-				th:each="educationList : ${educationList}">
-				<tr>
-					<td th:text="${educationListStat.index + 1}" rowspan="4"
-						class="indexprint"></td>
-					<td>교육명</td>
-					<td th:text="${educationList.title}"></td>
-				</tr>
+					<tr>
+						<td>주최 / 기관</td>
+						<td class="borderleft">| </td>
+						<td th:text="${educationList.holdby}"></td>
+					</tr>
 
-				<tr>
-					<td>주최 / 기관</td>
-					<td th:text="${educationList.holdby}"></td>
-				</tr>
+					<tr>
+						<td>교육 기간</td>
+						<td class="borderleft">| </td>
+						<td
+							th:text="${educationList.start} + ' ~ ' + ${educationList.end}"></td>
+					</tr>
 
-				<tr>
-					<td>교육 기간</td>
-					<td th:text="${educationList.start} + ' ~ ' + ${educationList.end}"></td>
-				</tr>
+					<tr>
+						<td>상세 교육 내용</td>
+						<td class="borderleft">| </td>
+						<td><pre th:text="${educationList.detail}" class="details"></pre></td>
+					</tr>
 
-				<tr>
-					<td>상세 교육 내용</td>
-					<td th:text="${educationList.detail}"></td>
-				</tr>
+				</tbody>
 
-			</tbody>
+				<tbody th:unless="${educationList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
 
-			<tbody th:unless="${educationList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">어학사항</th>
+				</thead>
+				<tbody th:if="${languagesList != null}"
+					th:each="languagesList : ${languagesList}" class="tablebody">
+					<tr>
+						<td th:text="${languagesListStat.index + 1}" rowspan="5"
+							class="indexprint"></td>
+						<td class="column1st">언어</td>
+						<td class="borderleft">| </td>
+						<td th:text="${languagesList.languages}"></td>
+					</tr>
 
-		<table>
-			<thead>
-				<th class="table_head">어학사항</th>
-			</thead>
-			<tbody th:if="${languagesList != null}"
-				th:each="languagesList : ${languagesList}">
-				<tr>
-					<td th:text="${languagesListStat.index + 1}" rowspan="5"
-						class="indexprint"></td>
-					<td>언어</td>
-					<td th:text="${languagesList.languages}"></td>
-				</tr>
+					<tr>
+						<td>회화 가능 수준</td>
+						<td class="borderleft">| </td>
+						<td th:if="${languagesList.leveltalking == 'novice'}">기초 일상
+							회화</td>
+						<td th:if="${languagesList.leveltalking == 'intermediate'}">비즈니스
+							회화</td>
+						<td th:if="${languagesList.leveltalking == 'native'}">원어민 수준</td>
+					</tr>
 
-				<tr>
-					<td>회화 가능 수준</td>
-					<td th:if="${languagesList.leveltalking == 'novice'}">기초 일상 회화</td>
-					<td th:if="${languagesList.leveltalking == 'intermediate'}">비즈니스
-						회화</td>
-					<td th:if="${languagesList.leveltalking == 'native'}">원어민 수준</td>
-				</tr>
+					<tr>
+						<td>작문 / 독해 가능수준</td>
+						<td class="borderleft">| </td>
+						<td th:if="${languagesList.levelwriting == 'novice'}">기초
+							작문/독해</td>
+						<td th:if="${languagesList.levelwriting == 'intermediate'}">비즈니스
+							작문/독해</td>
+						<td th:if="${languagesList.levelwriting == 'native'}">원어민 수준</td>
+					</tr>
 
-				<tr>
-					<td>작문 / 독해 가능수준</td>
-					<td th:if="${languagesList.levelwriting == 'novice'}">기초 작문/독해</td>
-					<td th:if="${languagesList.levelwriting == 'intermediate'}">비즈니스
-						작문/독해</td>
-					<td th:if="${languagesList.levelwriting == 'native'}">원어민 수준</td>
-				</tr>
+					<tr>
+						<td>응시 시험</td>
+						<td class="borderleft">| </td>
+						<td th:if="${languagesList.test != ''}"
+							th:text="${languagesList.test} + '  점수 : ' + ${languagesList.score}"></td>
+						<td th:unless="${languagesList.test != ''}" th:text="해당없음"></td>
+					</tr>
 
-				<tr>
-					<td>응시 시험</td>
-					<td th:if="${languagesList.test != ''}"
-						th:text="${languagesList.test} + '  점수 : ' + ${languagesList.score}"></td>
-					<td th:unless="${languagesList.test != ''}" th:text="해당없음"></td>
-				</tr>
+					<tr>
+						<td>성적표 / 시험 번호</td>
+						<td class="borderleft">| </td>
+						<td th:if="${languagesList.test != ''}"
+							th:text="${languagesList.certificatenumber}"></td>
+						<td th:unless="${languagesList.test != ''}" th:text="해당없음"></td>
+					</tr>
 
-				<tr>
-					<td>성적표 / 시험 번호</td>
-					<td th:if="${languagesList.test != ''}"
-						th:text="${languagesList.certificatenumber}"></td>
-					<td th:unless="${languagesList.test != ''}" th:text="해당없음"></td>
-				</tr>
+				</tbody>
 
-			</tbody>
+				<tbody th:unless="${languagesList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
 
-			<tbody th:unless="${languagesList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">해외경험</th>
+				</thead>
+				<tbody th:if="${oeList != null}" th:each="oeList : ${oeList}" class="tablebody">
+					<tr>
+						<td th:text="${oeListStat.index + 1}" rowspan="4"
+							class="indexprint"></td>
+						<td class="column1st">국가</td>
+						<td class="borderleft">| </td>
+						<td th:text="${oeList.country}"></td>
+					</tr>
 
-		<table>
-			<thead>
-				<th class="table_head">해외경험</th>
-			</thead>
-			<tbody th:if="${oeList != null}" th:each="oeList : ${oeList}">
-				<tr>
-					<td th:text="${oeListStat.index + 1}" rowspan="4"
-						class="indexprint"></td>
-					<td>국가</td>
-					<td th:text="${oeList.country}"></td>
-				</tr>
+					<tr>
+						<td>해외 체류 기간</td>
+						<td class="borderleft">| </td>
+						<td th:text="${oeList.start} + ' ~ ' + ${oeList.end}"></td>
+					</tr>
 
-				<tr>
-					<td>해외 체류 기간</td>
-					<td th:text="${oeList.start} + ' ~ ' + ${oeList.end}"></td>
-				</tr>
+					<tr>
+						<td>세부 경험 내용</td>
+						<td class="borderleft">| </td>
+						<td><pre th:text="${oeList.detail}" class="details"></pre></td>
+					</tr>
 
-				<tr>
-					<td>세부 경험 내용</td>
-					<td th:text="${oeList.detail}"></td>
-				</tr>
+					<tr>
+						<td>현재 체류 여부</td>
+						<td class="borderleft">| </td>
+						<td th:if="${oeList.staying == 'staying'}">체류 중</td>
+						<td th:if="${oeList.staying == 'back'}">체류 중 아님</td>
+					</tr>
 
-				<tr>
-					<td>현재 체류 여부</td>
-					<td th:if="${oeList.staying == 'staying'}">체류 중</td>
-					<td th:if="${oeList.staying == 'back'}">체류 중 아님</td>
-				</tr>
+				</tbody>
 
-			</tbody>
+				<tbody th:unless="${oeList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
 
-			<tbody th:unless="${oeList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
+			<table class="contenttable table">
+				<thead>
+					<th class="table_head">포트폴리오</th>
+				</thead>
+				<tbody th:if="${portfolioList != null}"
+					th:each="portfolioList : ${portfolioList}" class="tablebody">
+					<tr>
+						<td th:text="${portfolioListStat.index + 1}" rowspan="4"
+							class="indexprint"></td>
+						<td class="column1st">제목</td>
+						<td class="borderleft">| </td>
+						<td th:text="${portfolioList.title}"></td>
+					</tr>
 
-		<table>
-			<thead>
-				<th class="table_head">포트폴리오</th>
-			</thead>
-			<tbody th:if="${portfolioList != null}"
-				th:each="portfolioList : ${portfolioList}">
-				<tr>
-					<td th:text="${portfolioListStat.index + 1}" rowspan="3"
-						class="indexprint"></td>
-					<td>제목</td>
-					<td th:text="${portfolioList.title}"></td>
-				</tr>
+					<tr>
+						<td>URL1</td>
+						<td class="borderleft">| </td>
+						<td th:text="${portfolioList.url1}"></td>
+					</tr>
 
-				<tr>
-					<td>URL1</td>
-					<td th:text="${portfolioList.url1}"></td>
-				</tr>
+					<tr>
+						<td>URL2</td>
+						<td class="borderleft">| </td>
+						<td th:text="${portfolioList.url2}"></td>
+					</tr>
 
-				<tr>
-					<td>URL2</td>
-					<td th:text="${portfolioList.url2}"></td>
-				</tr>
+					<!--  누르면 파일 다운로드 설정 예정 -->
+					<tr>
+						<td>포트폴리오 파일</td>
+						<td class="borderleft">| </td>
+						<td th:text="${portfolioList.url2}"></td>
+					</tr>
 
-				<!--  누르면 파일 다운로드 설정 예정 -->
-				<tr>
-					<td>포트폴리오 파일</td>
-					<td th:text="${portfolioList.url2}"></td>
-				</tr>
+				</tbody>
 
-			</tbody>
+				<tbody th:unless="${portfolioList != null}">
+					<tr>
+						<td>내용 없음</td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table id="buttons">
+				<tbody>
+					<tr>
+						<td class="blankcol"></td>
+						<td class="buttoncol">
+							<button id="revise_button" class="btn btn-primary" th:resumeId="${resume.id}"
+								th:onclick="toRevise(this.getAttribute('resumeId'))">수정하기</button>
+						</td>
+						<td class="blankcol"></td>
+						<td class="blankcol"></td>
+						<td class="buttoncol">
+							<button id="back_button" class="btn btn-outline-primary" onClick="back()">돌아가기</button>
+						</td>
+						<td class="blankcol"></td>
+					</tr>
+				</tbody>
+			</table>
 
-			<tbody th:unless="${portfolioList != null}">
-				<tr>
-					<td>내용 없음</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<table>
-			<tbody>
-				<tr>
-					<td>
-						<button id="revise_button" th:resumeId="${resume.id}"
-							th:onclick="toRevise(this.getAttribute('resumeId'))">수정하기</button>
-					</td>
-					<td>
-						<button id="back_button" onClick="back()">돌아가기</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
+		</div>
 	</div>
 
 	<!-- Footer 제작 공간 -->

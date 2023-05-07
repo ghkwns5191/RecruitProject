@@ -2,19 +2,19 @@
 
 
 #resume_img {
-	width: 100px;
-	height: 140px;
+	width: 130px;
+	height: 180px;
 }
 
 .table_head {
 	text-align: left;
-	
+	width: 100px;
 }
 
 table {
-	width: 650px;
-	margin-bottom: 40px;
-	border-bottom: black 2.5px solid;
+	width: 800px;
+	margin-top: 60px;
+	
 }
 
 .indexprint {
@@ -23,6 +23,52 @@ table {
 
 .tablebody {
 	margin-bottom: 40px;
+	border-top: 0.25px lightgray solid;
 }
+
+#text_resumetitle {
+	font-size: 20px;
+}
+
+#resume_title {
+	margin-top: 30px;
+}
+
+.details {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 13px;
+}
+
+.column1st {
+	width: 130px;
+}
+.borderleft {
+	color: lightgray;
+	width: 10px;
+}
+
+.contenttable {
+	font-size: 13px;
+	width: 800px;
+}
+
+#imgfilepart {
+	width: 150px;
+}
+
+.blankcol {
+	width: 150px;
+}
+
+.buttoncol {
+	width: 100px;
+	height: 50px;
+}
+
+
+
+
+
+
 
 

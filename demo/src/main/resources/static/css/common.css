@@ -5,15 +5,29 @@
 	padding: 0;
 	font-family: 'Noto Sans KR', sans-serif;
 	text-decoration-line: none;
+	
+}
+
+
+header {
+	color: white;
 }
 
 
 #navbarhead {
-	background-color: grey;
+	background-color: #0d62fd;
 	width: 1000px;
 	font-size: 1.25rem;
 	border-radius: 20px;
 	
+}
+
+.navbar-nav .nav-link {
+    color: white; /* 내부 글자 색상을 빨간색으로 변경 */
+}
+
+.navbar-nav .nav-link:hover {
+	color: #ffc107;
 }
 
 #logoimg {

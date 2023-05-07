@@ -1,1 +1,19 @@
 @charset "UTF-8";
+
+.details {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 13px;
+}
+
+.blankcol {
+	width: 150px;
+}
+
+.buttoncol {
+	width: 100px;
+	height: 50px;
+}
+
+#buttons {
+    margin-top: 50px;
+}

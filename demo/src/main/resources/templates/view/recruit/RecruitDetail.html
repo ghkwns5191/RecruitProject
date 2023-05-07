@@ -29,21 +29,20 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-						<li class="nav-item"><a class="nav-link active"
+						<li class="nav-item"><a class="nav-link"
 							aria-current="page" href="/recruitpage/list">채용공고</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">기업리뷰</a></li>
-						<li class="nav-item"><a class="nav-link disabled">Disabled</a>
-						</li>
+						<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>
+
 					</ul>
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 						<li class="nav-item" sec:authorize="isAnonymous()"><a
-							class="nav-link active" aria-current="page" href="/login">로그인</a></li>
+							class="nav-link" aria-current="page" href="/login">로그인</a></li>
 						<li class="nav-item" sec:authorize="isAnonymous()"><a
-							class="nav-link active" aria-current="page" href="/join">회원가입</a></li>
+							class="nav-link" aria-current="page" href="/join">회원가입</a></li>
 						<li class="nav-item" sec:authorize="isAuthenticated()"><a
-							class="nav-link active" aria-current="page" href="/logout">로그아웃</a></li>
+							class="nav-link" aria-current="page" href="/logout">로그아웃</a></li>
 						<li class="nav-item" sec:authorize="isAuthenticated()"><a
-							class="nav-link active" aria-current="page" href="/logout">마이페이지</a></li>
+							class="nav-link" aria-current="page" href="/mypage">마이페이지</a></li>
 					</ul>
 				</div>
 			</div>
@@ -51,8 +50,8 @@
 	</header>
 
 	<!-- 본문 -->
-	<div th:fragment="content">
-		<table>
+	<div th:fragment="content" style="display: table; margin: auto; width: 800px;">
+		<table class="table">
 			<thead>
 				<th th:text="${recruit.title}" colspan="2"></th>
 			</thead>
@@ -96,7 +95,7 @@
 
 				<tr>
 					<td>상세정보</td>
-					<td><pre th:text="${recruit.detail}"></pre></td>
+					<td><pre th:text="${recruit.detail}" class="details"></pre></td>
 				</tr>
 
 				<tr>
@@ -117,7 +116,7 @@
 			</tbody>
 		</table>
 
-		<table>
+		<table class="table">
 			<thead>
 				<th colspan="2">기업정보</th>
 			</thead>
@@ -146,22 +145,38 @@
 
 		</table>
 
-		<table id="buttons">
+		<table th:if="${principal} != null and ${sort} == 'individual'" id="buttons">
 			<tbody>
-				<tr th:if="${principal} != null and ${sort} == 'individual' ">
-					<td th:if="${apply} == null"><button type="button"
-							th:recruitId="${recruit.id}"
-							th:onclick="applyto(this.getAttribute('recruitId'))">지원하기</button></td>
-					<td th:unless="${apply} == null"><button type="button"
-							disabled>지원완료</button></td>
-
-
-				</tr>
-
 				<tr>
+					<td class="blankcol"></td>
+					<td th:if="${apply} == null" class="buttoncol">
+						<button id="revise_button" type="button"
+						th:recruitId="${recruit.id}"
+						th:onclick="applyto(this.getAttribute('recruitId'))" class="btn btn-primary">지원하기</button>
+					</td>
 
-					<td><button type="button" th:onclick="bakctoList()">돌아가기</button></td>
+					<td th:unless="${apply} == null" class="buttoncol">
+						<button id="revise_button" type="button"
+						class="btn btn-primary" disabled>지원완료</button>
+					</td>
 
+					<td class="blankcol"></td>
+					<td class="blankcol"></td>
+					<td class="buttoncol">
+						<button id="back_button" class="btn btn-outline-primary" onClick="bakctoList()">돌아가기</button>
+					</td>
+					<td class="blankcol"></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table th:unless="${principal} != null and ${sort} == 'individual'" id="buttons">
+			<tbody>
+				
+				<tr>
+					<td class="sidecol"></td>
+					<td class="centercol"><button type="button" class="btn btn-outline-primary" th:onclick="bakctoList()">돌아가기</button></td>
+					<td class="sidecol"></td>
 
 				</tr>
 			</tbody>
