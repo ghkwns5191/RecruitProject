@@ -1,40 +1,23 @@
 @charset "UTF-8";
 
-#sidebar {
-
-	
-	list-style-type: none;
-}
-
-#sidebar li {
-	justify-content: center;
-	text-align: center;
-	height: 30px;
-	background-color: lightgrey;
-	width: 220px;
-}
-
-#sidebar li:hover {
-	justify-content: center;
-	height: 30px;
-	background-color: grey;
-	width: 220px;
-	cursor: pointer;
-	text-align: center;
-}
-
 #contenttable {
 	margin-top: 80px;
-	border: solid black 0.25px;
+	font-size: 13px;
+	
 }
 
-#contenttable td {
-	height: 60px;
+#contenttable tbody tr td {
+	height: 20px;
+
+}
+
+#tablebody {
+	border-top: 2px solid darkgrey;
 }
 
 #contenttable .col1st {
 	width: 120px;
-	background-color: lightgrey;
+	
 	padding: 14px;
 }
 
@@ -43,4 +26,16 @@
 	padding: 14px;
 }
 
+.blankcol {
+	width: 150px;
+}
+
+.buttoncol {
+	width: 100px;
+	height: 50px;
+}
+
+#buttons {
+    margin-top: 50px;
+}
 

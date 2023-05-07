@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http:www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http:www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<link th:href="@{/css/common.css}" rel="stylesheet">
-<link th:href="@{/css/AccountInfo.css}" rel="stylesheet">
-<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
-<meta charset="UTF-8">
-<title>마이페이지 - 회원 정보 조회</title>
+	<link th:href="@{/css/common.css}" rel="stylesheet">
+	<link th:href="@{/css/AccountInfo.css}" rel="stylesheet">
+	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>마이페이지 - 회원 정보 조회</title>
 </head>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+
 <body>
 
 	<div style="display: table; margin: auto;">
@@ -18,94 +18,111 @@
 		<header>
 
 			<a href="/"><img th:src="@{/img/Logo1.svg}" id="logoimg"></a>
-	
+
 			<nav class="navbar navbar-expand-lg" id="navbarhead">
 				<div class="container-fluid">
-	
-					<button class="navbar-toggler" type="button"
-						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
+
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item"><a class="nav-link"
-								aria-current="page" href="/recruitpage/list">채용공고</a></li>
+							<li class="nav-item"><a class="nav-link" aria-current="page"
+									href="/recruitpage/list">채용공고</a></li>
 							<li class="nav-item"><a class="nav-link" href="/notice/list">공지사항</a></li>
-	
+
 						</ul>
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item" sec:authorize="isAnonymous()"><a
-								class="nav-link" aria-current="page" href="/login">로그인</a></li>
-							<li class="nav-item" sec:authorize="isAnonymous()"><a
-								class="nav-link" aria-current="page" href="/join">회원가입</a></li>
-							<li class="nav-item" sec:authorize="isAuthenticated()"><a
-								class="nav-link" aria-current="page" href="/logout">로그아웃</a></li>
-							<li class="nav-item" sec:authorize="isAuthenticated()"><a
-								class="nav-link" aria-current="page" href="/mypage">마이페이지</a></li>
+							<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" aria-current="page"
+									href="/login">로그인</a></li>
+							<li class="nav-item" sec:authorize="isAnonymous()"><a class="nav-link" aria-current="page"
+									href="/join">회원가입</a></li>
+							<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+									aria-current="page" href="/logout">로그아웃</a></li>
+							<li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link"
+									aria-current="page" href="/mypage">마이페이지</a></li>
 						</ul>
 					</div>
 				</div>
 			</nav>
 		</header>
 
-		<ul id="sidebar" style="display: flex; margin: auto;">
-			<li>회원정보</li>
-			<li>이력서</li>
-			<li>지원 내역</li>
-		</ul>
+		<div style="display: table; margin: auto; width: 800px;">
+			<!-- 본문 회원 계정 정보 -->
+			<table id="contenttable" class="table">
+				<thead>
+					<th>회원 정보</th>
+				</thead>
 
-		<!-- 본문 회원 계정 정보 -->
-		<table id="contenttable">
-			<thead>
+				<tbody id="tablebody">
+					<tr>
+						<td class="col1st">아이디</td>
+						<td id="username" class="col2nd"></td>
+					</tr>
 
-			</thead>
+					<tr>
+						<td class="col1st">회원구분</td>
+						<td id="sort" class="col2nd"></td>
+					</tr>
 
-			<tbody>
-				<tr>
-					<td class="col1st">아이디</td>
-					<td id="username" class="col2nd"></td>
-				</tr>
+					<tr>
+						<td class="col1st">회원 이름</td>
+						<td id="name" class="col2nd"></td>
+					</tr>
 
-				<tr>
-					<td class="col1st">회원구분</td>
-					<td id="sort" class="col2nd"></td>
-				</tr>
+					<tr>
+						<td class="col1st">전화번호</td>
+						<td id="phone" class="col2nd"></td>
+					</tr>
 
-				<tr>
-					<td class="col1st">회원 이름</td>
-					<td id="name" class="col2nd"></td>
-				</tr>
+					<tr>
+						<td class="col1st">이메일</td>
+						<td id="email" class="col2nd"></td>
+					</tr>
 
-				<tr>
-					<td class="col1st">전화번호</td>
-					<td id="phone" class="col2nd"></td>
-				</tr>
+					<tr>
+						<td class="col1st">생년월일</td>
+						<td id="birthday" class="col2nd"></td>
+					</tr>
 
-				<tr>
-					<td class="col1st">이메일</td>
-					<td id="email" class="col2nd"></td>
-				</tr>
+					<tr>
+						<td class="col1st" rowspan="2">주소</td>
+						<td id="address1" class="col2nd"></td>
+					</tr>
 
-				<tr>
-					<td class="col1st">생년월일</td>
-					<td id="birthday" class="col2nd"></td>
-				</tr>
+					<tr>
+						
+						<td id="address2" class="col2nd"></td>
+					</tr>
 
-				<tr>
-					<td class="col1st">주소</td>
-					<td id="address" class="col2nd"></td>
-				</tr>
+					<tr>
+						<td class="col1st">가입일</td>
+						<td id="registerdate" class="col2nd"></td>
+					</tr>
+				</tbody>
+			</table>
 
-				<tr>
-					<td class="col1st">가입일</td>
-					<td id="registerdate" class="col2nd"></td>
-				</tr>
-			</tbody>
-		</table>
+			<table id="buttons">
+				<tbody>
+					<tr>
+						<td class="blankcol"></td>
+						<td class="buttoncol">
+							<button id="revise_button" class="btn btn-primary"
+								th:onclick="toRevise()">수정하기</button>
+						</td>
+						<td class="blankcol"></td>
+						<td class="blankcol"></td>
+						<td class="buttoncol">
+							<button id="back_button" class="btn btn-outline-primary" onClick="back()">돌아가기</button>
+						</td>
+						<td class="blankcol"></td>
+					</tr>
+				</tbody>
+			</table>
 
-
+		</div>
 
 		<!-- Footer 제작 공간 -->
 		<footer>
@@ -113,12 +130,12 @@
 		</footer>
 	</div>
 </body>
+
 </html>
 <script th:inline="javascript">
-	
+
 </script>
 <script type="application/javascript" th:src="@{/js/AccountInfo.js}"></script>
 
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"
 	rel="stylesheet">
