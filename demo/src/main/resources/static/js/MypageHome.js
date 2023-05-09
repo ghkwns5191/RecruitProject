@@ -17,3 +17,11 @@ function tonewresume() {
 function recruitapply(id) {
     location.href="/mypage/company/recruit/detail/" + id;
 }
+
+function applylist() {
+    location.href="/mypage/user/applyinfo";
+}
+
+function back() {
+    history.go(-1);
+}

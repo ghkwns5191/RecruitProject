@@ -40,7 +40,7 @@ function revise() {
                 location.href = '/mypage';
                 
             } else {
-                console.log("else 절 작동?")
+                
                 window.alert("비밀번호가 틀렸습니다.");
             }
         },
@@ -50,3 +50,4 @@ function revise() {
         }
     });
 }
+

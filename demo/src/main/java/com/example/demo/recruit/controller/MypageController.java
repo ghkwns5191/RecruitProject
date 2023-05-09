@@ -165,10 +165,13 @@ public class MypageController {
                     model.addAttribute("imgurl", imgurl);
 
                 } else if (user.getSort().equals("company")) {
-                    List<Recruit> recruitList = this.recruitService.getRecruit5(user);
+                    List<Recruit> recruitList = this.recruitService.getRecruit5(user);              
                     model.addAttribute("recruitList", recruitList);
                     model.addAttribute("recruitLength", recruitList.size());
                     List<Integer> applynum = this.applyService.getApplynum(recruitList);
+                    for (int i = 0; i < applynum.size(); i++) {
+                        System.out.println(applynum.get(i));
+                    }
                     model.addAttribute("applynum", applynum);
                 }
                 url = "/view/mypage/MypageHome";
@@ -368,6 +371,9 @@ public class MypageController {
 
             if (resume.getMember() == member && resume != null) {
                 model.addAttribute("member", member);
+                String[] addarr = this.memberService.getaddress(member);
+                model.addAttribute("address1", addarr[0]);
+                model.addAttribute("address2", addarr[1]);
 
                 model.addAttribute("resume", resume);
                 if (academicList != null)
@@ -399,13 +405,7 @@ public class MypageController {
                     }
                     model.addAttribute("urlList", urlList);
                     model.addAttribute("portfolioList", portfolioList);
-                }
-                String[] addarr = this.memberService.getaddress(member);
-                model.addAttribute("add1", addarr[0]);
-                model.addAttribute("add2", addarr[1]);
-
-                System.out.println("add1 : " + addarr[0]);
-                System.out.println("add2 : " + addarr[1]);
+                }           
 
             }
 
