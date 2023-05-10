@@ -94,4 +94,17 @@ public class AcademicController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    // 이력서 id 기준으로 학력정보 조회하기
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Academic>> getList(@PathVariable("id") Long id) {
+    	try {
+			Resume resume = this.resumeService.getResume(id);
+			List<Academic> academicList = this.academicService.getacademic(resume);
+			return new ResponseEntity<>(academicList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 }

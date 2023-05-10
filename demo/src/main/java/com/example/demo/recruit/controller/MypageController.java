@@ -74,482 +74,520 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MypageController {
 
-    @Autowired
-    private final MemberService memberService;
+	@Autowired
+	private final MemberService memberService;
 
-    @Autowired
-    private final ResumeService resumeService;
+	@Autowired
+	private final ResumeService resumeService;
 
-    @Autowired
-    private final ImgfileService imgfileService;
+	@Autowired
+	private final ImgfileService imgfileService;
 
-    @Autowired
-    private final AcademicService academicService;
+	@Autowired
+	private final AcademicService academicService;
 
-    @Autowired
-    private final ActivityService activityService;
+	@Autowired
+	private final ActivityService activityService;
 
-    @Autowired
-    private final CareerService careerService;
+	@Autowired
+	private final CareerService careerService;
 
-    @Autowired
-    private final CertificateService certificateService;
+	@Autowired
+	private final CertificateService certificateService;
 
-    @Autowired
-    private final EducationService educationService;
+	@Autowired
+	private final EducationService educationService;
 
-    @Autowired
-    private final LanguagesService LanguageService;
+	@Autowired
+	private final LanguagesService LanguageService;
 
-    @Autowired
-    private final OverseasexperienceService oeService;
+	@Autowired
+	private final OverseasexperienceService oeService;
 
-    @Autowired
-    private final PortfolioService portfolioService;
+	@Autowired
+	private final PortfolioService portfolioService;
 
-    @Autowired
-    private final ApplyService applyService;
+	@Autowired
+	private final ApplyService applyService;
 
-    @Autowired
-    private final RecruitService recruitService;
+	@Autowired
+	private final RecruitService recruitService;
 
-    @Autowired
-    private final PortfoliofileService portfoliofileService;
+	@Autowired
+	private final PortfoliofileService portfoliofileService;
 
-    @Autowired
-    private final AcademicApplyService academicApplyService;
+	@Autowired
+	private final AcademicApplyService academicApplyService;
 
-    @Autowired
-    private final ActivityApplyService activityApplyService;
+	@Autowired
+	private final ActivityApplyService activityApplyService;
 
-    @Autowired
-    private final CareerApplyService careerApplyService;
+	@Autowired
+	private final CareerApplyService careerApplyService;
 
-    @Autowired
-    private final CertificateApplyService certificateApplyService;
+	@Autowired
+	private final CertificateApplyService certificateApplyService;
 
-    @Autowired
-    private final EducationApplyService educationApplyService;
+	@Autowired
+	private final EducationApplyService educationApplyService;
 
-    @Autowired
-    private final ImgfileApplyService imgfileApplyService;
+	@Autowired
+	private final ImgfileApplyService imgfileApplyService;
 
-    @Autowired
-    private final LanguagesApplyService languagesApplyService;
+	@Autowired
+	private final LanguagesApplyService languagesApplyService;
 
-    @Autowired
-    private final OverseasexperienceApplyService overseasexperienceApplyService;
+	@Autowired
+	private final OverseasexperienceApplyService overseasexperienceApplyService;
 
-    @Autowired
-    private final PortfolioApplyService portfolioApplyService;
+	@Autowired
+	private final PortfolioApplyService portfolioApplyService;
 
-    @GetMapping(value = { "", "/" })
-    public ModelAndView mypagehome(Principal principal, Map<String, Object> check, Model model) {
-        String url = "";
-        try {
-            if (principal != null) {
-                Member user = this.memberService.getMemberinfo(principal.getName());
-                model.addAttribute("member", user);
-                model.addAttribute("sort", user.getSort());
-                model.addAttribute("name", user.getName());
-                if (user.getSort().equals("individual")) {
-                    List<Apply> applyList = this.applyService.getapply5(user);
-                    Resume resume = this.resumeService.getResume(user);
-                    List<Recruit> recruitList = this.recruitService.getList(applyList);
-                    Imgfile imgfile = this.imgfileService.getimgfile(resume);
-                    String imgurl = imgfile.getImgurl();
-                    model.addAttribute("applyList", applyList);
-                    model.addAttribute("applyLength", applyList.size());
-                    model.addAttribute("resume", resume);
-                    model.addAttribute("recruitList", recruitList);
-                    model.addAttribute("imgurl", imgurl);
+	@GetMapping(value = { "", "/" })
+	public ModelAndView mypagehome(Principal principal, Map<String, Object> check, Model model) {
+		String url = "";
+		try {
+			if (principal != null) {
+				Member user = this.memberService.getMemberinfo(principal.getName());
+				model.addAttribute("member", user);
+				model.addAttribute("sort", user.getSort());
+				model.addAttribute("name", user.getName());
+				if (user.getSort().equals("individual")) {
+					List<Apply> applyList = this.applyService.getapply5(user);
+					Resume resume = this.resumeService.getResume(user);
+					List<Recruit> recruitList = this.recruitService.getList(applyList);
+					Imgfile imgfile = this.imgfileService.getimgfile(resume);
+					String imgurl = imgfile.getImgurl();
+					model.addAttribute("applyList", applyList);
+					model.addAttribute("applyLength", applyList.size());
+					model.addAttribute("resume", resume);
+					model.addAttribute("recruitList", recruitList);
+					model.addAttribute("imgurl", imgurl);
 
-                } else if (user.getSort().equals("company")) {
-                    List<Recruit> recruitList = this.recruitService.getRecruit5(user);              
-                    model.addAttribute("recruitList", recruitList);
-                    model.addAttribute("recruitLength", recruitList.size());
-                    List<Integer> applynum = this.applyService.getApplynum(recruitList);
-                    for (int i = 0; i < applynum.size(); i++) {
-                        System.out.println(applynum.get(i));
-                    }
-                    model.addAttribute("applynum", applynum);
-                }
-                url = "/view/mypage/MypageHome";
-            } else {
-                check.put("check", true);
-                url = "/view/Login";
-            }
-            return new ModelAndView(url);
-        } catch (Exception e) {
-            e.printStackTrace();
-            url = "/view/Home";
-            return new ModelAndView(url);
-        }
+				} else if (user.getSort().equals("company")) {
+					List<Recruit> recruitList = this.recruitService.getRecruit5(user);
+					model.addAttribute("recruitList", recruitList);
+					model.addAttribute("recruitLength", recruitList.size());
+					List<Integer> applynum = this.applyService.getApplynum(recruitList);
+					for (int i = 0; i < applynum.size(); i++) {
+						System.out.println(applynum.get(i));
+					}
+					model.addAttribute("applynum", applynum);
+				}
+				url = "/view/mypage/MypageHome";
+			} else {
+				check.put("check", true);
+				url = "/view/Login";
+			}
+			return new ModelAndView(url);
+		} catch (Exception e) {
+			e.printStackTrace();
+			url = "/view/Home";
+			return new ModelAndView(url);
+		}
 
-    }
+	}
 
-    @GetMapping("/accountinfo")
-    public ModelAndView accountinfo(Principal principal, Map<String, Object> check) {
-        try {
-            String username = principal.getName();
-            System.out.println(username);
-            return new ModelAndView("/view/mypage/AccountInfo");
-        } catch (NullPointerException e) {
-            check.put("check", true);
-            return new ModelAndView("/view/Login");
-        }
+	@GetMapping("/accountinfo")
+	public ModelAndView accountinfo(Principal principal, Map<String, Object> check) {
+		try {
+			String username = principal.getName();
+			System.out.println(username);
+			return new ModelAndView("/view/mypage/AccountInfo");
+		} catch (NullPointerException e) {
+			check.put("check", true);
+			return new ModelAndView("/view/Login");
+		}
 
-    }
+	}
 
-    @GetMapping("/account/revise")
-    public ModelAndView accountrevise(Principal principal, Map<String, Object> check, Model model) {
-        String url = "";
-        if (principal != null) {
-            Member member = this.memberService.getMemberinfo(principal.getName()); 
-            String[] address = this.memberService.getaddress(member);
-            model.addAttribute("member", member);
-            model.addAttribute("address1", address[0]);
-            model.addAttribute("address2", address[1]);
-            url = "/view/mypage/AccountRevise";
-            
-        } else {
-            check.put("check", true);
-            url = "/view/Login";    
-        }
-        return new ModelAndView(url);
-    }
+	@GetMapping("/account/revise")
+	public ModelAndView accountrevise(Principal principal, Map<String, Object> check, Model model) {
+		String url = "";
+		if (principal != null) {
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			String[] address = this.memberService.getaddress(member);
+			model.addAttribute("member", member);
+			model.addAttribute("address1", address[0]);
+			model.addAttribute("address2", address[1]);
+			url = "/view/mypage/AccountRevise";
 
-    @GetMapping("/user/resume")
-    public ModelAndView resumeList(Model model, Principal principal, Map<String, Object> check) {
-        try {
+		} else {
+			check.put("check", true);
+			url = "/view/Login";
+		}
+		return new ModelAndView(url);
+	}
 
-            String username = principal.getName();
-            System.out.println(username);
-            Member member = memberService.getMember(username);
-            System.out.println(member);
-            Resume resume = resumeService.getResume(member);
-            System.out.println(resume);
-            if (imgfileService.getimgfile(resume) != null) {
-                Imgfile imgfile = imgfileService.getimgfile(resume);
-                String imgurl = imgfile.getImgurl();
-                model.addAttribute("imgurl", imgurl);
-                System.out.println(imgfile.getImgurl());
-            }
-            model.addAttribute("resume", resume);
+	@GetMapping("/user/resume")
+	public ModelAndView resumeList(Model model, Principal principal, Map<String, Object> check) {
+		try {
 
-            return new ModelAndView("/view/mypage/Resume");
-        } catch (NullPointerException e) {
-            check.put("check", true);
-            return new ModelAndView("view/Login");
-        }
-    }
+			String username = principal.getName();
+			System.out.println(username);
+			Member member = memberService.getMember(username);
+			System.out.println(member);
+			Resume resume = resumeService.getResume(member);
+			System.out.println(resume);
+			if (imgfileService.getimgfile(resume) != null) {
+				Imgfile imgfile = imgfileService.getimgfile(resume);
+				String imgurl = imgfile.getImgurl();
+				model.addAttribute("imgurl", imgurl);
+				System.out.println(imgfile.getImgurl());
+			}
+			model.addAttribute("resume", resume);
 
-    @GetMapping("/user/resume/detail/{id}")
-    public ModelAndView resumeList(@PathVariable Long id, Model model, Principal principal, Map<String, Object> check) {
-        try {
+			return new ModelAndView("/view/mypage/Resume");
+		} catch (NullPointerException e) {
+			check.put("check", true);
+			return new ModelAndView("view/Login");
+		}
+	}
 
-            String username = principal.getName();
-            System.out.println(username);
-            Member member = memberService.getMember(username);
-            System.out.println(member);
-            Resume resume = resumeService.getResume(id);
-            System.out.println(resume);
-            List<Academic> academicList = this.academicService.getacademic(resume);
-            List<Activity> activityList = this.activityService.getactivity(resume);
-            List<Career> careerList = this.careerService.getcareer(resume);
-            List<Certificate> certificateList = this.certificateService.getcertificate(resume);
-            List<Education> educationList = this.educationService.geteducation(resume);
-            List<Languages> languagesList = this.LanguageService.getlanguages(resume);
-            List<Overseasexperience> oeList = this.oeService.getoverseasexperience(resume);
-            List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
+	@GetMapping("/user/resume/detail/{id}")
+	public ModelAndView resumeList(@PathVariable Long id, Model model, Principal principal, Map<String, Object> check,
+			Map<String, Integer> lengthinfo) {
+		try {
 
-            if (imgfileService.getimgfile(resume) != null) {
-                Imgfile imgfile = imgfileService.getimgfile(resume);
-                String imgurl = imgfile.getImgurl();
-                model.addAttribute("imgurl", imgurl);
-                System.out.println(imgfile.getImgurl());
+			String username = principal.getName();
+			System.out.println(username);
+			Member member = memberService.getMember(username);
+			System.out.println(member);
+			Resume resume = resumeService.getResume(id);
+			System.out.println(resume);
+			List<Academic> academicList = this.academicService.getacademic(resume);
+			List<Activity> activityList = this.activityService.getactivity(resume);
+			List<Career> careerList = this.careerService.getcareer(resume);
+			List<Certificate> certificateList = this.certificateService.getcertificate(resume);
+			List<Education> educationList = this.educationService.geteducation(resume);
+			List<Languages> languagesList = this.LanguageService.getlanguages(resume);
+			List<Overseasexperience> oeList = this.oeService.getoverseasexperience(resume);
+			List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
 
-            }
+			if (imgfileService.getimgfile(resume) != null) {
+				Imgfile imgfile = imgfileService.getimgfile(resume);
+				String imgurl = imgfile.getImgurl();
+				model.addAttribute("imgurl", imgurl);
+				System.out.println(imgfile.getImgurl());
 
-            if (resume.getMember() == member && resume != null) {
-                model.addAttribute("member", member);
-                model.addAttribute("resume", resume);
+			}
 
-                String[] addarr = this.memberService.getaddress(member);
-                model.addAttribute("add1", addarr[0]);
-                model.addAttribute("add2", addarr[1]);
+			if (resume.getMember() == member && resume != null) {
+				model.addAttribute("member", member);
+				model.addAttribute("resume", resume);
 
-                if (academicList != null)
-                    model.addAttribute("academicList", academicList);
-                if (activityList != null)
-                    model.addAttribute("activityList", activityList);
-                if (careerList != null)
-                    model.addAttribute("careerList", careerList);
-                if (certificateList != null)
-                    model.addAttribute("certificateList", certificateList);
-                if (educationList != null)
-                    model.addAttribute("educationList", educationList);
-                if (languagesList != null)
-                    model.addAttribute("languagesList", languagesList);
-                if (oeList != null)
-                    model.addAttribute("oeList", oeList);
-                if (portfolioList != null) {
-                    List<String> urlList = new ArrayList<>();
-                    for (int i = 0; i < portfolioList.size(); i++) {
-                        String url = "";
-                        if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
-                            Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
-                            url = portfoliofile.getFileurl();
-                        } else {
-                            url = "";
-                        }
+				String[] addarr = this.memberService.getaddress(member);
+				model.addAttribute("add1", addarr[0]);
+				model.addAttribute("add2", addarr[1]);
 
-                        urlList.add(url);
-                    }
-                    model.addAttribute("urlList", urlList);
-                    model.addAttribute("portfolioList", portfolioList);
-                }
-            }
+				if (academicList != null) {
+					model.addAttribute("academicList", academicList);
+					lengthinfo.put("academicLength", academicList.size());
+				} else {
+					lengthinfo.put("academicLength", 0);
+				}
 
-            return new ModelAndView("/view/mypage/ResumeDetail");
+				if (activityList != null) {
+					model.addAttribute("activityList", activityList);
+					lengthinfo.put("activityLength", activityList.size());
+				} else {
+					lengthinfo.put("activityLength", 0);
+				}
 
-        } catch (NullPointerException e) {
-            /*
-             * principal 이 null 로 되어있으면 (계정 접속이 되어있지 않으면)
-             * NullPointerException 발생시켜서 check 값을 true로 전송
-             * check 값이 true 가 되면 경고문 발생과 함께 로그인 페이지로 이동.
-             */
-            check.put("check", true);
-            return new ModelAndView("view/Login");
-        }
-    }
+				if (careerList != null) {
+					model.addAttribute("careerList", careerList);
+					lengthinfo.put("careerLength", careerList.size());
+				} else {
+					lengthinfo.put("careerLength", 0);
+				}
 
-    @GetMapping("/error")
-    public ResponseEntity errorMsg(Principal principal) {
-        if (principal == null) {
-            return new ResponseEntity("로그인이 필요한 페이지 입니다.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity(null, HttpStatus.OK);
-        }
-    }
+				if (certificateList != null) {
+					model.addAttribute("certificateList", certificateList);
+					lengthinfo.put("certificateLength", certificateList.size());
+				} else {
+					lengthinfo.put("certificateLength", 0);
+				}
 
-    @GetMapping("/user/resume/new")
-    public ModelAndView newResume(Model model, Principal principal, Map<String, Object> check) {
-        try {
-            String username = principal.getName();
-            System.out.println("작동함?");
-            model.addAttribute("resumeDto", new ResumeDto());
-            model.addAttribute("username", username);
-            return new ModelAndView("/view/mypage/NewResume");
-        } catch (NullPointerException e) {
-            check.put("check", true);
-            return new ModelAndView("view/Login");
-        }
-    }
+				if (educationList != null) {
+					model.addAttribute("educationList", educationList);
+					lengthinfo.put("educationLength", educationList.size());
+				} else {
+					lengthinfo.put("educationLength", 0);
+				}
 
-    @GetMapping("/user/resume/revise/{id}")
-    public ModelAndView forupdateResume(@PathVariable("id") Long id, Model model, Principal principal,
-            Map<String, Object> check) {
-        if (principal != null) {
-            Member member = this.memberService.getMemberinfo(principal.getName());
-            Resume resume = this.resumeService.getResume(id);
-            model.addAttribute("resume", resume);
-            List<Academic> academicList = this.academicService.getacademic(resume);
-            List<Activity> activityList = this.activityService.getactivity(resume);
-            List<Career> careerList = this.careerService.getcareer(resume);
-            List<Certificate> certificateList = this.certificateService.getcertificate(resume);
-            List<Education> educationList = this.educationService.geteducation(resume);
-            List<Languages> languagesList = this.LanguageService.getlanguages(resume);
-            List<Overseasexperience> oeList = this.oeService.getoverseasexperience(resume);
-            List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
+				if (languagesList != null) {
+					model.addAttribute("languagesList", languagesList);
+					lengthinfo.put("languagesLength", languagesList.size());
+				} else {
+					lengthinfo.put("languagesLength", 0);
+				}
 
-            if (imgfileService.getimgfile(resume) != null) {
-                Imgfile imgfile = imgfileService.getimgfile(resume);
-                String imgurl = imgfile.getImgurl();
-                model.addAttribute("imgurl", imgurl);
-            }
+				if (oeList != null) {
+					model.addAttribute("oeList", oeList);
+					lengthinfo.put("oeLength", oeList.size());
+				} else {
+					lengthinfo.put("oeLength", 0);
+				}
 
-            if (resume.getMember() == member && resume != null) {
-                model.addAttribute("member", member);
-                String[] addarr = this.memberService.getaddress(member);
-                model.addAttribute("address1", addarr[0]);
-                model.addAttribute("address2", addarr[1]);
+				if (portfolioList != null) {
+					List<String> urlList = new ArrayList<>();
+					for (int i = 0; i < portfolioList.size(); i++) {
+						String url = "";
+						if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
+							Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
+							url = portfoliofile.getFileurl();
+						} else {
+							url = "";
+						}
 
-                model.addAttribute("resume", resume);
-                if (academicList != null)
-                    model.addAttribute("academicList", academicList);
-                if (activityList != null)
-                    model.addAttribute("activityList", activityList);
-                if (careerList != null)
-                    model.addAttribute("careerList", careerList);
-                if (certificateList != null)
-                    model.addAttribute("certificateList", certificateList);
-                if (educationList != null)
-                    model.addAttribute("educationList", educationList);
-                if (languagesList != null)
-                    model.addAttribute("languagesList", languagesList);
-                if (oeList != null)
-                    model.addAttribute("oeList", oeList);
-                if (portfolioList != null) {
-                    List<String> urlList = new ArrayList<>();
-                    for (int i = 0; i < portfolioList.size(); i++) {
-                        String url = "";
-                        if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
-                            Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
-                            url = portfoliofile.getFileurl();
-                        } else {
-                            url = "";
-                        }
+						urlList.add(url);
+					}
+					model.addAttribute("urlList", urlList);
+					model.addAttribute("portfolioList", portfolioList);
+					lengthinfo.put("portfolioLength", portfolioList.size());
+				} else {
+					lengthinfo.put("portfolioLength", 0);
+				}
+			}
 
-                        urlList.add(url);
-                    }
-                    model.addAttribute("urlList", urlList);
-                    model.addAttribute("portfolioList", portfolioList);
-                }           
+			return new ModelAndView("/view/mypage/ResumeDetail");
 
-            }
+		} catch (NullPointerException e) {
+			/*
+			 * principal 이 null 로 되어있으면 (계정 접속이 되어있지 않으면) NullPointerException 발생시켜서 check
+			 * 값을 true로 전송 check 값이 true 가 되면 경고문 발생과 함께 로그인 페이지로 이동.
+			 */
+			check.put("check", true);
+			return new ModelAndView("view/Login");
+		}
+	}
 
-            return new ModelAndView("/view/mypage/ReviseResume");
-        } else {
-            check.put("check", true);
-            return new ModelAndView("/view/Login");
-        }
-    }
+	@GetMapping("/error")
+	public ResponseEntity errorMsg(Principal principal) {
+		if (principal == null) {
+			return new ResponseEntity("로그인이 필요한 페이지 입니다.", HttpStatus.OK);
+		} else {
+			return new ResponseEntity(null, HttpStatus.OK);
+		}
+	}
 
-    @GetMapping("/company/input")
-    public ModelAndView newCompany(Map<String, Object> check, Principal principal, Model model) {
-        try {
-            String username = principal.getName();
-            Member member = this.memberService.getMemberinfo(username);
-            String sort = member.getSort();
-            model.addAttribute("sort", sort);
-            return new ModelAndView("/view/mypage/NewCompany");
-        } catch (NullPointerException e) {
-            check.put("check", true);
-            return new ModelAndView("view/Login");
-        }
-    }
+	@GetMapping("/user/resume/new")
+	public ModelAndView newResume(Model model, Principal principal, Map<String, Object> check) {
+		try {
+			String username = principal.getName();
+			System.out.println("작동함?");
+			model.addAttribute("resumeDto", new ResumeDto());
+			model.addAttribute("username", username);
+			return new ModelAndView("/view/mypage/NewResume");
+		} catch (NullPointerException e) {
+			check.put("check", true);
+			return new ModelAndView("view/Login");
+		}
+	}
 
-    // 사용자 지원 현황 리스트
-    @GetMapping("/user/applyinfo")
-    public ModelAndView userApplyinfo(Principal principal, Model model, Map<String, Object> check) {
-        String url = "";
-        if (principal != null) {
-            Member member = this.memberService.getMemberinfo(principal.getName());
-            List<Apply> applyList = this.applyService.getapply(member);
-            List<Recruit> recruitList = this.recruitService.getList(applyList);
-            model.addAttribute("applyList", applyList);
-            model.addAttribute("recruitList", recruitList);
-            url = "/view/mypage/ApplyListBymember";
-        } else {
-            check.put("check", true);
-            url = "/view/Login";
+	@GetMapping("/user/resume/revise/{id}")
+	public ModelAndView forupdateResume(@PathVariable("id") Long id, Model model, Principal principal,
+			Map<String, Object> check) {
+		if (principal != null) {
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			Resume resume = this.resumeService.getResume(id);
+			model.addAttribute("resume", resume);
+			List<Academic> academicList = this.academicService.getacademic(resume);
+			List<Activity> activityList = this.activityService.getactivity(resume);
+			List<Career> careerList = this.careerService.getcareer(resume);
+			List<Certificate> certificateList = this.certificateService.getcertificate(resume);
+			List<Education> educationList = this.educationService.geteducation(resume);
+			List<Languages> languagesList = this.LanguageService.getlanguages(resume);
+			List<Overseasexperience> oeList = this.oeService.getoverseasexperience(resume);
+			List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
 
-        }
+			if (imgfileService.getimgfile(resume) != null) {
+				Imgfile imgfile = imgfileService.getimgfile(resume);
+				String imgurl = imgfile.getImgurl();
+				model.addAttribute("imgurl", imgurl);
+			}
 
-        return new ModelAndView(url);
-    }
+			if (resume.getMember() == member && resume != null) {
+				model.addAttribute("member", member);
+				String[] addarr = this.memberService.getaddress(member);
+				model.addAttribute("address1", addarr[0]);
+				model.addAttribute("address2", addarr[1]);
 
-    @GetMapping("/user/applydetail/{id}")
-    public ModelAndView userApplyDetail(@PathVariable("id") Long id, Principal principal, Map<String, Object> check,
-            Model model) {
-        String url = "";
-        if (principal != null) {
-            Apply apply = this.applyService.getapply(id);
-            Member member = this.memberService.getMemberinfo(principal.getName());
-            if (member.getUsername().equals(apply.getMember().getUsername())) {
-                Recruit recruit = apply.getRecruit();
-                List<AcademicApply> academicApplyList = this.academicApplyService.getList(apply);
-                List<ActivityApply> activityApplyList = this.activityApplyService.getList(apply);
-                List<CareerApply> careerApplyList = this.careerApplyService.getList(apply);
-                List<CertificateApply> certificateApplyList = this.certificateApplyService.getList(apply);
-                List<EducationApply> educationApplyList = this.educationApplyService.getList(apply);
-                ImgfileApply imgfileApply = this.imgfileApplyService.getData(apply);
-                List<LanguagesApply> languagesApplyList = this.languagesApplyService.getList(apply);
-                List<OverseasexperienceApply> oeApplyList = this.overseasexperienceApplyService.getList(apply);
-                List<PortfolioApply> portfolioApplyList = this.portfolioApplyService.getList(apply);
-                model.addAttribute("apply", apply);
-                model.addAttribute("recruit", recruit);
-                url = "/view/mypage/"; // 해당 지원 상세페이지로 이동 필요
-            } else {
-                check.put("check", true);
-                url = ""; // 사용자 지원 현황 리스트 페이지로 전환 필요 경고문과 함께
-            }
+				model.addAttribute("resume", resume);
+				if (academicList != null)
+					model.addAttribute("academicList", academicList);
+				if (activityList != null)
+					model.addAttribute("activityList", activityList);
+				if (careerList != null)
+					model.addAttribute("careerList", careerList);
+				if (certificateList != null)
+					model.addAttribute("certificateList", certificateList);
+				if (educationList != null)
+					model.addAttribute("educationList", educationList);
+				if (languagesList != null)
+					model.addAttribute("languagesList", languagesList);
+				if (oeList != null)
+					model.addAttribute("oeList", oeList);
+				if (portfolioList != null) {
+					List<String> urlList = new ArrayList<>();
+					for (int i = 0; i < portfolioList.size(); i++) {
+						String url = "";
+						if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
+							Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
+							url = portfoliofile.getFileurl();
+						} else {
+							url = "";
+						}
 
-        } else {
-            check.put("check", true);
-            url = "view/Login";
-        }
-        return new ModelAndView(url);
-    }
+						urlList.add(url);
+					}
+					model.addAttribute("urlList", urlList);
+					model.addAttribute("portfolioList", portfolioList);
+				}
 
-    // 기업회원 작성 채용공고 리스트
-    @GetMapping("/company/recruit/list")
-    public ModelAndView recruitApplyinfo(Principal principal, Model model, Map<String, Object> check) {
-        try {
-            Member member = this.memberService.getMemberinfo(principal.getName());
-            List<Recruit> recruitList = this.recruitService.getRecruit(member);
-            model.addAttribute("recruitList", recruitList);
-            return new ModelAndView("/view/mypage/");
-        } catch (NullPointerException e) {
-            check.put("check", true);
-            return new ModelAndView("view/Login");
-        }
-    }
+			}
 
-    @GetMapping("/company/recruit/detail/{id}")
-    public ModelAndView recruitdetailandapplylist(Principal principal, Model model, Map<String, Object> check,
-            @PathVariable("id") Long id,
-            @PageableDefault(page = 0, size = 10, sort = "applydate", direction = Sort.Direction.DESC) Pageable pageable) {
-        String url = "";
-        if (principal != null) {
-            Recruit recruit = this.recruitService.getRecruit(id);
-            Member member = this.memberService.getMemberinfo(principal.getName());
-            if (member.getUsername().equals(recruit.getMember().getUsername())) {
-                Page<Apply> applyList = this.applyService.getapply(recruit, pageable);
-                List<Integer> certificatenumber = this.certificateApplyService.getnumber(applyList);
-                List<Integer> careernumber = this.careerApplyService.getnumber(applyList);
-                List<Integer> languagesnumber = this.languagesApplyService.getnumber(applyList);
+			return new ModelAndView("/view/mypage/ReviseResume");
+		} else {
+			check.put("check", true);
+			return new ModelAndView("/view/Login");
+		}
+	}
 
-                model.addAttribute("recruit", recruit);
-                model.addAttribute("applyList", applyList);
-                model.addAttribute("certificatenumber", certificatenumber);
-                model.addAttribute("careernumber", careernumber);
-                model.addAttribute("languagesnumber", languagesnumber);
+	@GetMapping("/company/input")
+	public ModelAndView newCompany(Map<String, Object> check, Principal principal, Model model) {
+		try {
+			String username = principal.getName();
+			Member member = this.memberService.getMemberinfo(username);
+			String sort = member.getSort();
+			model.addAttribute("sort", sort);
+			return new ModelAndView("/view/mypage/NewCompany");
+		} catch (NullPointerException e) {
+			check.put("check", true);
+			return new ModelAndView("view/Login");
+		}
+	}
 
-                url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
-            } else {
-                check.put("check", true);
-                url = ""; // 사용자 작성 채용공고 리스트로 이동.
-            }
-        } else {
-            check.put("check", true);
-            url = "view/Login";
-        }
+	// 사용자 지원 현황 리스트
+	@GetMapping("/user/applyinfo")
+	public ModelAndView userApplyinfo(Principal principal, Model model, Map<String, Object> check) {
+		String url = "";
+		if (principal != null) {
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			List<Apply> applyList = this.applyService.getapply(member);
+			List<Recruit> recruitList = this.recruitService.getList(applyList);
+			model.addAttribute("applyList", applyList);
+			model.addAttribute("recruitList", recruitList);
+			url = "/view/mypage/ApplyListBymember";
+		} else {
+			check.put("check", true);
+			url = "/view/Login";
 
-        return new ModelAndView(url);
-    }
+		}
 
-    @GetMapping("/company/recruit/detail/applyinfo/{id}")
-    public ModelAndView applyinfotorecruit(Principal principal, Model model, Map<String, Object> check,
-            @PathVariable("id") Long id) {
-        String url = "";
-        if (principal != null) {
-            Apply apply = this.applyService.getapply(id);
-            Member member = this.memberService.getMemberinfo(principal.getName());
-            if (member.getUsername().equals(apply.getMember().getUsername())) {
-                model.addAttribute("apply", apply);
-                url = "/view/mypage"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
-            } else {
-                check.put("check", true);
-                url = ""; // 사용자 작성 채용공고 리스트로 이동.
-            }
-        } else {
-            check.put("check", true);
-            url = "view/Login";
-        }
+		return new ModelAndView(url);
+	}
 
-        return new ModelAndView(url);
-    }
+	@GetMapping("/user/applydetail/{id}")
+	public ModelAndView userApplyDetail(@PathVariable("id") Long id, Principal principal, Map<String, Object> check,
+			Model model) {
+		String url = "";
+		if (principal != null) {
+			Apply apply = this.applyService.getapply(id);
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			if (member.getUsername().equals(apply.getMember().getUsername())) {
+				Recruit recruit = apply.getRecruit();
+				List<AcademicApply> academicApplyList = this.academicApplyService.getList(apply);
+				List<ActivityApply> activityApplyList = this.activityApplyService.getList(apply);
+				List<CareerApply> careerApplyList = this.careerApplyService.getList(apply);
+				List<CertificateApply> certificateApplyList = this.certificateApplyService.getList(apply);
+				List<EducationApply> educationApplyList = this.educationApplyService.getList(apply);
+				ImgfileApply imgfileApply = this.imgfileApplyService.getData(apply);
+				List<LanguagesApply> languagesApplyList = this.languagesApplyService.getList(apply);
+				List<OverseasexperienceApply> oeApplyList = this.overseasexperienceApplyService.getList(apply);
+				List<PortfolioApply> portfolioApplyList = this.portfolioApplyService.getList(apply);
+				model.addAttribute("apply", apply);
+				model.addAttribute("recruit", recruit);
+				url = "/view/mypage/"; // 해당 지원 상세페이지로 이동 필요
+			} else {
+				check.put("check", true);
+				url = ""; // 사용자 지원 현황 리스트 페이지로 전환 필요 경고문과 함께
+			}
+
+		} else {
+			check.put("check", true);
+			url = "view/Login";
+		}
+		return new ModelAndView(url);
+	}
+
+	// 기업회원 작성 채용공고 리스트
+	@GetMapping("/company/recruit/list")
+	public ModelAndView recruitApplyinfo(Principal principal, Model model, Map<String, Object> check) {
+		try {
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			List<Recruit> recruitList = this.recruitService.getRecruit(member);
+			model.addAttribute("recruitList", recruitList);
+			return new ModelAndView("/view/mypage/");
+		} catch (NullPointerException e) {
+			check.put("check", true);
+			return new ModelAndView("view/Login");
+		}
+	}
+
+	@GetMapping("/company/recruit/detail/{id}")
+	public ModelAndView recruitdetailandapplylist(Principal principal, Model model, Map<String, Object> check,
+			@PathVariable("id") Long id,
+			@PageableDefault(page = 0, size = 10, sort = "applydate", direction = Sort.Direction.DESC) Pageable pageable) {
+		String url = "";
+		if (principal != null) {
+			Recruit recruit = this.recruitService.getRecruit(id);
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			if (member.getUsername().equals(recruit.getMember().getUsername())) {
+				Page<Apply> applyList = this.applyService.getapply(recruit, pageable);
+				List<Integer> certificatenumber = this.certificateApplyService.getnumber(applyList);
+				List<Integer> careernumber = this.careerApplyService.getnumber(applyList);
+				List<Integer> languagesnumber = this.languagesApplyService.getnumber(applyList);
+
+				model.addAttribute("recruit", recruit);
+				model.addAttribute("applyList", applyList);
+				model.addAttribute("certificatenumber", certificatenumber);
+				model.addAttribute("careernumber", careernumber);
+				model.addAttribute("languagesnumber", languagesnumber);
+
+				url = "/view/mypage/"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
+			} else {
+				check.put("check", true);
+				url = ""; // 사용자 작성 채용공고 리스트로 이동.
+			}
+		} else {
+			check.put("check", true);
+			url = "view/Login";
+		}
+
+		return new ModelAndView(url);
+	}
+
+	@GetMapping("/company/recruit/detail/applyinfo/{id}")
+	public ModelAndView applyinfotorecruit(Principal principal, Model model, Map<String, Object> check,
+			@PathVariable("id") Long id) {
+		String url = "";
+		if (principal != null) {
+			Apply apply = this.applyService.getapply(id);
+			Member member = this.memberService.getMemberinfo(principal.getName());
+			if (member.getUsername().equals(apply.getMember().getUsername())) {
+				model.addAttribute("apply", apply);
+				url = "/view/mypage"; // 채용공고 상세 및 채용공고마다 지원 현황 리스트 보여주는 페이지로 이동
+			} else {
+				check.put("check", true);
+				url = ""; // 사용자 작성 채용공고 리스트로 이동.
+			}
+		} else {
+			check.put("check", true);
+			url = "view/Login";
+		}
+
+		return new ModelAndView(url);
+	}
 
 }

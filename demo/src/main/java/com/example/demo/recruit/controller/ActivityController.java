@@ -95,4 +95,17 @@ public class ActivityController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Activity>> getList(@PathVariable("id") Long id) {
+    	try {
+    		Resume resume = this.resumeService.getResume(id);
+    		List<Activity> activityList = this.activityService.getactivity(resume);
+    		return new ResponseEntity<>(activityList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    		
+    	}
+    }
 }
