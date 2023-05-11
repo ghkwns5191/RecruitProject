@@ -1,5 +1,6 @@
 package com.example.demo.recruit.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -23,5 +24,9 @@ public interface ApplyRepository extends JpaRepository<Apply, Long> {
     Apply findByRecruitAndMember(Recruit recruit, Member member);
 
     List<Apply> findTop5ByMemberOrderByApplydateDesc(Member member);
+
+	List<Apply> findAllByApplydate(LocalDate dateinfo);
+
+	List<Apply> findTop10ByOrderByApplydate();
 
 }

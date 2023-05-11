@@ -135,5 +135,14 @@ public class RecruitService {
         
         return recruitList;
     }
+    
+    public List<Recruit> getList(LocalDate dateinfo) {
+    	List<Recruit> recruitList = this.recruitRepository.findAllByRegisterdate(dateinfo);
+    	return recruitList;
+    }
 
+    public List<Recruit> getList10() {
+    	List<Recruit> recruitList = this.recruitRepository.findTop10ByOrderByRegisterdate();
+    	return recruitList;
+    }
 }

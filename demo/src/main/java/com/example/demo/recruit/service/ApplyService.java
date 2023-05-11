@@ -138,4 +138,14 @@ public class ApplyService {
         }
         return applynumList;
     }
+    
+    public List<Apply> getapply(LocalDate dateinfo) {
+    	List<Apply> applyList = this.applyRepository.findAllByApplydate(dateinfo);
+    	return applyList;
+    }
+    
+    public List<Apply> getapply10() {
+    	List<Apply> applyList = this.applyRepository.findTop10ByOrderByApplydate();
+    	return applyList;
+    }
 }

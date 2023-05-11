@@ -1,5 +1,6 @@
 package com.example.demo.recruit.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -18,6 +19,10 @@ public interface RecruitRepository extends JpaRepository<Recruit, Long> {
     Page<Recruit> findByTitleContaining(String searchKeyword, Pageable pageable);
 
     List<Recruit> findTop5ByMemberOrderByRegisterdateDesc(Member member);
+
+	List<Recruit> findAllByRegisterdate(LocalDate dateinfo);
+
+	List<Recruit> findTop10ByOrderByRegisterdate();
 
     
 

@@ -225,5 +225,16 @@ public class MemberService implements UserDetailsService {
         return addarr;
         
     }
+    
+    public List<Member> getMemberList(LocalDate dateinfo) {
+        List<Member> memberList = this.memberRepository.findAllByRegisterdate(dateinfo);
+        
+        return memberList;
+    }
+    
+    public List<Member> getMember10() {
+    	List<Member> memberList = this.memberRepository.findTop10ByOrderByRegisterdate();
+    	return memberList;
+    }
 
 }
