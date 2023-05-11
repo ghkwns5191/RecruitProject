@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.recruit.dto.CompanyDto;
 import com.example.demo.recruit.entity.Company;
 import com.example.demo.recruit.entity.Member;
+import com.example.demo.recruit.entity.Recruit;
 import com.example.demo.recruit.repository.CompanyRepository;
 import com.example.demo.recruit.repository.MemberRepository;
 
@@ -26,6 +27,9 @@ public class CompanyService {
 
     @Autowired
     private final MemberRepository memberRepository;
+    
+    @Autowired
+    private final MemberService memberService;
 
     // 전체 회사 리스트를 조회하는 코드
     public List<Company> getcompany() {
@@ -88,6 +92,16 @@ public class CompanyService {
             companyList.add(company);
         }
         return companyList;
+    }
+    
+    public List<Company> getList(List<Recruit> recruitList) {
+    	List<Company> companyList = new ArrayList<>();
+    	for (int i = 0; i < recruitList.size(); i++) {
+    		Member member = this.memberService.getMemberdata(recruitList.get(i));
+    		Company company = getData(member);
+    		companyList.add(company);
+    	}
+    	return companyList;
     }
 
 }

@@ -83,6 +83,8 @@ public class MainController {
 
 			String username = principal.getName();
 			Member member = memberService.getMember(username);
+			String role = member.getRole().toString();
+			model.addAttribute("role", role);
 			if (member.getRole().equals(ERole.USER)) {
 				String sort = member.getSort();
 				if (this.resumeService.getResume(member) != null) {
@@ -102,9 +104,12 @@ public class MainController {
 			} else if (member.getRole().equals(ERole.ADMIN)) {
 				List<Member> memberList10 = this.memberService.getMember10();
 				List<Recruit> recruitList10 = this.recruitService.getList10();
-				List<Apply> applyList10 = this.applyService.getapply10(); 		
+				List<Company> companyList_recruit = this.companyService.getList(recruitList10);
+				List<Apply> applyList10 = this.applyService.getapply10(); 	
+				
 				model.addAttribute("memberList10", memberList10);
 				model.addAttribute("recruitList10", recruitList10);
+				model.addAttribute("companyList_recruit", companyList_recruit);
 				model.addAttribute("applyList10", applyList10);
 				
 				List<Member> memberList_today = this.memberService.getMemberList(LocalDate.now());
@@ -128,6 +133,8 @@ public class MainController {
 				model.addAttribute("newApplyToday", newApplyToday);
 				model.addAttribute("newApplyYesterday", newApplyYesterday);
 				
+				List<Recruit> recruitList_apply = this.recruitService.getList(applyList10);
+				model.addAttribute("recruitList_apply", recruitList_apply);
 			}
 		}
 		return location;

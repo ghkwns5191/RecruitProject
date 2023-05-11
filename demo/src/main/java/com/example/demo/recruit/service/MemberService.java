@@ -236,5 +236,10 @@ public class MemberService implements UserDetailsService {
     	List<Member> memberList = this.memberRepository.findTop10ByOrderByRegisterdate();
     	return memberList;
     }
+    
+    public Member getMemberdata(Recruit recruit) {
+    	Member member = recruit.getMember();
+    	return member;
+    }
 
 }
