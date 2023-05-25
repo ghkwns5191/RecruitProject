@@ -6,6 +6,7 @@
 <head>
 	<link th:href="@{/css/common.css}" rel="stylesheet">
 	<link th:href="@{/css/ReviseResume.css}" rel="stylesheet">
+	<link th:href="@{/css/NewResume.css}" rel="stylesheet">
 	<link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet">
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
@@ -49,166 +50,192 @@
 	</header>
 
 
-	<div style="display: table; margin:auto; width: 800px;">
-		<table class="table titletable">
-			<tbody>
-				<tr>
-					<td>이력서 제목</td>
-					<td><input id="resumetitle" th:value="${resume.title}"></td>
-				</tr>
-			</tbody>
-		</table>
+	<div th:fragment="content"
+		style="display: table; margin: auto; width: 800px;">
 
-		<table id="basic_info" class="table contenttable">
-			<thead>
-				<th colspan="3" class="table_head">기본정보</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td rowspan="7" style="width: 130px;">
-						<img th:src="*{imgurl}" id="resume_img" style="width: 120px; height: 160px;">
-					</td>
-					<td>이름</td>
-					<td id="resume_name" th:text="${member.name}"></td>
-				</tr>
-				<tr>
-					<td>생년월일</td>
-					<td id="resume_birth" th:text="${member.birthday}"></td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td id="resume_phone" th:text="${member.phone}"></td>
-				</tr>
-				<tr>
-					<td>이메일</td>
-					<td id="resume_email" th:text="${member.email}"></td>
-				</tr>
-				<tr>
-					<td rowspan="2">주소</td>
-					<td th:text="${address1}"></td>
-				</tr>
-				<tr>
-					<td th:text="${address2}"></td>
-				</tr>
-			</tbody>
-		</table>
-		<p style="font-size: 11px;">이름, 생년월일, 전화번호, 이메일, 주소 등 개인정보는 회원가입 시 입력한 정보를 기준으로 반영되었습니다. <br>
-			수정을 원하시는 경우 회원정보 수정을 이용해주시기 바랍니다.</p>
-
-		<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
-			<thead>
-				<th colspan="3" class="기본정보">학력사항</th>
-			</thead>
-			<tbody id="academic"></tbody>
-			<tbody>
-				<tr>
-					<td><input type="button" onclick="addacademic()" value="학력사항 추가하기" class="btn btn-primary btn-sm"></td>
-				</tr>
-			</tbody>
+		<div>
+			<label th:for="title" text="제목" style="font-size: 20px;"></label> <input
+				type="text" placeholder="이력서 제목을 입력하세요" id="title"
+				class="form-control" name="title"> <br>
+				
+				<table id="basic_info" class="table contenttable">
+					<thead>
+						<th colspan="3" class="table_head">기본정보</th>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<td rowspan="7" style="width: 130px;">
+								<img id="preview" th:src="*{imgurl}" style="width: 120px; height: 160px;"> <br>
+								<input type="file" name="imgfile" id="imgfile" onchange="previewimage(event)" style="margin-left: 20px;">
+								
+							</td>
+							<td>이름</td>
+							<td><input type="text" name="name" readonly id="name" class="form-control form-control-sm"></td>
+						</tr>
+						
+						<tr>
+							<td>생년월일</td>
+							<td><input type="text" name="birthday" readonly id="birthday" class="form-control form-control-sm"></td>
+						</tr>
+						
+						<tr>
+							<td>연락처</td>
+							<td><input type="text" name="phone" readonly id="phone" class="form-control form-control-sm"></td>
+						</tr>
+						
+						<tr>
+							<td>이메일</td>
+							<td><input type="text" name="email" readonly id="email" class="form-control form-control-sm"></td>
+						</tr>
+						
+						<tr>
+							<td rowspan="2">주소</td>
+							<td><input type="text" name="address" readonly id="add1" class="form-control form-control-sm"></td>
+						</tr>
+						
+						<tr>		
+							<td><input type="text" name="address" readonly id="add2" class="form-control form-control-sm"></td>
+						</tr>
+					</tbody>
+					
+					
+				</table>
+		</div>
+		<div>
+			<p style="font-size: 11px;">이름, 생년월일, 전화번호, 이메일, 주소 등 개인정보는 회원가입 시 입력한 정보를 기준으로 반영되었습니다. <br>
+				수정을 원하시는 경우 회원정보 수정을 이용해주시기 바랍니다.</p>
 			
-		</table>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">학력사항</th>
+				</thead>
+				<tbody id="academic"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addacademic()" value="학력사항 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-		<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
-			<thead>
-				<th colspan="3">학력사항</th>
-			</thead>
-			<tbody th:if="${academicList} != null" th:each="academicList : ${academicList}">
-				<tr>
-					<td class="column1st">학교명</td>
-					<td class="borderleft">| </td>
-					<td colspan="3" class="columncontent"><input type="text"
-							class="academic_name form-control form-control-sm" th:value="${academicList.name}"></td>
-				</tr>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">활동내역</th>
+				</thead>
+				<tbody id="activity"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addactivity()" value="활동내역 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-				<tr>
-					<td>구분</td>
-					<td class="borderleft">| </td>
-					<td colspan="3"><select th:if="${academicList.type} == 'highschool'"
-							class="academic_type form-select form-select-sm">
-							<option value='highschool' selected>고등학교</option>
-							<option value='university'>대학교</option>
-							<option value='graduateSchool'>대학원</option>
-						</select> <select th:if="${academicList.type} == 'university'"
-							class="academic_type form-select form-select-sm">
-							<option value='highschool'>고등학교</option>
-							<option value='university' selected>대학교</option>
-							<option value='graduateSchool'>대학원</option>
-						</select> <select th:if="${academicList.type} == 'graduateSchool'"
-							class="academic_type form-select form-select-sm">
-							<option value='highschool'>고등학교</option>
-							<option value='university'>대학교</option>
-							<option value='graduateSchool' selected>대학원</option>
-						</select></td>
-				</tr>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">경력사항</th>
+				</thead>
+				<tbody id="career"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addcareer()" value="경력사항 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-				<tr>
-					<td>재학기간</td>
-					<td class="borderleft">| </td>
-					<td><input type="date" class="academic_start form-control form-control-sm inputcontrol"
-							th:value="${academicList.start}"></td>
-					<td style="width: 8px; align-items: center; font-size: 20px;">~</td>
-					<td><input type="date" class="academic_start form-control form-control-sm inputcontrol"
-							th:value="${academicList.end}"></td>
-				</tr>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">자격증</th>
+				</thead>
+				<tbody id="certificate"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addcertificate()" value="자격증 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-				<tr>
-					<td>졸업여부</td>
-					<td class="borderleft">| </td>
-					<td colspan="3"><select th:if="${academicList.studying} == 'attending'" class="academic_studying form-select form-select-sm">
-							<option value='attending' selected>재학중</option>
-							<option value='off'>휴학중</option>
-							<option value='graduated'>졸업</option>
-						</select> <select th:if="${academicList.studying} == 'off'" class="academic_studying form-select form-select-sm">
-							<option value='attending'>재학중</option>
-							<option value='off' selected>휴학중</option>
-							<option value='graduated'>졸업</option>
-						</select> <select th:if="${academicList.studying} == 'graduated'" class="academic_studying form-select form-select-sm">
-							<option value='attending'>재학중</option>
-							<option value='off'>휴학중</option>
-							<option value='graduated' selected>졸업</option>
-						</select></td>
-				</tr>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">교육내용</th>
+				</thead>
+				<tbody id="education"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addeducation()" value="교육내용 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-				<tr>
-					<td>전공 / 계열</td>
-					<td class="borderleft">| </td>
-					<td colspan="3"><input type="text" class="academic_major form-control form-control-sm" th:value="${academicList.major}"></td>
-				</tr>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">어학사항</th>
+				</thead>
+				<tbody id="languages"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addlanguages()" value="어학사항 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-				<tr>
-					<td>학점</td>
-					<td class="borderleft">| </td>
-					<td><input type="text" class="academic_grade inputcontrol form-control form-control-sm inputcontrol" th:value="${academicList.grade}"> / <select
-							th:if="${academicList.gradefull} == '4.0'" class="academic_gradefull form-select form-select-sm inputcontrol">
-							<option value='4.0' selected>4.0</option>
-							<option value='4.3'>4.3</option>
-							<option value='4.5'>4.5</option>
-						</select> <select th:if="${academicList.gradefull} == '4.3'" class="academic_gradefull form-select form-select-sm inputcontrol">
-							<option value='4.0'>4.0</option>
-							<option value='4.3' selected>4.3</option>
-							<option value='4.5'>4.5</option>
-						</select> <select th:if="${academicList.gradefull} == '4.5'" class="academic_gradefull form-select form-select-sm inputcontrol">
-							<option value='4.0'>4.0</option>
-							<option value='4.3'>4.3</option>
-							<option value='4.5' selected>4.5</option>
-						</select></td>
-				</tr>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">해외경험</th>
+				</thead>
+				<tbody id="oe"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addoe()" value="해외경험 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-				<tr>
-					<td>세부 학습 내용</td>
-					<td class="borderleft">| </td>
-					<td colspan="3" style="text-align: right;">			
-							<textarea th:text="${academicList.detail}" rows='5'
-								class="academic_detail form-control form-control-sm"></textarea>
-					</td>
-				</tr>
-			</tbody>
+			<table class="table contenttable" style="width: 600px; margin-bottom: 40px;">
+				<thead>
+					<th colspan="3" class="기본정보">포트폴리오</th>
+				</thead>
+				<tbody id="portfolio"></tbody>
+				<tbody>
+					<tr>
+						<td><input type="button" onclick="addportfolio()" value="포트폴리오 추가하기" class="btn btn-primary btn-sm"></td>
+					</tr>
+				</tbody>
+				
+			</table>
 
-			<tbody id="addacademic"></tbody>
+			<div>
+				<label>자기소개서</label><br>
+				<textarea class="form-control form-control-sm" name="cv" cols="100" rows="30"
+					id="cv" placeholder="자기소개서 내용을 입력하세요."></textarea>
+			</div>
 
+			<div id="openforheadhunter">
+				<label>이력서 공개여부</label> <input type="radio" name="openforheadhunter"
+					value="open" checked><label>공개</label> <input type="radio"
+					name="openforheadhunter" value="close"><label>비공개</label>
+			</div>
+		</div>
+		<table id="buttons">
 			<tbody>
 				<tr>
-					<td><input type="button" onclick="addacademic()" value="학력사항 추가하기"></td>
+					<td class="blankcol"></td>
+					<td class="buttoncol">
+						<button id="revise_button" class="btn btn-primary"
+							onClick="submit()">수정하기</button>
+					</td>
+					<td class="blankcol"></td>
+					<td class="blankcol"></td>
+					<td class="buttoncol">
+						<button id="back_button" class="btn btn-outline-primary" onClick="back()">돌아가기</button>
+					</td>
+					<td class="blankcol"></td>
 				</tr>
 			</tbody>
 		</table>

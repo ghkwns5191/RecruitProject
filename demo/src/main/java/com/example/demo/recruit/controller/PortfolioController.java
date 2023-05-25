@@ -103,5 +103,17 @@ public class PortfolioController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Portfolio>> getListbyResume(@PathVariable("id") Long id) {
+    	try {
+    		Resume resume = this.resumeService.getResume(id);
+    		List<Portfolio> portfolioList = this.portfolioService.getPortfolio(resume);
+    		return new ResponseEntity<>(portfolioList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 
 }

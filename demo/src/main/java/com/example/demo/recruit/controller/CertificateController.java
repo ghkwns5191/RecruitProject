@@ -95,4 +95,16 @@ public class CertificateController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Certificate>> getcerties(@PathVariable("id") Long id) {
+    	try {
+    		Resume resume = this.resumeService.getResume(id);
+    		List<Certificate> certificateList = this.certificateService.getcertificate(resume);
+    		return new ResponseEntity<>(certificateList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 }

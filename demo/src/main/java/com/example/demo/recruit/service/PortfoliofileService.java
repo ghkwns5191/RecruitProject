@@ -1,12 +1,14 @@
 package com.example.demo.recruit.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
-import com.example.demo.recruit.entity.Imgfile;
 import com.example.demo.recruit.entity.Portfolio;
 import com.example.demo.recruit.entity.Portfoliofile;
 import com.example.demo.recruit.repository.PortfoliofileRepository;
@@ -53,6 +55,15 @@ public class PortfoliofileService {
         Portfoliofile portfoliofile = this.portfoliofileRepository.findByPortfolio(portfolio);
 
         return portfoliofile;
+    }
+    
+    public List<Portfoliofile> getList(List<Portfolio> portfolioList) {
+    	List<Portfoliofile> portfoliofileList = new ArrayList<>();
+    	for (int i = 0; i < portfolioList.size(); i++) {
+    		Portfoliofile portfoliofile = getfile(portfolioList.get(i));
+    		portfoliofileList.add(portfoliofile);
+    	}
+    	return portfoliofileList;
     }
     
     public String getOriginalname(MultipartFile multipartfile) {

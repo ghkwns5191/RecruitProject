@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.recruit.dto.ResumeDto;
 import com.example.demo.recruit.entity.Academic;
@@ -85,47 +84,16 @@ public class ResumeController {
 
     // 해당 회원의 이력서 작성페이지를 띄우기 위해 사용
 
-    // 해당 회원의 이력서를 조회하기 위해 사용
-    @GetMapping("/detail")
-    public String getList(Principal principal, Model model) {
-
-        String memberData = principal.getName();
-        Member member = memberService.getMember(memberData);
-        Resume resume = resumeService.getResume(member);
-        List<Academic> academicList = academicService.getacademic(resume);
-        List<Activity> activityList = activityService.getactivity(resume);
-        List<Career> careerList = careerService.getcareer(resume);
-        List<Certificate> certificateList = certificateService.getcertificate(resume);
-        List<Education> educationList = educationService.geteducation(resume);
-        Imgfile imgfile = imgfileService.getimgfile(resume);
-        List<Languages> languagesList = languagesService.getlanguages(resume);
-        List<Overseasexperience> overseasExperienceList = overseasexperienceService.getoverseasexperience(resume);
-        List<Portfolio> portfolioList = portfolioService.getPortfolio(resume);
-
-        model.addAttribute("member", member);
-        model.addAttribute("resume", resume);
-        model.addAttribute("academicList", academicList);
-        model.addAttribute("activityList", activityList);
-        model.addAttribute("careerList", careerList);
-        model.addAttribute("certificateList", certificateList);
-        model.addAttribute("educationList", educationList);
-        model.addAttribute("imgfile", imgfile);
-        model.addAttribute("languagesList", languagesList);
-        model.addAttribute("overseasExperienceList", overseasExperienceList);
-        model.addAttribute("portfolioList", portfolioList);
-
-        return "/view/mypage/ViewResume";
-
-    }
 
     // 해당 이력서 정보를 조회하기 위해 사용
-    @GetMapping("/detail/{id_resume}")
-    public ResponseEntity<Resume> getResume(@RequestParam(required = false) Long id) {
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Resume> getResume(@PathVariable("id") Long id) {
         try {
-            Resume resume = new Resume();
-            resume = resumeService.getResume(id);
+            Resume resume = resumeService.getResume(id);
             return new ResponseEntity<>(resume, HttpStatus.OK);
         } catch (Exception e) {
+        	System.out.println(e);
+        	
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

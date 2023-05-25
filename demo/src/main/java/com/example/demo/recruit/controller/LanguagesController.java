@@ -93,4 +93,16 @@ public class LanguagesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Languages>> getListbyResume(@PathVariable("id") Long id) {
+    	try {
+    		Resume resume = this.resumeService.getResume(id);
+    		List<Languages> languagesList = this.languagesService.getlanguages(resume);
+    		return new ResponseEntity<>(languagesList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 }

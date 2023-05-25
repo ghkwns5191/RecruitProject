@@ -79,7 +79,7 @@ public class OverseasexperienceController {
             @RequestBody List<OverseasexperienceDto> overseasexperienceDtoList) {
         try {
             Resume resume = this.resumeService.getResume(id);
-            List<Overseasexperience> overseasexperienceList = overseasexperienceService.inputData(resume, overseasexperienceDtoList);
+            List<Overseasexperience> overseasexperienceList = this.overseasexperienceService.inputData(resume, overseasexperienceDtoList);
             return new ResponseEntity<>(overseasexperienceList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -95,5 +95,17 @@ public class OverseasexperienceController {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Overseasexperience>> getListbyResume(@PathVariable("id") Long id) {
+    	try {
+    		 Resume resume = this.resumeService.getResume(id);
+    		 List<Overseasexperience> overseasexperienceList = this.overseasexperienceService.getoverseasexperience(resume);
+    		 return new ResponseEntity<>(overseasexperienceList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 }

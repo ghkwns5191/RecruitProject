@@ -94,4 +94,16 @@ public class EducationController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/get/{id}")
+    public ResponseEntity<List<Education>> getedus(@PathVariable("id") Long id) {
+    	try {
+    		Resume resume = this.resumeService.getResume(id);
+    		List<Education> educationList = this.educationService.geteducation(resume);
+    		return new ResponseEntity<>(educationList, HttpStatus.OK);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
+    }
 }
