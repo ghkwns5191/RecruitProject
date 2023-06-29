@@ -45,4 +45,11 @@ public class PortfoliofileController {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@GetMapping("/download/{id}")
+	public void downloadFile(@PathVariable("id") Long id, HttpServletResponse response) {
+		Portfolio portfolio = this.portfolioService.getPortfolio(id);
+		this.portfoliofileService.downloadFile(portfolio, response);
+
+	}
 }

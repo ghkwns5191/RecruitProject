@@ -78,4 +78,9 @@ public class PortfoliofileService {
         this.portfoliofileRepository.deleteById(portfoliofile.getId());
        
     }
+
+    public void downloadFile(Portfolio portfolio, HttpServletResponse response) {
+        Portfoliofile portfoliofile = getfile(portfolio);
+        this.fileService.downloadFile(portfoliofile, response);
+    }
 }

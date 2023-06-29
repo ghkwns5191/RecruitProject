@@ -38,4 +38,33 @@ public class FileService {
             log.info("파일이 존재하지 않습니다.");
         }
     }
+
+    public void downloadFile(Portfoliofile portfoliofile, HttpServletResponse response) {
+        String filename = portfoliofile.getFilename();
+        String fileurl = portfoliofile.getFileurl();
+        String contentType = "application/pdf";
+
+        File file = new File(fileurl);
+        Long fileLength = file.length();
+
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\";");
+            response.setHeader("Content-Transfer-Encoding", "binary");
+            response.setHeader("Content-Type", contentType);
+            response.setHeader("Content-Length", "" + fileLength);
+            response.setHeader("Pragma", "no-cache;");
+            response.setHeader("Expires", "-1;");
+
+            try(
+                        FileInputStream fis = new FileInputStream(fileurl);
+                        OutputStream out = response.getOutputStream();
+                ){
+                        int readCount = 0;
+                        byte[] buffer = new byte[1024];
+                    while((readCount = fis.read(buffer)) != -1){
+                            out.write(buffer,0,readCount);
+                    }
+                }catch(Exception ex){
+                    throw new RuntimeException("file Save Error");
+                }
+    }
 }

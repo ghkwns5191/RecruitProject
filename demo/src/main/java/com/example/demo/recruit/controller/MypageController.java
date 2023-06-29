@@ -330,19 +330,19 @@ public class MypageController {
 				}
 
 				if (portfolioList != null) {
-					List<String> urlList = new ArrayList<>();
+					List<String> oriNameList = new ArrayList<>();
 					for (int i = 0; i < portfolioList.size(); i++) {
-						String url = "";
+						String oriName = "";
 						if (this.portfoliofileService.getfile(portfolioList.get(i)) != null) {
 							Portfoliofile portfoliofile = this.portfoliofileService.getfile(portfolioList.get(i));
-							url = portfoliofile.getFileurl();
+							oriName = portfoliofile.getOriname();
 						} else {
-							url = "";
+							oriName = "";
 						}
 
-						urlList.add(url);
+						oriNameList.add(oriName);
 					}
-					model.addAttribute("urlList", urlList);
+					model.addAttribute("oriNameList", oriNameList);
 					model.addAttribute("portfolioList", portfolioList);
 					lengthinfo.put("portfolioLength", portfolioList.size());
 				} else {
