@@ -493,7 +493,7 @@
 					<tr>
 						<td>포트폴리오 파일</td>
 						<td class="borderleft">| </td>
-						<td><a href="다운로드 컨트롤러 mapping url" th:text="${oriNameList[__${portfolioListStat.index}__]}"></a></td>
+						<td><a th:href="@{/downloadl/${id}(id = portfolioList.id)}" th:text="${oriNameList[__${portfolioListStat.index}__]}"></a></td>
 					</tr>
 
 				</tbody>
