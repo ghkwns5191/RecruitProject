@@ -29,7 +29,40 @@ function validateAndSubmit(event) {
 	var password = document.getElementById("password").value;
 
 	if(regEmail.test(email) && regPw.test(password)) {
+		var memberDto = {
+			username : document.getElementById("username").value,
+			password : password,
+			sort : document.querySelector("[name='sort']:checked").value,
+			name : document.getElementById("name").value,
+			phone : document.getElementById("phone").value,
+			email : email,
+			birthday : document.getElementById("birthday").value,
+			address : document.getElementById("address").value
+
+
+		}
 		// ajax 회원가입
+		$.ajax({
+			type: 'post',
+			url : '/join',
+			data: JSON.stringify(memberDto),
+			dataType: 'json/application',
+			success: function(data) {
+				// 확인 및 취소 입력에 따라 페이지 다르게 이동
+				var joinSuccess = window.confirm("회원가입이 완료되었습니다. 로그인 페이지로 이동하시겠습니까?");
+				if(joinSuccess) {
+					location.href="/login";
+				} else {
+					location.href="/";
+				}
+				
+			},
+			error: function(e) {
+				console.log("회원가입 실패 ㅠ");
+				console.log(e);
+			}
+
+		});
 	} else if (!regEmail.test(email) && regPw.test(password)) {
 		window.alert("이메일을 형식에 맞게 다시 입력하세요.");
 	} else if (regEmail.test(email) && !regPw.test(password)) {

@@ -147,11 +147,11 @@ public class MainController {
 	}
 
 	@PostMapping("/join")
-	public String join(MemberDto memberDto, Map<String, Object> ok) {
+	public ResponseEntity<Member> join(MemberDto memberDto, Map<String, Object> ok) {
 		System.out.println(memberDto.getUsername());
-		memberService.createMember(memberDto, passwordEncoder);
+		Member member = memberService.createMember(memberDto, passwordEncoder);
 		ok.put("message", "회원가입이 완료되었습니다.");
-		return "redirect:/";
+		return new ResponseEntity<>(member, HttpStatus.OK);
 	}
 
 	@GetMapping("/login")

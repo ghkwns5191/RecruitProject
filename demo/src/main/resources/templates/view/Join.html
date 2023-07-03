@@ -85,9 +85,9 @@
 						<tr>
 							<td>회원구분</td>
 							<td><label th:for="sort"> 개인 </label> <input type="radio"
-								th:field="*{sort}" value="individual"></td>
+								th:field="*{sort}" name="sort" id="individual" value="individual"></td>
 							<td><label th:for="sort"> 기업 </label> <input type="radio"
-								th:field="*{sort}" value="company"></td>
+								th:field="*{sort}" name="sort" id="company" value="company"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -98,7 +98,7 @@
 					<tbody>
 						<tr>
 							<td th:for="name">이름</td>
-							<td><input type="text" th:field="*{name}"
+							<td><input type="text" th:field="*{name}" id="name"
 								class="form-control" placeholder="이름을 입력하세요"></td>
 						</tr>
 					</tbody>
@@ -110,7 +110,7 @@
 					<tbody>
 						<tr>
 							<td th:for="phone">연락처</td>
-							<td><input type="text" class="form-control"
+							<td><input type="text" class="form-control" id="phone"
 								th:field="*{phone}" placeholder="전화번호를 입력하세요"></td>
 						</tr>
 					</tbody>
@@ -134,7 +134,7 @@
 					<tbody>
 						<tr>
 							<td th:for="birthday">생년월일</td>
-							<td><input type="date" th:field="*{birthday}"
+							<td><input type="date" th:field="*{birthday}" id="birthday"
 								class="form-control"></td>
 						</tr>
 					</tbody>
@@ -146,7 +146,7 @@
 					<tbody>
 						<tr>
 							<td th:for="address">주소</td>
-							<td><input type="text" th:field="*{address}"
+							<td><input type="text" th:field="*{address}" id="address"
 								class="form-control" placeholder="주소를 입력하세요"></td>
 						</tr>
 					</tbody>
