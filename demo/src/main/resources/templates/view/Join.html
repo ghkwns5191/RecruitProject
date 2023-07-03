@@ -48,7 +48,7 @@
 	
 	<!-- 본문 회원가입 Form -->
 	<div layout:fragment="content">
-		<form action="/join" role="form" method="post"
+		<form onsubmit="validateAndSubmit(event)" 
 			th:object="${memberDto}">
 			<div class="form-group">
 				<table>
@@ -155,8 +155,8 @@
 			<table>
 				<tbody>
 					<tr>
-						<td><button type="submit" onClick="joinsuccess()">회원가입</button></td>
-						<td><button type="button" onClick="location.href='/'">돌아가기</button></td>
+						<td><button type="submit">회원가입</button></td>
+						<td><button type="button" onClick="back()">돌아가기</button></td>
 					</tr>
 				</tbody>
 			</table>

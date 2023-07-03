@@ -72,3 +72,7 @@ function validateAndSubmit(event) {
 	}
 
 }
+
+function back () {
+	history.go(-1);
+}
