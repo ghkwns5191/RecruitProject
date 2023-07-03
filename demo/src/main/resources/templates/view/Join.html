@@ -163,8 +163,7 @@
 
 
 			<!-- csrf 공격 방어하기 위한 csrf 토큰값이 있어야 함. csrf 토큰이란 실제 서버에서 요청한 것이 맞는지 확인 -->
-			<!-- <input type="hidden" th:name="${_csrf.parameterName}"
-				th:value="&{_csrf.token}">  -->
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		</form>
 	</div>
 	

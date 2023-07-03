@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .mvcMatchers("**").permitAll()
                 .anyRequest().authenticated();
 
-        http.csrf().disable();
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
 //        // 인증되지 않은 사용자가 리소스 요청 시 오류 발생시킴
 //        http.exceptionHandling()
