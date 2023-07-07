@@ -87,23 +87,30 @@ public class MemberService implements UserDetailsService {
 //        validationPhone(memberDto);
 //        validationEmail(memberDto);
 
-        // 입력받은 정보 member 변수에 저장.
-        Member member = new Member();
-        member.setSort(memberDto.getSort());
-        member.setUsername(memberDto.getUsername());
-        String password = passwordEncoder.encode(memberDto.getPassword());
-        member.setPassword(password);
-        member.setName(memberDto.getName());
-        member.setPhone(memberDto.getPhone());
-        member.setEmail(memberDto.getEmail());
-        member.setBirthday(memberDto.getBirthday());
-        member.setAddress(memberDto.getAddress());
-        member.setRegisterdate(LocalDate.now());
-        member.setRole(ERole.USER);
+        // 입력받은 정보의 pw 및 email 데이터를 정규표현식과 match 여부 확인
+        
 
-        // member 변수 내용 DB 에 저장.
-        this.memberRepository.save(member);
-        return member;
+        if (checkPattern(memberDto)) {
+            // 입력받은 정보 member 변수에 저장.
+            Member member = new Member();
+            member.setSort(memberDto.getSort());
+            member.setUsername(memberDto.getUsername());
+            String password = passwordEncoder.encode(memberDto.getPassword());
+            member.setPassword(password);
+            member.setName(memberDto.getName());
+            member.setPhone(memberDto.getPhone());
+            member.setEmail(memberDto.getEmail());
+            member.setBirthday(memberDto.getBirthday());
+            member.setAddress(memberDto.getAddress());
+            member.setRegisterdate(LocalDate.now());
+            member.setRole(ERole.USER);
+
+            // member 변수 내용 DB 에 저장.
+            this.memberRepository.save(member);
+            return member;
+        } else {
+            throw new IllegalStateException;
+        }
     }
 
     @Override
@@ -240,6 +247,19 @@ public class MemberService implements UserDetailsService {
     public Member getMemberdata(Recruit recruit) {
     	Member member = recruit.getMember();
     	return member;
+    }
+
+    public boolean checkPattern(MemberDto memberDto) {
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+        String passwordPattern = "^(?=.*[a-zA-Z0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$";
+
+        boolean emailCheck = Pattern.match(emailPattern, memberDto.getEmail());
+        boolean pwCheck = Pattern.match(passwordPattern, memberDto.getPassword());
+        if(emailCheck && pwCheck) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
